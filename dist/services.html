@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Restaurant | Le Lézard Bleu Bujumbura</title>
+  <meta name="description" content="Découvrez nos services : restaurant gastronomique, spa, piscine, conciergerie 24/7.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header-navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="nav-logo">
+        <div class="nav-logo-icon">L</div>
+        <div class="nav-logo-text">
+          <span class="nav-brand-title">LE LÉZARD BLEU</span>
+          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
+        </div>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/index.html" class="nav-link">Accueil</a></li>
+          <li><a href="/presentation.html" class="nav-link">Présentation</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites & Villas</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réservation</a></li>
+          <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
+          <li><a href="/services.html" class="nav-link active">Services & Resto</a></li>
+          <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
+          <li><a href="/offres.html" class="nav-link">Offres</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <a href="/reservation.html" class="btn btn-gold" style="padding: 0.65rem 1.25rem;">Réserver</a>
+        <button id="mobileToggle" class="mobile-toggle">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside id="mobileDrawer" class="mobile-drawer">
+    <button id="drawerClose" class="drawer-close">✕</button>
+    <ul class="drawer-menu">
+      <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+      <li><a href="/chambres.html" class="drawer-link">Chambres</a></li>
+      <li><a href="/services.html" class="drawer-link">Services</a></li>
+      <li><a href="/contact.html" class="drawer-link">Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- Hero -->
+  <section class="hero-section" style="min-height: 60vh;">
+    <img src="/assets/images/spa_piscine.jpg" alt="Services Hôtel" class="hero-bg-image">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1 class="hero-title">Services & <span>Restaurant</span></h1>
+      <p class="hero-subtitle">Une expérience complète pour votre confort</p>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 4rem;">
+        <span class="section-subtitle">NOS SERVICES</span>
+        <h2 class="section-title">À Votre Service 24/7</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+        
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🍽️</div>
+          <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 1rem;">Restaurant Gastronomique</h3>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            Cuisine fusion burundaise et internationale. Produits frais du lac et des collines.
+          </p>
+          <p style="color: var(--text-light-secondary); margin-top: 1rem; font-size: 0.9rem;">
+            <strong>Horaires :</strong> 6h30 - 23h00
+          </p>
+        </div>
+
+        <div id="spa" style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">💆</div>
+          <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 1rem;">Spa & Bien-être</h3>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            Centre de bien-être avec massages, hammam, sauna et soins traditionnels.
+          </p>
+          <p style="color: var(--text-light-secondary); margin-top: 1rem; font-size: 0.9rem;">
+            <strong>Horaires :</strong> 9h00 - 21h00
+          </p>
+        </div>
+
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🏊</div>
+          <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 1rem;">Piscine & Plage</h3>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            Piscine à débordement avec vue lac et accès direct à notre plage privée.
+          </p>
+          <p style="color: var(--text-light-secondary); margin-top: 1rem; font-size: 0.9rem;">
+            <strong>Horaires :</strong> 7h00 - 20h00
+          </p>
+        </div>
+
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🏋️</div>
+          <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 1rem;">Fitness & Sport</h3>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            Salle de sport équipée, yoga, tennis et activités nautiques sur le lac.
+          </p>
+          <p style="color: var(--text-light-secondary); margin-top: 1rem; font-size: 0.9rem;">
+            <strong>Horaires :</strong> 6h00 - 22h00
+          </p>
+        </div>
+
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+          <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 1rem;">Conciergerie 24/7</h3>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            Assistance multilingue, réservations, transferts aéroport, excursions.
+          </p>
+          <p style="color: var(--text-light-secondary); margin-top: 1rem; font-size: 0.9rem;">
+            <strong>Disponible :</strong> 24h/24
+          </p>
+        </div>
+
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🚗</div>
+          <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 1rem;">Transferts & Parking</h3>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            Navette aéroport gratuite, parking sécurisé, location de véhicules.
+          </p>
+          <p style="color: var(--text-light-secondary); margin-top: 1rem; font-size: 0.9rem;">
+            <strong>Parking :</strong> 150 places
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-padding" style="background: var(--bg-dark-main);">
+    <div class="container text-center">
+      <h2 class="section-title">Réservez Votre Expérience</h2>
+      <p class="section-desc">Profitez de tous nos services inclus dans votre séjour</p>
+      <a href="/reservation.html" class="btn btn-gold" style="padding: 1rem 2.5rem; margin-top: 2rem;">Réserver Maintenant</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="footer-bottom" style="padding: 2rem 0;">
+        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>

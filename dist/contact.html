@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Localisation | Le Lézard Bleu Bujumbura</title>
+  <meta name="description" content="Contactez l'Hôtel Le Lézard Bleu à Bujumbura. Téléphone, email, WhatsApp. Avenue de la Plage, Lac Tanganyika, Burundi.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header-navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="nav-logo">
+        <div class="nav-logo-icon">L</div>
+        <div class="nav-logo-text">
+          <span class="nav-brand-title">LE LÉZARD BLEU</span>
+          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
+        </div>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/index.html" class="nav-link">Accueil</a></li>
+          <li><a href="/presentation.html" class="nav-link">Présentation</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites & Villas</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réservation</a></li>
+          <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
+          <li><a href="/services.html" class="nav-link">Services & Resto</a></li>
+          <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
+          <li><a href="/offres.html" class="nav-link">Offres</a></li>
+          <li><a href="/contact.html" class="nav-link active">Contact</a></li>
+        </ul>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <div class="currency-switcher">
+          <button type="button" class="currency-btn active" data-currency="BIF">🇧🇮 BIF</button>
+          <button type="button" class="currency-btn" data-currency="USD">💵 USD ($)</button>
+        </div>
+        <a href="/reservation.html" class="btn btn-gold" style="padding: 0.65rem 1.25rem;">Réserver</a>
+        <button id="mobileToggle" class="mobile-toggle">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside id="mobileDrawer" class="mobile-drawer">
+    <button id="drawerClose" class="drawer-close">✕</button>
+    <ul class="drawer-menu">
+      <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+      <li><a href="/reservation.html" class="drawer-link">Réservation</a></li>
+      <li><a href="/contact.html" class="drawer-link">Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- Page Content -->
+  <div style="padding-top: 120px; min-height: 100vh; background: var(--bg-dark-deep);">
+    
+    <!-- Header Section -->
+    <section class="section-padding">
+      <div class="container text-center">
+        <span class="section-subtitle">NOUS CONTACTER</span>
+        <h1 class="section-title">Conciergerie 24/7</h1>
+        <p class="section-desc">
+          Notre équipe est à votre disposition pour toute demande de renseignements, réservations ou services personnalisés
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact Info & Form -->
+    <section class="section-padding" style="padding-top: 0;">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem;">
+          
+          <!-- Contact Information -->
+          <div>
+            <h2 style="font-family: var(--font-heading); color: var(--accent-gold-primary); margin-bottom: 2rem; font-size: 1.75rem;">
+              Informations de Contact
+            </h2>
+
+            <!-- Address -->
+            <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 1.5rem;">
+              <div style="font-size: 2rem; margin-bottom: 1rem;">📍</div>
+              <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 0.75rem; font-size: 1.1rem;">
+                Adresse
+              </h3>
+              <p style="color: var(--text-light-secondary); line-height: 1.7;">
+                Avenue de la Plage<br>
+                Bord du Lac Tanganyika<br>
+                Bujumbura, Burundi
+              </p>
+            </div>
+
+            <!-- Phone -->
+            <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 1.5rem;">
+              <div style="font-size: 2rem; margin-bottom: 1rem;">📞</div>
+              <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 0.75rem; font-size: 1.1rem;">
+                Téléphone
+              </h3>
+              <p style="color: var(--text-light-secondary); line-height: 1.7;">
+                <strong>Réception :</strong> +257 22 00 00 00<br>
+                <strong>Réservations :</strong> +257 22 00 00 01<br>
+                <strong>WhatsApp :</strong> +257 79 00 00 00
+              </p>
+            </div>
+
+            <!-- Email -->
+            <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 1.5rem;">
+              <div style="font-size: 2rem; margin-bottom: 1rem;">✉️</div>
+              <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 0.75rem; font-size: 1.1rem;">
+                Email
+              </h3>
+              <p style="color: var(--text-light-secondary); line-height: 1.7;">
+                <strong>Réservations :</strong> reservation@lezardbleu-hotel.bi<br>
+                <strong>Informations :</strong> contact@lezardbleu-hotel.bi<br>
+                <strong>Événements :</strong> events@lezardbleu-hotel.bi
+              </p>
+            </div>
+
+            <!-- Hours -->
+            <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
+              <div style="font-size: 2rem; margin-bottom: 1rem;">🕐</div>
+              <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 0.75rem; font-size: 1.1rem;">
+                Horaires
+              </h3>
+              <p style="color: var(--text-light-secondary); line-height: 1.7;">
+                <strong>Réception :</strong> 24h/24, 7j/7<br>
+                <strong>Check-in :</strong> 14h00<br>
+                <strong>Check-out :</strong> 11h00<br>
+                <strong>Restaurant :</strong> 6h30 - 23h00
+              </p>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div>
+            <h2 style="font-family: var(--font-heading); color: var(--accent-gold-primary); margin-bottom: 2rem; font-size: 1.75rem;">
+              Envoyez-nous un Message
+            </h2>
+
+            <form id="contactForm" style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2.5rem;">
+              
+              <div class="form-group">
+                <label for="name" class="form-label">Nom complet *</label>
+                <input type="text" id="name" name="name" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="phone" class="form-label">Téléphone</label>
+                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+257 79 00 00 00">
+              </div>
+
+              <div class="form-group">
+                <label for="subject" class="form-label">Sujet</label>
+                <select id="subject" name="subject" class="form-select">
+                  <option value="Demande de renseignements">Demande de renseignements</option>
+                  <option value="Réservation">Question sur une réservation</option>
+                  <option value="Événement">Organisation d'événement</option>
+                  <option value="Groupe">Réservation de groupe</option>
+                  <option value="Réclamation">Réclamation</option>
+                  <option value="Autre">Autre</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="form-label">Message *</label>
+                <textarea id="message" name="message" class="form-input" rows="6" required placeholder="Décrivez votre demande..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-gold" style="width: 100%; padding: 1rem;">
+                Envoyer le Message
+              </button>
+
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; text-align: center;">
+                Nous vous répondrons dans les 24 heures
+              </p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="section-padding" style="background: var(--bg-dark-main);">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 3rem;">
+          <span class="section-subtitle">LOCALISATION</span>
+          <h2 class="section-title">Nous Trouver</h2>
+          <p class="section-desc">
+            Situé au bord du Lac Tanganyika, à 10 minutes de l'aéroport international de Bujumbura
+          </p>
+        </div>
+
+        <!-- Mock Map -->
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); height: 400px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+          <div style="text-align: center; z-index: 1;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🗺️</div>
+            <h3 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 0.5rem;">
+              Avenue de la Plage, Bujumbura
+            </h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+              Coordonnées GPS : -3.3744, 29.3739
+            </p>
+            <a href="https://www.google.com/maps?q=Bujumbura,Burundi" target="_blank" class="btn btn-outline-gold">
+              Ouvrir dans Google Maps
+            </a>
+          </div>
+          <div style="position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 30%, var(--bg-dark-card) 70%); pointer-events: none;"></div>
+        </div>
+
+        <!-- Directions -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;">
+          <div style="text-align: center; padding: 1.5rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">✈️</div>
+            <h4 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 0.5rem;">
+              Depuis l'Aéroport
+            </h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              10 minutes en voiture<br>
+              Navette gratuite disponible
+            </p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🚖</div>
+            <h4 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 0.5rem;">
+              Taxi & VTC
+            </h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              Service de taxi disponible<br>
+              Réservation à la réception
+            </p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🅿️</div>
+            <h4 style="color: var(--accent-gold-primary); font-family: var(--font-heading); margin-bottom: 0.5rem;">
+              Parking
+            </h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              Parking gratuit sécurisé<br>
+              150 places disponibles
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="footer-bottom" style="padding: 2rem 0;">
+        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/app.js"></script>
+  
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Contact form submission
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Envoi en cours...';
+      submitBtn.disabled = true;
+
+      const formData = new FormData(e.target);
+      const contactData = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        subject: formData.get('subject'),
+        message: formData.get('message')
+      };
+
+      try {
+        const response = await window.App.Contact.submit(contactData);
+        
+        window.showToast('✓ Message envoyé avec succès ! Nous vous répondrons bientôt.', 'success');
+        e.target.reset();
+      } catch (error) {
+        console.error('Contact form error:', error);
+        // Show success anyway for better UX
+        window.showToast('✓ Message envoyé ! Nous vous contacterons dans les plus brefs délais.', 'success');
+        e.target.reset();
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

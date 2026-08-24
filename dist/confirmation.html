@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmation de Réservation | Le Lézard Bleu Bujumbura</title>
+  <meta name="description" content="Votre réservation a été confirmée à l'Hôtel Le Lézard Bleu.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header-navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="nav-logo">
+        <div class="nav-logo-icon">L</div>
+        <div class="nav-logo-text">
+          <span class="nav-brand-title">LE LÉZARD BLEU</span>
+          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
+        </div>
+      </a>
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <a href="/index.html" class="btn btn-outline-gold" style="padding: 0.65rem 1.25rem;">← Accueil</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Confirmation Content -->
+  <div style="padding-top: 120px; min-height: 100vh; background: var(--bg-dark-deep); display: flex; align-items: center; justify-content: center;">
+    <div class="container" style="max-width: 700px; padding: 3rem 1rem;">
+      
+      <!-- Success Icon -->
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div style="width: 120px; height: 120px; margin: 0 auto 2rem auto; border-radius: 50%; background: linear-gradient(135deg, #1a4d2e, #2d7a4e); display: flex; align-items: center; justify-content: center; font-size: 4rem; box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);">
+          ✓
+        </div>
+        <h1 style="font-family: var(--font-heading); color: var(--text-light-primary); margin-bottom: 1rem; font-size: clamp(2rem, 5vw, 3rem);">
+          Réservation <span style="color: var(--accent-gold-primary);">Confirmée</span> !
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
+          Nous avons le plaisir de confirmer votre réservation à l'Hôtel Le Lézard Bleu.
+        </p>
+      </div>
+
+      <!-- Booking Details Card -->
+      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2.5rem; margin-bottom: 2rem;">
+        
+        <div style="text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-subtle);">
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Numéro de confirmation</p>
+          <p id="bookingId" style="font-size: 1.8rem; font-weight: 700; color: var(--accent-gold-primary); font-family: monospace; letter-spacing: 2px;">
+            #LOADING...
+          </p>
+        </div>
+
+        <div id="bookingDetails" style="display: grid; gap: 1.5rem;">
+          
+          <div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">📅 Dates du séjour</p>
+            <p id="dates" style="color: var(--text-light-primary); font-weight: 600; font-size: 1.1rem;">
+              Chargement...
+            </p>
+          </div>
+
+          <div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">🏨 Chambre réservée</p>
+            <p id="roomName" style="color: var(--text-light-primary); font-weight: 600; font-size: 1.1rem;">
+              Chargement...
+            </p>
+          </div>
+
+          <div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">👥 Nombre d'invités</p>
+            <p id="guests" style="color: var(--text-light-primary); font-weight: 600; font-size: 1.1rem;">
+              Chargement...
+            </p>
+          </div>
+
+          <div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">💰 Montant total</p>
+            <p id="totalPrice" style="color: var(--accent-gold-primary); font-weight: 700; font-size: 1.4rem;">
+              Chargement...
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Next Steps -->
+      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 2rem;">
+        <h3 style="color: var(--text-light-primary); margin-bottom: 1.5rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+          <span style="color: var(--accent-gold-primary);">📧</span> Prochaines Étapes
+        </h3>
+        <ul style="color: var(--text-muted); line-height: 2; padding-left: 1.5rem;">
+          <li>Un email de confirmation vous a été envoyé</li>
+          <li>Conservez votre numéro de réservation</li>
+          <li>Notre équipe vous contactera sous 24h pour finaliser les détails</li>
+          <li>Vous recevrez toutes les informations pratiques avant votre arrivée</li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 2rem; text-align: center;">
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">
+          Des questions sur votre réservation ?
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="tel:+25722000000" class="btn btn-outline-gold" style="padding: 0.75rem 1.5rem;">
+            📞 +257 22 00 00 00
+          </a>
+          <a href="/contact.html" class="btn btn-outline-gold" style="padding: 0.75rem 1.5rem;">
+            ✉️ Nous Contacter
+          </a>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="/index.html" class="btn btn-gold" style="padding: 1rem 2rem;">
+          Retour à l'Accueil
+        </a>
+        <a href="/account.html" class="btn btn-outline-gold" style="padding: 1rem 2rem;">
+          Mon Compte
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="background: var(--bg-dark-deep); border-top: 1px solid var(--border-subtle);">
+    <div class="container" style="padding: 2rem 1rem; text-align: center;">
+      <p style="color: var(--text-muted); margin-bottom: 0.5rem;">
+        © <span id="currentYear">2025</span> Le Lézard Bleu - Hôtel & Spa Bujumbura
+      </p>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">
+        Tous droits réservés • Avenue de la Plage, Lac Tanganyika, Bujumbura, Burundi
+      </p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/app.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get booking ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookingId = urlParams.get('booking');
+
+      if (!bookingId) {
+        // No booking ID provided, show generic confirmation
+        document.getElementById('bookingId').textContent = '#PENDING';
+        document.getElementById('dates').textContent = 'Information en cours de traitement';
+        document.getElementById('roomName').textContent = 'Voir email de confirmation';
+        document.getElementById('guests').textContent = 'Voir email de confirmation';
+        document.getElementById('totalPrice').textContent = 'Voir email de confirmation';
+      } else {
+        // Display booking ID
+        document.getElementById('bookingId').textContent = `#${bookingId}`;
+
+        // Try to load booking details from API
+        loadBookingDetails(bookingId);
+      }
+
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
+    });
+
+    async function loadBookingDetails(bookingId) {
+      try {
+        // Récupérer le token Supabase depuis le localStorage
+        const sessionRaw = localStorage.getItem('hotel_auth_token');
+        let authHeader = '';
+        if (sessionRaw) {
+          try {
+            const session = JSON.parse(sessionRaw);
+            if (session?.access_token) {
+              authHeader = `Bearer ${session.access_token}`;
+            }
+          } catch (_) {}
+        }
+
+        const response = await fetch(`/.netlify/functions/bookings?id=${bookingId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(authHeader ? { 'Authorization': authHeader } : {})
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Booking not found');
+        }
+
+        const data = await response.json();
+        const booking = data.booking;
+
+        // Display booking details
+        if (booking.check_in && booking.check_out) {
+          const checkIn = window.App.DateHelper.format(booking.check_in);
+          const checkOut = window.App.DateHelper.format(booking.check_out);
+          document.getElementById('dates').textContent = `${checkIn} → ${checkOut}`;
+        }
+
+        if (booking.room_name) {
+          document.getElementById('roomName').textContent = booking.room_name;
+        }
+
+        if (booking.guests) {
+          document.getElementById('guests').textContent = `${booking.guests} personne(s)`;
+        }
+
+        if (booking.total_price_bif) {
+          const price = window.formatPrice(booking.total_price_bif);
+          document.getElementById('totalPrice').textContent = price;
+        }
+
+      } catch (error) {
+        console.error('Error loading booking details:', error);
+        // Keep generic messages if API fails
+      }
+    }
+  </script>
+
+</body>
+</html>

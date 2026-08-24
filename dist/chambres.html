@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chambres & Suites de Luxe | Le Lézard Bleu Bujumbura</title>
+  <meta name="description" content="Découvrez nos chambres et suites de luxe au bord du Lac Tanganyika. Suites présidentielles, chambres deluxe et villas familiales.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header-navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="nav-logo">
+        <div class="nav-logo-icon">L</div>
+        <div class="nav-logo-text">
+          <span class="nav-brand-title">LE LÉZARD BLEU</span>
+          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
+        </div>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/index.html" class="nav-link">Accueil</a></li>
+          <li><a href="/presentation.html" class="nav-link">Présentation</a></li>
+          <li><a href="/chambres.html" class="nav-link active">Suites & Villas</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réservation</a></li>
+          <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
+          <li><a href="/services.html" class="nav-link">Services & Resto</a></li>
+          <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
+          <li><a href="/offres.html" class="nav-link">Offres</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <div class="currency-switcher">
+          <button type="button" class="currency-btn active" data-currency="BIF">🇧🇮 BIF</button>
+          <button type="button" class="currency-btn" data-currency="USD">💵 USD ($)</button>
+        </div>
+        <a href="/reservation.html" class="btn btn-gold" style="padding: 0.65rem 1.25rem;">Réserver</a>
+        <a href="/login.html" class="btn btn-outline-gold" style="padding:0.65rem 1rem;font-size:0.85rem;" id="authButton">Connexion</a>
+        <button id="mobileToggle" class="mobile-toggle" aria-label="Menu Mobile">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside id="mobileDrawer" class="mobile-drawer">
+    <button id="drawerClose" class="drawer-close">✕</button>
+    <div style="margin-bottom: 1.5rem; text-align: center;">
+      <div class="currency-switcher" style="margin-top: 0.5rem; justify-content: center;">
+        <button type="button" class="currency-btn active" data-currency="BIF">🇧🇮 BIF</button>
+        <button type="button" class="currency-btn" data-currency="USD">💵 USD ($)</button>
+      </div>
+    </div>
+    <ul class="drawer-menu">
+      <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+      <li><a href="/chambres.html" class="drawer-link">Chambres</a></li>
+      <li><a href="/reservation.html" class="drawer-link">Réservation</a></li>
+      <li><a href="/contact.html" class="drawer-link">Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- Hero Section -->
+  <section class="hero-section" style="min-height: 60vh;">
+    <img src="/assets/images/hero_hotel.jpg" alt="Chambres Luxe Bujumbura" class="hero-bg-image">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <span class="section-subtitle" style="color: var(--accent-gold-primary);">NOS HÉBERGEMENTS</span>
+      <h1 class="hero-title" style="font-size: clamp(2.5rem, 5vw, 3.5rem);">
+        Chambres & Suites d'<span>Exception</span>
+      </h1>
+      <p class="hero-subtitle" style="max-width: 650px; margin: 0 auto;">
+        Du confort deluxe aux suites présidentielles, chaque chambre offre une vue imprenable sur le Lac Tanganyika
+      </p>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section style="background: var(--bg-dark-main); padding: 2rem 0;">
+    <div class="container">
+      <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: center;">
+        <button class="btn btn-outline-gold filter-btn active" data-category="all">
+          Toutes les chambres
+        </button>
+        <button class="btn btn-outline-gold filter-btn" data-category="Suite">
+          Suites
+        </button>
+        <button class="btn btn-outline-gold filter-btn" data-category="Executive">
+          Executive
+        </button>
+        <button class="btn btn-outline-gold filter-btn" data-category="Deluxe">
+          Deluxe
+        </button>
+        <button class="btn btn-outline-gold filter-btn" data-category="Villa">
+          Villas
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rooms Grid -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="grid-cards" id="roomsGrid">
+        <!-- Rooms will be loaded dynamically -->
+        <div class="empty-state">
+          <div class="empty-state-icon">🏨</div>
+          <p class="empty-state-title">Chargement des chambres...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section-padding" style="background: var(--bg-dark-main);">
+    <div class="container text-center">
+      <span class="section-subtitle">BESOIN D'AIDE ?</span>
+      <h2 class="section-title">Notre Conciergerie à Votre Service</h2>
+      <p class="section-desc">
+        Contactez-nous pour des recommandations personnalisées et des demandes spéciales
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+        <a href="tel:+25722000000" class="btn btn-gold">
+          📞 +257 22 00 00 00
+        </a>
+        <a href="https://wa.me/25779000000" class="btn btn-outline-gold">
+          💬 WhatsApp
+        </a>
+        <a href="/contact.html" class="btn btn-outline-gold">
+          ✉️ Email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="footer-bottom" style="padding: 2rem 0;">
+        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/app.js"></script>
+  
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    let allRooms = [];
+    let currentFilter = 'all';
+
+    // Load rooms
+    async function loadRooms() {
+      try {
+        const data = await window.App.Rooms.fetchAll();
+        allRooms = data;
+        renderRooms(allRooms);
+      } catch (error) {
+        console.error('Error loading rooms:', error);
+        allRooms = window.App.Rooms.getFallbackRooms();
+        renderRooms(allRooms);
+      }
+    }
+
+    // Render rooms
+    function renderRooms(rooms) {
+      const grid = document.getElementById('roomsGrid');
+      
+      if (rooms.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">🔍</div>
+            <p class="empty-state-title">Aucune chambre trouvée</p>
+            <p class="empty-state-text">Essayez un autre filtre</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = rooms.map(room => `
+        <div class="card-luxury" data-category="${room.category}">
+          <div class="card-img-wrapper">
+            <img src="${room.photo_main}" alt="${room.name}" class="card-img" loading="lazy">
+            <span class="card-badge">${room.category}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${room.name}</h3>
+            <p class="card-text">${room.description}</p>
+            
+            ${room.amenities && room.amenities.length > 0 ? `
+              <div style="margin: 1rem 0;">
+                <h4 style="font-size: 0.85rem; color: var(--accent-gold-primary); margin-bottom: 0.75rem; font-family: var(--font-heading);">
+                  Équipements
+                </h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                  ${room.amenities.slice(0, 6).map(amenity => `
+                    <span style="font-size: 0.75rem; background: var(--bg-dark-main); padding: 0.35rem 0.75rem; border-radius: var(--radius-full); color: var(--text-muted);">
+                      ${amenity}
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+            
+            <div class="card-specs">
+              <div class="card-spec-item">👥 ${room.capacity_adults} pers.</div>
+              <div class="card-spec-item">📐 ${room.surface_m2} m²</div>
+              <div class="card-spec-item">🌅 Vue Lac</div>
+            </div>
+            <div class="card-footer">
+              <div class="card-price">
+                <span class="card-price-amount" data-price-bif="${room.price_per_night_bif}">
+                  ${window.formatPrice(room.price_per_night_bif)}
+                </span>
+                <span class="card-price-unit">par nuitée</span>
+              </div>
+              <a href="/reservation.html?room_id=${room.id}" class="btn btn-gold" style="padding:.65rem 1.25rem;font-size:.8rem;">
+                Réserver
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        const category = this.dataset.category;
+        currentFilter = category;
+        
+        if (category === 'all') {
+          renderRooms(allRooms);
+        } else {
+          const filtered = allRooms.filter(room => room.category === category);
+          renderRooms(filtered);
+        }
+      });
+    });
+
+    // Initialize
+    loadRooms();
+  </script>
+
+  <style>
+    .filter-btn {
+      padding: 0.65rem 1.5rem;
+      font-size: 0.85rem;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-gold-primary);
+      color: #070C14;
+      border-color: var(--accent-gold-primary);
+    }
+  </style>
+
+</body>
+</html>

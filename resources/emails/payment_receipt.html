@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Reçu de Paiement — Le Lézard Bleu</title></head>
+<body style="margin:0;padding:0;background:#0E1626;font-family:'Segoe UI',Arial,sans-serif;color:#CBD5E1;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0E1626;padding:40px 20px;">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#162238;border:1px solid rgba(212,175,55,0.3);border-radius:12px;overflow:hidden;max-width:600px;">
+  <tr><td style="background:linear-gradient(135deg,#0E1626,#1E2D48);padding:40px;text-align:center;border-bottom:1px solid rgba(212,175,55,0.3);">
+    <div style="font-size:26px;color:#D4AF37;font-weight:700;letter-spacing:2px;">LE LÉZARD BLEU</div>
+    <div style="color:#94A3B8;font-size:12px;letter-spacing:1px;">HÔTEL & SPA · BUJUMBURA</div>
+  </td></tr>
+  <tr><td style="background:#22c55e;padding:18px 40px;text-align:center;">
+    <div style="font-size:20px;font-weight:700;color:#fff;">✓ Paiement Confirmé</div>
+  </td></tr>
+  <tr><td style="padding:40px;">
+    <p style="margin:0 0 20px;font-size:16px;">Bonjour <strong style="color:#F8FAFC;">{{first_name}}</strong>,</p>
+    <p style="margin:0 0 25px;color:#94A3B8;line-height:1.7;">Votre paiement a été reçu et votre réservation est confirmée.</p>
+    <table width="100%" style="background:#0E1626;border-radius:10px;border:1px solid rgba(212,175,55,0.2);margin-bottom:25px;">
+      <tr><td style="padding:15px 20px;border-bottom:1px solid rgba(212,175,55,0.1);">
+        <span style="color:#94A3B8;font-size:12px;">Référence réservation</span>
+        <div style="color:#D4AF37;font-size:18px;font-weight:700;font-family:monospace;">{{reference}}</div>
+      </td></tr>
+      <tr><td style="padding:15px 20px;border-bottom:1px solid rgba(255,255,255,0.06);">
+        <span style="color:#94A3B8;font-size:12px;">Mode de paiement</span>
+        <div style="color:#F8FAFC;font-weight:600;">{{payment_method}}</div>
+      </td></tr>
+      <tr><td style="padding:15px 20px;border-bottom:1px solid rgba(255,255,255,0.06);">
+        <span style="color:#94A3B8;font-size:12px;">Montant payé</span>
+        <div style="color:#22c55e;font-size:20px;font-weight:700;">{{amount_bif}}</div>
+        <div style="color:#94A3B8;font-size:11px;">Taux : 1 USD = {{exchange_rate}} BIF (figé à la réservation)</div>
+      </td></tr>
+      <tr><td style="padding:15px 20px;border-bottom:1px solid rgba(255,255,255,0.06);">
+        <span style="color:#94A3B8;font-size:12px;">Date de paiement</span>
+        <div style="color:#F8FAFC;font-weight:600;">{{payment_date}}</div>
+      </td></tr>
+      <tr><td style="padding:15px 20px;">
+        <span style="color:#94A3B8;font-size:12px;">Suite réservée</span>
+        <div style="color:#F8FAFC;font-weight:600;">{{room_name}}</div>
+        <div style="color:#94A3B8;font-size:12px;">{{checkin}} → {{checkout}} ({{nb_nights}} nuit(s))</div>
+      </td></tr>
+    </table>
+    <div style="text-align:center;margin-bottom:25px;">
+      <a href="{{booking_url}}" style="background:#D4AF37;color:#0E1626;padding:13px 32px;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block;">Voir Mon Reçu</a>
+    </div>
+    <p style="color:#94A3B8;font-size:13px;line-height:1.7;">
+      Conservez cet email comme justificatif. Pour toute question :<br>
+      📞 <strong style="color:#F8FAFC;">+257 22 00 00 00</strong> · 
+      ✉️ <a href="mailto:reservation@lezardbleu-hotel.bi" style="color:#D4AF37;">reservation@lezardbleu-hotel.bi</a>
+    </p>
+  </td></tr>
+  <tr><td style="background:#0E1626;padding:20px 40px;text-align:center;border-top:1px solid rgba(212,175,55,0.15);">
+    <div style="color:#94A3B8;font-size:11px;">Hôtel Le Lézard Bleu & Spa · Lac Tanganyika · Bujumbura, Burundi</div>
+  </td></tr>
+</table>
+</td></tr>
+</table>
+</body></html>

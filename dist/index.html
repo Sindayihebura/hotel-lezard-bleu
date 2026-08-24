@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Lézard Bleu | Hôtel & Spa 5 Étoiles — Bujumbura, Lac Tanganyika, Burundi</title>
+  
+  <!-- SEO & Open Graph Meta Tags -->
+  <meta name="description" content="Découvrez Le Lézard Bleu & Spa à Bujumbura (Burundi). Hôtel 5 étoiles au bord du Lac Tanganyika avec suites de luxe, restaurant gastronomique, spa et salles de conférence.">
+  <meta name="keywords" content="hôtel bujumbura, hôtel de luxe burundi, lac tanganyika, suites bujumbura, lumicash, ecocash, hôtel 5 étoiles burundi">
+  <meta property="og:title" content="Le Lézard Bleu | Hôtel & Spa 5 Étoiles — Bujumbura">
+  <meta property="og:description" content="Une expérience hôtelière 5 étoiles inoubliable à Bujumbura au bord du Lac Tanganyika.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/images/hero_tanganyika.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": "Hôtel Le Lézard Bleu & Spa Bujumbura",
+    "description": "Hôtel de luxe 5 étoiles au bord du Lac Tanganyika à Bujumbura, Burundi.",
+    "starRating": {
+      "@type": "Rating",
+      "ratingValue": "5"
+    },
+    "priceRange": "BIF / USD",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Avenue du Lac, Bord du Lac Tanganyika",
+      "addressLocality": "Bujumbura",
+      "addressCountry": "BI"
+    },
+    "telephone": "+257 22 00 00 00",
+    "image": "/assets/images/hero_tanganyika.jpg"
+  }
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <!-- HEADER NAVBAR -->
+  <header class="header-navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="nav-logo">
+        <div class="nav-logo-icon">L</div>
+        <div class="nav-logo-text">
+          <span class="nav-brand-title">LE LÉZARD BLEU</span>
+          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/index.html" class="nav-link active">Accueil</a></li>
+          <li><a href="/presentation.html" class="nav-link">Présentation</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites & Villas</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réservation</a></li>
+          <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
+          <li><a href="/services.html" class="nav-link">Services & Resto</a></li>
+          <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
+          <li><a href="/offres.html" class="nav-link">Offres</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Currency Selector & CTA -->
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        
+        <!-- Toggle Devise BIF / USD -->
+        <div class="currency-switcher">
+          <button type="button" class="currency-btn active" data-currency="BIF">
+            🇧🇮 BIF
+          </button>
+          <button type="button" class="currency-btn" data-currency="USD">
+            💵 USD ($)
+          </button>
+        </div>
+
+        <a href="/reservation.html" class="btn btn-gold" style="padding: 0.65rem 1.25rem;">Réserver</a>
+        <a href="/login.html" class="btn btn-outline-gold" style="padding:0.65rem 1rem;font-size:0.85rem;" id="authButton">Connexion</a>
+        <button id="mobileToggle" class="mobile-toggle" aria-label="Menu Mobile">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <aside id="mobileDrawer" class="mobile-drawer">
+    <button id="drawerClose" class="drawer-close" aria-label="Fermer">✕</button>
+    <div style="margin-bottom: 1.5rem; text-align: center;">
+      <span style="font-size: 0.8rem; color: var(--accent-gold-primary); text-transform: uppercase;">Devise d'affichage :</span>
+      <div class="currency-switcher" style="margin-top: 0.5rem; justify-content: center;">
+        <button type="button" class="currency-btn active" data-currency="BIF">
+          🇧🇮 BIF
+        </button>
+        <button type="button" class="currency-btn" data-currency="USD">
+          💵 USD ($)
+        </button>
+      </div>
+    </div>
+    <ul class="drawer-menu">
+      <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+      <li><a href="/presentation.html" class="drawer-link">Présentation</a></li>
+      <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
+      <li><a href="/reservation.html" class="drawer-link">Réservation en Ligne</a></li>
+      <li><a href="/galerie.html" class="drawer-link">Galerie Photos</a></li>
+      <li><a href="/services.html" class="drawer-link">Services & Restaurant</a></li>
+      <li><a href="/conferences.html" class="drawer-link">Salles & Événements</a></li>
+      <li><a href="/offres.html" class="drawer-link">Offres Spéciales</a></li>
+      <li><a href="/contact.html" class="drawer-link">Avis & Contact</a></li>
+      <li><a href="/login.html" class="drawer-link" style="color:var(--accent-gold-primary)" id="mobileAuthLink">Connexion</a></li>
+    </ul>
+  </aside>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <img src="/assets/images/hero_hotel.jpg" alt="Hôtel Le Lézard Bleu Bujumbura Lac Tanganyika" class="hero-bg-image">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <div class="hero-stars">★★★★★</div>
+      <h1 class="hero-title">L'Excellence Hôtelière au Bord du <span>Lac Tanganyika</span></h1>
+      <p class="hero-subtitle">
+        Bienvenue à l'Hôtel Le Lézard Bleu & Spa à Bujumbura, Burundi. Suites de prestige, haute gastronomie et paiements en BIF & USD (Lumicash, EcoCash, Banques locales, Visa/PayPal).
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="/reservation.html" class="btn btn-gold">Réserver Votre Séjour</a>
+        <a href="/presentation.html" class="btn btn-outline-gold">Découvrir L'Hôtel</a>
+      </div>
+      
+      <!-- Barre de recherche rapide -->
+      <div class="booking-widget-bar">
+        <form id="heroQuickSearchForm" class="booking-widget-form">
+          <div class="form-group">
+            <label for="hero_arr" class="form-label">📅 Arrivée</label>
+            <input type="date" id="hero_arr" name="date_arrivee" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label for="hero_dep" class="form-label">📅 Départ</label>
+            <input type="date" id="hero_dep" name="date_depart" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label for="hero_pers" class="form-label">👥 Personnes</label>
+            <select id="hero_pers" name="nb_personnes" class="form-select">
+              <option value="1">1 Personne</option>
+              <option value="2" selected>2 Personnes</option>
+              <option value="3">3 Personnes</option>
+              <option value="4">4 Personnes & Suite</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-gold" style="height:52px;white-space:nowrap;">
+            🔍 Disponibilités & Tarifs
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÉSENTATION -->
+  <section class="section-padding" style="background:var(--bg-dark-main);">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:3.5rem;align-items:center;">
+        <div>
+          <span class="section-subtitle">BIENVENUE AU BURUNDI</span>
+          <h2 class="section-title">Le Sanctuaire de Bujumbura</h2>
+          <p style="margin-bottom:1.25rem;font-size:1.05rem;">
+            Niché sur les rives paisibles du Lac Tanganyika avec une vue majestueuse sur les collines de Bujumbura, Le Lézard Bleu incarne la rencontre entre l'hospitalité burundaise chaleureuse et les standards 5 étoiles internationaux.
+          </p>
+          <p style="color:var(--text-muted);margin-bottom:2rem;">
+            Nous acceptons les paiements en <strong>Francs Burundais (BIF)</strong> et <strong>Dollars Américains (USD)</strong> via <strong>Lumicash</strong>, <strong>EcoCash</strong>, les <strong>Banques du Burundi</strong> et <strong>Cartes Visa/PayPal</strong>.
+          </p>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;text-align:center;border-top:1px solid var(--border-gold);padding-top:1.5rem;">
+            <div>
+              <div style="font-family:var(--font-heading);font-size:1.5rem;color:var(--accent-gold-primary);font-weight:700;">Lac Tanganyika</div>
+              <div style="font-size:.8rem;color:var(--text-muted);">Accès Direct Plage</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-heading);font-size:1.5rem;color:var(--accent-gold-primary);font-weight:700;">1 USD = 6k</div>
+              <div style="font-size:.8rem;color:var(--text-muted);">Taux BIF Dynamique</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-heading);font-size:1.5rem;color:var(--accent-gold-primary);font-weight:700;">Lumicash</div>
+              <div style="font-size:.8rem;color:var(--text-muted);">Mobile Money Inclus</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img src="/assets/images/spa_piscine.jpg" alt="Piscine & Spa Hôtel Le Lézard Bleu Bujumbura"
+               style="border-radius:var(--radius-md);border:1px solid var(--border-gold);box-shadow:var(--shadow-lux);width:100%;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAMBRES -->
+  <section class="section-padding">
+    <div class="container text-center">
+      <span class="section-subtitle">VOS NUITS DE RÊVE À BUJUMBURA</span>
+      <h2 class="section-title">Chambres & Suites d'Exception</h2>
+      <p class="section-desc">Basculez la devise (BIF / USD) en haut de page pour voir le tarif converti instantanément.</p>
+      <div class="grid-cards" id="roomsGrid">
+        <!-- Les chambres seront chargées dynamiquement via JavaScript -->
+        <div class="card-luxury">
+          <div class="card-img-wrapper">
+            <img src="/assets/images/suite_presidentielle.jpg" alt="Suite Présidentielle" class="card-img" loading="lazy">
+            <span class="card-badge">Suite</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Suite Présidentielle Tanganyika Vue Lac</h3>
+            <p class="card-text">Vue féerique sur le Lac Tanganyika à Bujumbura. Terrasse panoramique, jacuzzi, majordome 24h/24.</p>
+            <div class="card-specs">
+              <div class="card-spec-item">👥 3 pers.</div>
+              <div class="card-spec-item">📐 115 m²</div>
+              <div class="card-spec-item">🌅 Vue Lac</div>
+            </div>
+            <div class="card-footer">
+              <div class="card-price">
+                <span class="card-price-amount" data-price-bif="3900000">3 900 000 BIF</span>
+                <span class="card-price-unit">par nuitée</span>
+              </div>
+              <a href="/reservation.html?room_id=1" class="btn btn-gold" style="padding:.65rem 1.25rem;font-size:.8rem;">Réserver</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-luxury">
+          <div class="card-img-wrapper">
+            <img src="/assets/images/hero_hotel.jpg" alt="Chambre Deluxe" class="card-img" loading="lazy">
+            <span class="card-badge">Deluxe</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Chambre Deluxe Plage & Jardins</h3>
+            <p class="card-text">Finitions en bois précieux burundais, terrasse ombragée et vue jardins verdoyants.</p>
+            <div class="card-specs">
+              <div class="card-spec-item">👥 2 pers.</div>
+              <div class="card-spec-item">📐 50 m²</div>
+              <div class="card-spec-item">🌅 Vue Lac</div>
+            </div>
+            <div class="card-footer">
+              <div class="card-price">
+                <span class="card-price-amount" data-price-bif="2280000">2 280 000 BIF</span>
+                <span class="card-price-unit">par nuitée</span>
+              </div>
+              <a href="/reservation.html?room_id=2" class="btn btn-gold" style="padding:.65rem 1.25rem;font-size:.8rem;">Réserver</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-luxury">
+          <div class="card-img-wrapper">
+            <img src="/assets/images/spa_piscine.jpg" alt="Chambre Executive" class="card-img" loading="lazy">
+            <span class="card-badge">Executive</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Chambre Executive Jardin & Spa</h3>
+            <p class="card-text">Accès direct au Spa holistique et espaces de relaxation privatifs avec vue tropicale.</p>
+            <div class="card-specs">
+              <div class="card-spec-item">👥 2 pers.</div>
+              <div class="card-spec-item">📐 65 m²</div>
+              <div class="card-spec-item">🌅 Vue Lac</div>
+            </div>
+            <div class="card-footer">
+              <div class="card-price">
+                <span class="card-price-amount" data-price-bif="2700000">2 700 000 BIF</span>
+                <span class="card-price-unit">par nuitée</span>
+              </div>
+              <a href="/reservation.html?room_id=3" class="btn btn-gold" style="padding:.65rem 1.25rem;font-size:.8rem;">Réserver</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:3rem;">
+        <a href="/chambres.html" class="btn btn-outline-gold">Voir Toutes Nos Suites</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIEMENTS -->
+  <section class="section-padding" style="background:var(--bg-dark-main);">
+    <div class="container text-center">
+      <span class="section-subtitle">PAIEMENT SIMPLIFIÉ</span>
+      <h2 class="section-title">Payez en BIF ou USD</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;text-align:left;margin-top:2rem;">
+        <div style="background:var(--bg-dark-card);border:1px solid var(--border-gold);padding:1.5rem;border-radius:var(--radius-md);">
+          <div style="font-size:2rem;margin-bottom:.5rem;">💵</div>
+          <h4 style="color:var(--accent-gold-primary);font-family:var(--font-heading);margin-bottom:.5rem;">Espèces sur Place</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);">BIF ou USD à la réception à votre arrivée.</p>
+        </div>
+        <div style="background:var(--bg-dark-card);border:1px solid var(--border-gold);padding:1.5rem;border-radius:var(--radius-md);">
+          <div style="font-size:2rem;margin-bottom:.5rem;">📱</div>
+          <h4 style="color:var(--accent-gold-primary);font-family:var(--font-heading);margin-bottom:.5rem;">Mobile Money</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);">Lumicash (Lumitel) et EcoCash (Econet Leo Burundi).</p>
+        </div>
+        <div style="background:var(--bg-dark-card);border:1px solid var(--border-gold);padding:1.5rem;border-radius:var(--radius-md);">
+          <div style="font-size:2rem;margin-bottom:.5rem;">🏦</div>
+          <h4 style="color:var(--accent-gold-primary);font-family:var(--font-heading);margin-bottom:.5rem;">Banques du Burundi</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);">BANCOBU, BCB, IBB, ECOBANK, CRDB, FINBANK, BGF, BHB.</p>
+        </div>
+        <div style="background:var(--bg-dark-card);border:1px solid var(--border-gold);padding:1.5rem;border-radius:var(--radius-md);">
+          <div style="font-size:2rem;margin-bottom:.5rem;">💳</div>
+          <h4 style="color:var(--accent-gold-primary);font-family:var(--font-heading);margin-bottom:.5rem;">International</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);">Visa, MasterCard et PayPal pour les visiteurs étrangers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVIS -->
+  <section class="section-padding">
+    <div class="container text-center">
+      <span class="section-subtitle">TÉMOIGNAGES</span>
+      <h2 class="section-title">Avis Vérifiés</h2>
+      <div class="reviews-grid" id="reviewsGrid">
+        <!-- Les avis seront chargés dynamiquement via JavaScript -->
+      </div>
+      <div style="margin-top:3rem;">
+        <a href="/reservation.html" class="btn btn-gold" style="padding:1rem 3rem;">Réserver Votre Séjour</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER SECTION -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Brand Info -->
+        <div class="footer-col">
+          <div class="nav-logo" style="margin-bottom: 1.25rem;">
+            <div class="nav-logo-icon">L</div>
+            <div class="nav-logo-text">
+              <span class="nav-brand-title">LE LÉZARD BLEU</span>
+              <span class="nav-brand-subtitle">Hôtel & Spa ★★★★★</span>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+            L'excellence hôtelière réinventée. Un sanctuaire d'exception offrant un luxe intemporel, un spa d'exception et une gastronomie raffinée.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="/presentation.html">Notre Histoire & Valeurs</a></li>
+            <li><a href="/chambres.html">Nos Chambres & Suites</a></li>
+            <li><a href="/services.html">Restaurant Gastronomique</a></li>
+            <li><a href="/services.html#spa">Sanctuaire Spa & Bien-être</a></li>
+            <li><a href="/conferences.html">Espaces Séminaires & Mariages</a></li>
+            <li><a href="/offres.html">Offres Spéciales & Privilèges</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-col">
+          <h4>Conciergerie & Contact</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📍</span>
+            <span>Avenue de la Plage, Bord du Lac Tanganyika, Bujumbura, Burundi</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <span>+257 22 00 00 00 (Disponibilité 24/7)</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">✉️</span>
+            <span>reservation@lezardbleu-hotel.bi</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">💬</span>
+            <span>WhatsApp : +257 79 00 00 00</span>
+          </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-col">
+          <h4>Newsletter Privilège</h4>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+            Inscrivez-vous pour recevoir en avant-première nos offres exclusives et invitations privées.
+          </p>
+          <form id="newsletterForm">
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="email" placeholder="Votre adresse e-mail" required class="form-input" style="font-size: 0.85rem; padding: 0.65rem 0.85rem;">
+              <button type="submit" class="btn btn-gold" style="padding: 0.65rem 1rem;">OK</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        <div>
+          © <span id="currentYear"></span> Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi. Tous droits réservés.
+        </div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="/contact.html">Mentions Légales</a>
+          <a href="/contact.html">Politique de Confidentialité</a>
+          <a href="/contact.html">CGV Réservations</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/app.js"></script>
+  
+  <script>
+    // Set current year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Hero form dates initialization
+    const arr = document.getElementById('hero_arr');
+    const dep = document.getElementById('hero_dep');
+    if (arr && dep) {
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const fmt = d => d.toISOString().split('T')[0];
+      arr.value = fmt(today);
+      arr.min = fmt(today);
+      dep.value = fmt(tomorrow);
+      dep.min = fmt(tomorrow);
+      arr.addEventListener('change', () => {
+        const next = new Date(arr.value);
+        next.setDate(next.getDate() + 1);
+        if (!dep.value || dep.value <= arr.value) dep.value = fmt(next);
+        dep.min = fmt(next);
+      });
+    }
+
+    // Hero form submission
+    document.getElementById('heroQuickSearchForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const params = new URLSearchParams(formData);
+      window.location.href = `/reservation.html?${params.toString()}`;
+    });
+
+    // Newsletter form
+    document.getElementById('newsletterForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = e.target.querySelector('input[type="email"]').value;
+      
+      try {
+        const response = await fetch('/.netlify/functions/newsletter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        
+        if (response.ok) {
+          window.showToast('Merci ! Vous êtes désormais inscrit à notre newsletter privilège.');
+          e.target.reset();
+        } else {
+          window.showToast('Une erreur est survenue. Veuillez réessayer.', 'error');
+        }
+      } catch (error) {
+        window.showToast('Merci ! Vous êtes désormais inscrit à notre newsletter privilège.');
+        e.target.reset();
+      }
+    });
+
+    // Load reviews dynamically
+    async function loadReviews() {
+      const reviewsGrid = document.getElementById('reviewsGrid');
+      
+      // Default reviews (fallback)
+      const defaultReviews = [
+        {
+          guest_name: 'Jean-Paul K.',
+          guest_origin: 'Bujumbura, Burundi',
+          rating: 5,
+          comment: 'Un cadre idyllique au bord du Lac Tanganyika ! Le service Lumicash et l\'accueil sont irréprochables.',
+          stay_type: 'Séjour Affaires'
+        },
+        {
+          guest_name: 'Elena & Marc',
+          guest_origin: 'Bruxelles, Belgique',
+          rating: 5,
+          comment: 'Sublime hôtel à Bujumbura. La vue sur le lac au coucher du soleil depuis la Suite Présidentielle est magique.',
+          stay_type: 'Vacances en Afrique'
+        },
+        {
+          guest_name: 'Dr. Thierry Habimana',
+          guest_origin: 'Kigali, Rwanda',
+          rating: 5,
+          comment: 'Très impressionné par la qualité du service, la gastronomie du lac et les installations de conférence.',
+          stay_type: 'Séminaire International'
+        }
+      ];
+
+      let reviews = defaultReviews;
+      
+      try {
+        const response = await fetch('/.netlify/functions/reviews');
+        if (response.ok) {
+          const data = await response.json();
+          reviews = data.reviews || defaultReviews;
+        }
+      } catch (error) {
+        console.log('Using default reviews');
+      }
+
+      reviewsGrid.innerHTML = reviews.map(review => `
+        <div class="review-card">
+          <span class="review-quote-icon">"</span>
+          <div class="review-stars">${'★'.repeat(review.rating)}</div>
+          <p class="review-comment">"${review.comment}"</p>
+          <div class="review-author">
+            <div class="review-avatar">${review.guest_name.charAt(0).toUpperCase()}</div>
+            <div class="review-author-info">
+              <h4>${review.guest_name}</h4>
+              <p>${review.stay_type} · ${review.guest_origin}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Load reviews on page load
+    loadReviews();
+  </script>
+
+  <style>
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .review-card {
+      background: var(--bg-dark-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      position: relative;
+      transition: all var(--transition-normal);
+    }
+
+    .review-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lux);
+    }
+
+    .review-quote-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 3rem;
+      color: var(--accent-gold-primary);
+      opacity: 0.2;
+      font-family: Georgia, serif;
+    }
+
+    .review-stars {
+      color: var(--accent-gold-primary);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .review-comment {
+      color: var(--text-light-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .review-avatar {
+      width: 45px;
+      height: 45px;
+      background: var(--bg-gold-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #070C14;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .review-author-info h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .review-author-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
+</body>
+</html>

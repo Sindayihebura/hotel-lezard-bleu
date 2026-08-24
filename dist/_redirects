@@ -1,0 +1,27 @@
+# =====================================================================
+# Netlify _redirects — Hôtel Le Lézard Bleu
+# =====================================================================
+
+# ── API routes → Netlify Functions ───────────────────────────────────
+/api/rooms          /.netlify/functions/rooms        200
+/api/bookings       /.netlify/functions/bookings     200
+/api/auth/*         /.netlify/functions/auth         200
+/api/contact        /.netlify/functions/contact      200
+/api/reviews        /.netlify/functions/reviews      200
+/api/availability   /.netlify/functions/availability 200
+/api/payments       /.netlify/functions/payments     200
+
+# ── Clean URLs (sans .html) ───────────────────────────────────────────
+/presentation       /presentation.html               301
+/chambres           /chambres.html                   301
+/reservation        /reservation.html                301
+/galerie            /galerie.html                    301
+/services           /services.html                   301
+/offres             /offres.html                     301
+/conferences        /conferences.html                301
+/contact            /contact.html                    301
+/login              /login.html                      301
+/register           /register.html                   301
+/account            /account.html                    301
+/confirmation       /confirmation.html               301
+/reset-password     /reset-password.html             301

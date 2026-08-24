@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Compte | Le Lézard Bleu Bujumbura</title>
+  <meta name="description" content="Gérez votre compte et vos réservations à l'Hôtel Le Lézard Bleu.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script src="/env-config.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header-navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="nav-logo">
+        <div class="nav-logo-icon">L</div>
+        <div class="nav-logo-text">
+          <span class="nav-brand-title">LE LÉZARD BLEU</span>
+          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
+        </div>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/index.html" class="nav-link">Accueil</a></li>
+          <li><a href="/presentation.html" class="nav-link">Présentation</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites & Villas</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réservation</a></li>
+          <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
+          <li><a href="/services.html" class="nav-link">Services & Resto</a></li>
+          <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
+          <li><a href="/offres.html" class="nav-link">Offres</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <a href="/reservation.html" class="btn btn-gold" style="padding: 0.65rem 1.25rem;">Réserver</a>
+        <button class="btn btn-outline-gold logout-btn" style="padding:0.65rem 1rem;font-size:0.85rem;">Déconnexion</button>
+        <button id="mobileToggle" class="mobile-toggle" aria-label="Menu Mobile">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside id="mobileDrawer" class="mobile-drawer">
+    <div class="drawer-header">
+      <div class="nav-logo-icon" style="margin: 0;">L</div>
+      <span style="font-weight: 600; color: var(--accent-gold-primary);">LE LÉZARD BLEU</span>
+    </div>
+    <button id="drawerClose" class="drawer-close">✕</button>
+    <ul class="drawer-menu">
+      <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+      <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
+      <li><a href="/reservation.html" class="drawer-link">Réservation</a></li>
+      <li><a href="/contact.html" class="drawer-link">Contact</a></li>
+      <li><a href="#" class="drawer-link logout-btn">Déconnexion</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div style="padding-top: 120px; min-height: 100vh; background: var(--bg-dark-deep);">
+    <div class="container" style="padding: 3rem 1rem; max-width: 1200px;">
+      
+      <!-- Welcome Section -->
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-family: var(--font-heading); color: var(--text-light-primary); margin-bottom: 0.5rem; font-size: clamp(2rem, 5vw, 3rem);">
+          Mon Compte
+        </h1>
+        <p id="welcomeMessage" style="color: var(--text-muted); font-size: 1.1rem;">
+          Chargement...
+        </p>
+      </div>
+
+      <!-- Account Sections Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+        
+        <!-- Profile Card -->
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+            <div id="profileAvatar" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #D4AF37, #C19B2F); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0D1117;">
+              👤
+            </div>
+            <div>
+              <h3 style="color: var(--text-light-primary); margin-bottom: 0.25rem; font-size: 1.25rem;">Profil</h3>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Vos informations personnelles</p>
+            </div>
+          </div>
+          <div id="profileData" style="color: var(--text-muted);">
+            <p><strong>Email:</strong> <span id="userEmail">-</span></p>
+            <p><strong>Nom:</strong> <span id="userName">-</span></p>
+            <p><strong>Téléphone:</strong> <span id="userPhone">-</span></p>
+          </div>
+          <button onclick="alert('Fonctionnalité en développement')" class="btn btn-outline-gold" style="width: 100%; margin-top: 1.5rem; padding: 0.75rem;">
+            Modifier le profil
+          </button>
+        </div>
+
+        <!-- Bookings Card -->
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #D4AF37, #C19B2F); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0D1117;">
+              🏨
+            </div>
+            <div>
+              <h3 style="color: var(--text-light-primary); margin-bottom: 0.25rem; font-size: 1.25rem;">Réservations</h3>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Gérez vos séjours</p>
+            </div>
+          </div>
+          <div id="bookingsCount" style="text-align: center; padding: 2rem 0;">
+            <div style="font-size: 3rem; color: var(--accent-gold-primary);" id="bookingNumber">0</div>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">réservation(s) active(s)</p>
+          </div>
+          <a href="/reservation.html" class="btn btn-gold" style="width: 100%; padding: 0.75rem; text-align: center; display: block;">
+            Nouvelle Réservation
+          </a>
+        </div>
+
+        <!-- Help Card -->
+        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #D4AF37, #C19B2F); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0D1117;">
+              💬
+            </div>
+            <div>
+              <h3 style="color: var(--text-light-primary); margin-bottom: 0.25rem; font-size: 1.25rem;">Assistance</h3>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Besoin d'aide ?</p>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
+            Notre équipe de conciergerie est disponible 24h/24 pour répondre à toutes vos questions.
+          </p>
+          <a href="/contact.html" class="btn btn-outline-gold" style="width: 100%; padding: 0.75rem; text-align: center; display: block;">
+            Nous Contacter
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Bookings List -->
+      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
+        <h2 style="color: var(--text-light-primary); margin-bottom: 1.5rem; font-size: 1.5rem;">Historique des Réservations</h2>
+        <div id="bookingsList">
+          <p style="color: var(--text-muted); text-align: center; padding: 2rem;">
+            Chargement de vos réservations...
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="background: var(--bg-dark-deep); border-top: 1px solid var(--border-subtle);">
+    <div class="container" style="padding: 2rem 1rem; text-align: center;">
+      <p style="color: var(--text-muted); margin-bottom: 0.5rem;">
+        © <span id="currentYear">2025</span> Le Lézard Bleu - Hôtel & Spa Bujumbura
+      </p>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">
+        Tous droits réservés
+      </p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/supabase-auth.js"></script>
+  
+  <script type="module">
+    await window.__supabaseAuthReady;
+
+    // ── Helpers ────────────────────────────────────────────────────────────
+    function showEmptyBookings() {
+      document.getElementById('bookingsList').innerHTML = `
+        <div style="text-align: center; padding: 3rem 1rem;">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">🏨</div>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
+            Vous n'avez pas encore de réservation
+          </p>
+          <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem;">
+            Consultez nos suites exceptionnelles et réservez votre séjour de rêve
+          </p>
+          <a href="/reservation.html" class="btn btn-gold" style="padding: 1rem 2rem;">
+            Découvrir nos Suites
+          </a>
+        </div>
+      `;
+    }
+
+    // ── Chargement profil ──────────────────────────────────────────────────
+    async function loadUserProfile() {
+      try {
+        const session = await window.SupabaseAuth.getSession();
+        const user    = await window.SupabaseAuth.getUser();
+
+        if (!user || !session) {
+          window.location.href = '/login.html?redirect=/account.html';
+          return;
+        }
+
+        const fullName = user.user_metadata?.full_name
+          || user.user_metadata?.display_name
+          || user.email?.split('@')[0]
+          || 'Membre VIP';
+
+        const provider  = user.app_metadata?.provider || 'email';
+        const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
+
+        document.getElementById('welcomeMessage').textContent = `Bienvenue, ${fullName} !`;
+        document.getElementById('userEmail').textContent = user.email || '-';
+        document.getElementById('userName').textContent  = fullName;
+        document.getElementById('userPhone').textContent =
+          user.user_metadata?.phone || user.phone || 'Non renseigné';
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Avatar Google
+        if (avatarUrl) {
+          const avatarDiv = document.getElementById('profileAvatar');
+          if (avatarDiv) {
+            avatarDiv.innerHTML = `<img src="${avatarUrl}" alt="${fullName}"
+              style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+          }
+        }
+
+        // Badge provider
+        if (provider === 'google') {
+          const profileData = document.getElementById('profileData');
+          const providerInfo = document.createElement('p');
+          providerInfo.style.marginTop = '0.5rem';
+          providerInfo.innerHTML = '<strong>Connexion via :</strong> <span style="color:var(--accent-gold-primary);">Google</span>';
+          profileData.appendChild(providerInfo);
+        }
+
+        document.getElementById('bookingNumber').textContent = '0';
+        showEmptyBookings();
+
+      } catch (err) {
+        console.error('loadUserProfile:', err);
+        window.showToast && window.showToast('Erreur de chargement du profil.', 'error');
+        setTimeout(() => { window.location.href = '/login.html'; }, 3000);
+      }
+    }
+
+    // ── Déconnexion ────────────────────────────────────────────────────────
+    document.querySelectorAll('.logout-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+          await window.SupabaseAuth.signOut();
+          window.showToast && window.showToast('Déconnexion réussie', 'success');
+          setTimeout(() => { window.location.href = '/index.html'; }, 800);
+        } catch (err) {
+          window.showToast && window.showToast('Erreur lors de la déconnexion.', 'error');
+        }
+      });
+    });
+
+    // ── Listener état auth ─────────────────────────────────────────────────
+    window.SupabaseAuth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT')    window.location.href = '/login.html';
+      if (event === 'USER_UPDATED')  loadUserProfile();
+    });
+
+    // ── Lancement ─────────────────────────────────────────────────────────
+    await loadUserProfile();
+  </script>
+
+</body>
+</html>

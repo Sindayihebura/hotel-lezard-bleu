@@ -1,0 +1,84 @@
+# =====================================================================
+# Netlify Configuration — Hôtel Le Lézard Bleu & Spa
+# =====================================================================
+
+[build]
+  publish   = "dist"
+  functions = "netlify/functions"
+  command   = "chmod +x generate-env-config.sh && ./generate-env-config.sh"
+
+[build.environment]
+  NODE_VERSION = "18"
+  # Les variables suivantes doivent être définies dans
+  # Netlify Dashboard → Site Settings → Environment Variables :
+  #   SUPABASE_URL     = https://ztmbqaakfwugizvebscr.supabase.co
+  #   SUPABASE_ANON_KEY = sb_publishable_4M5nhT9daHi-uf-5WelfUA_o0HE_R6C
+  #   DEFAULT_EXCHANGE_RATE = 6000
+
+# ── API → Functions ───────────────────────────────────────────────────
+[[redirects]]
+  from   = "/api/rooms"
+  to     = "/.netlify/functions/rooms"
+  status = 200
+
+[[redirects]]
+  from   = "/api/availability"
+  to     = "/.netlify/functions/availability"
+  status = 200
+
+[[redirects]]
+  from   = "/api/bookings"
+  to     = "/.netlify/functions/bookings"
+  status = 200
+
+[[redirects]]
+  from   = "/api/contact"
+  to     = "/.netlify/functions/contact"
+  status = 200
+
+[[redirects]]
+  from   = "/api/auth/*"
+  to     = "/.netlify/functions/auth"
+  status = 200
+
+[[redirects]]
+  from   = "/api/payments"
+  to     = "/.netlify/functions/payments"
+  status = 200
+
+[[redirects]]
+  from   = "/api/reviews"
+  to     = "/.netlify/functions/reviews"
+  status = 200
+
+# ── Security Headers ──────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options            = "DENY"
+    X-Content-Type-Options     = "nosniff"
+    X-XSS-Protection           = "1; mode=block"
+    Referrer-Policy            = "strict-origin-when-cross-origin"
+    Permissions-Policy         = "geolocation=(), microphone=(), camera=()"
+    Strict-Transport-Security  = "max-age=31536000; includeSubDomains; preload"
+    # CSP : autorise Supabase + CDN jsdelivr pour le module ES Supabase
+    Content-Security-Policy    = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+
+# ── Cache assets statiques ────────────────────────────────────────────
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/env-config.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# ── Dev local (netlify dev) ───────────────────────────────────────────
+[dev]
+  command    = "echo 'Static site — no build command needed'"
+  port       = 8888
+  targetPort = 8888
+  framework  = "#static"
+  autoLaunch = true

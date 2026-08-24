@@ -1,0 +1,25 @@
+# ============================================================
+# Racine du projet — Bloquer tout accès web direct
+# Seul /public/ doit être la racine Apache/Nginx
+# ============================================================
+
+# Option 1 : Si le document root Apache pointe sur /Projet_Hotel/ (non recommandé)
+# Rediriger tout vers /public/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ /public/$1 [L,R=301]
+</IfModule>
+
+# Bloquer l'accès direct aux fichiers sensibles
+<FilesMatch "\.(env|env\.example|log|sql|json|lock|sh|bak|backup|conf|ini|md)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Bloquer les dossiers critiques
+<IfModule mod_rewrite.c>
+    RewriteRule ^(app|config|storage|migrations|tests|resources|vendor)/ - [F,L]
+</IfModule>
+
+Options -Indexes

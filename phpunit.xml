@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+    stopOnFailure="false"
+    displayDetailsOnTestsThatTriggerWarnings="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>tests/Integration</directory>
+        </testsuite>
+        <testsuite name="Security">
+            <directory>tests/Security</directory>
+        </testsuite>
+        <testsuite name="Api">
+            <directory>tests/Api</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage>
+        <include>
+            <directory>app</directory>
+        </include>
+    </coverage>
+
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_DEBUG" value="true"/>
+        <env name="DB_DATABASE" value="hotel_lezardbleu_test"/>
+        <env name="DEFAULT_EXCHANGE_RATE" value="6000"/>
+        <env name="CURRENCY_DEFAULT" value="BIF"/>
+        <env name="DEFAULT_LOCALE" value="fr"/>
+    </php>
+</phpunit>

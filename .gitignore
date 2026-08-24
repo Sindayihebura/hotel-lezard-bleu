@@ -1,0 +1,47 @@
+# Secrets — ne JAMAIS committer
+.env
+*.env.local
+*.env.*.local
+
+# Dépendances Node
+node_modules/
+
+# Sous-repo git imbriqué
+hotel-lezard-bleu/
+
+# Netlify cache local
+.netlify/
+
+# Composer
+/vendor/
+composer.lock
+
+# Logs et cache
+/storage/logs/*.log
+/storage/cache/*
+/storage/backups/*
+/storage/private/*
+!/storage/logs/.gitkeep
+!/storage/cache/.gitkeep
+!/storage/backups/.gitkeep
+!/storage/private/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# PHP
+*.phar
+
+# Tests coverage
+/coverage/
+.phpunit.result.cache
+
+# env-config.js contient la clé publique Supabase (anon key)
+# Cette clé est publique par conception Supabase — elle peut être committée
+# NE PAS ignorer ce fichier, sinon le site ne fonctionnerait pas en local
+# dist/env-config.js

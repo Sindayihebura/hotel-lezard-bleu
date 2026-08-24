@@ -1,0 +1,11 @@
+{
+  "name": "hotel-lezard-bleu",
+  "version": "1.0.0",
+  "description": "Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,311 @@
+openapi: 3.0.3
+info:
+  title: Hôtel Le Lézard Bleu & Spa — API REST v1
+  description: API de réservation, paiement et gestion hôtelière. Bujumbura, Burundi.
+  version: "1.0.0"
+  contact:
+    email: dev@lezardbleu-hotel.bi
+
+servers:
+  - url: https://lezardbleu-hotel.bi/api/v1
+    description: Production
+  - url: http://localhost:8000/api/v1
+    description: Développement local
+
+tags:
+  - name: Rooms
+  - name: Availability
+  - name: Bookings
+  - name: Payments
+  - name: Webhooks
+  - name: Me
+  - name: Admin
+
+paths:
+  /rooms:
+    get:
+      tags: [Rooms]
+      summary: Liste toutes les chambres actives
+      parameters:
+        - in: query
+          name: locale
+          schema: {type: string, enum: [fr, en, rn]}
+      responses:
+        "200":
+          description: Liste des chambres
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/SuccessResponse'}
+
+  /rooms/{id}:
+    get:
+      tags: [Rooms]
+      summary: Détail d'une chambre
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: integer}
+      responses:
+        "200": {description: Chambre trouvée}
+        "404": {description: Chambre introuvable}
+
+  /availability:
+    get:
+      tags: [Availability]
+      summary: Chambres disponibles pour une période
+      parameters:
+        - in: query
+          name: checkin
+          required: true
+          schema: {type: string, format: date, example: "2026-09-01"}
+        - in: query
+          name: checkout
+          required: true
+          schema: {type: string, format: date, example: "2026-09-03"}
+        - in: query
+          name: adults
+          schema: {type: integer, default: 1, minimum: 1, maximum: 10}
+      responses:
+        "200": {description: Chambres disponibles avec prix BIF et USD}
+        "422": {description: Dates invalides}
+
+  /booking-quotes:
+    post:
+      tags: [Bookings]
+      summary: Calculer un devis sans créer la réservation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [room_id, checkin, checkout]
+              properties:
+                room_id:   {type: integer}
+                checkin:   {type: string, format: date}
+                checkout:  {type: string, format: date}
+                offer_code:{type: string}
+      responses:
+        "200": {description: Devis calculé avec taux figé}
+
+  /bookings:
+    post:
+      tags: [Bookings]
+      summary: Créer une réservation provisoire
+      requestBody:
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CreateBookingRequest'}
+      responses:
+        "201": {description: Réservation créée}
+        "422": {description: Validation échouée}
+
+  /bookings/{reference}:
+    get:
+      tags: [Bookings]
+      summary: Détail d'une réservation par référence
+      parameters:
+        - in: path
+          name: reference
+          required: true
+          schema: {type: string, example: "RES-BDI-ABCD1234"}
+        - in: query
+          name: email
+          description: Email du client (requis pour les invités)
+          schema: {type: string}
+      responses:
+        "200": {description: Réservation trouvée}
+        "404": {description: Non trouvée}
+
+  /bookings/{reference}/cancel:
+    post:
+      tags: [Bookings]
+      summary: Annuler une réservation
+      security: [{sessionAuth: []}]
+      parameters:
+        - in: path
+          name: reference
+          required: true
+          schema: {type: string}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason: {type: string}
+      responses:
+        "200": {description: Réservation annulée}
+        "401": {description: Non authentifié}
+        "403": {description: Accès refusé (BOLA)}
+
+  /payments/initiate:
+    post:
+      tags: [Payments]
+      summary: Initier un paiement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [booking_id, provider, method]
+              properties:
+                booking_id:   {type: integer}
+                provider:     {type: string, enum: [manual, cash_bif, cash_usd, lumicash, ecocash, bank_local]}
+                method:       {type: string}
+                phone_number: {type: string, description: "Requis pour mobile money"}
+      responses:
+        "200": {description: Paiement initié}
+        "422": {description: Déjà payé ou invalide}
+
+  /payments/{id}:
+    get:
+      tags: [Payments]
+      summary: Statut d'un paiement
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: integer}
+      responses:
+        "200": {description: Statut paiement}
+        "403": {description: Accès refusé (BOLA)}
+
+  /payments/webhooks/{provider}:
+    post:
+      tags: [Webhooks]
+      summary: Recevoir un webhook de paiement
+      parameters:
+        - in: path
+          name: provider
+          required: true
+          schema: {type: string, enum: [lumicash, ecocash, easypay, paypal]}
+      responses:
+        "200": {description: Webhook reçu}
+        "400": {description: Signature invalide}
+
+  /payments/{id}/refund:
+    post:
+      tags: [Payments]
+      summary: Émettre un remboursement (admin)
+      security: [{sessionAuth: []}]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: integer}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [amount_bif, reason]
+              properties:
+                amount_bif: {type: integer}
+                reason:     {type: string}
+      responses:
+        "200": {description: Remboursement initié}
+        "403": {description: Permission payments.refund requise}
+
+  /me:
+    get:
+      tags: [Me]
+      summary: Profil du client connecté
+      security: [{sessionAuth: []}]
+      responses:
+        "200": {description: Profil client}
+        "401": {description: Non authentifié}
+
+  /me/bookings:
+    get:
+      tags: [Me]
+      summary: Réservations du client connecté
+      security: [{sessionAuth: []}]
+      responses:
+        "200": {description: Liste des réservations}
+
+  /me/profile:
+    patch:
+      tags: [Me]
+      summary: Mettre à jour le profil
+      security: [{sessionAuth: []}]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:            {type: string}
+                country_code:     {type: string, maxLength: 2}
+                preferred_locale: {type: string, enum: [fr, en, rn]}
+      responses:
+        "200": {description: Profil mis à jour}
+
+  /admin/reservations:
+    get:
+      tags: [Admin]
+      summary: Liste des réservations (admin)
+      security: [{sessionAuth: []}]
+      parameters:
+        - in: query
+          name: statut
+          schema: {type: string}
+        - in: query
+          name: q
+          schema: {type: string}
+        - in: query
+          name: page
+          schema: {type: integer, default: 1}
+      responses:
+        "200": {description: Liste paginée}
+        "403": {description: Permission reservations.view requise}
+
+components:
+  schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        success: {type: boolean, example: true}
+        data:    {}
+        error:   {nullable: true}
+        meta:
+          type: object
+          properties:
+            request_id: {type: string}
+
+    ErrorResponse:
+      type: object
+      properties:
+        success: {type: boolean, example: false}
+        data:    {nullable: true}
+        error:
+          type: object
+          properties:
+            code:    {type: string}
+            message: {type: string}
+        meta:
+          type: object
+
+    CreateBookingRequest:
+      type: object
+      required: [date_arrivee, date_depart, room_id, nb_adults, guest_first_name, guest_last_name, guest_email, guest_phone, payment_method, currency_chosen]
+      properties:
+        date_arrivee:     {type: string, format: date}
+        date_depart:      {type: string, format: date}
+        room_id:          {type: integer}
+        nb_adults:        {type: integer, minimum: 1, maximum: 10}
+        nb_children:      {type: integer, minimum: 0}
+        guest_first_name: {type: string, maxLength: 80}
+        guest_last_name:  {type: string, maxLength: 80}
+        guest_email:      {type: string, format: email}
+        guest_phone:      {type: string}
+        payment_method:   {type: string, enum: [cash_bif, cash_usd, lumicash, ecocash, easypay, bank_local, card_visa, paypal]}
+        currency_chosen:  {type: string, enum: [BIF, USD]}
+        offer_code:       {type: string}
+        special_requests: {type: string, maxLength: 1000}
+
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: __Host-lezard_session
