@@ -309,6 +309,13 @@ img {
 }
 
 /* ── Boutons + switcher côté droit ── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+}
+
 .nav-container > div:last-of-type {
   display: flex;
   align-items: center;
