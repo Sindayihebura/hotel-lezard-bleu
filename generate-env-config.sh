@@ -6,8 +6,8 @@
 echo "🔧 Génération de env-config.js..."
 
 # Valeurs par défaut si les variables ne sont pas définies dans Netlify
-SUPABASE_URL="${SUPABASE_URL:-https://ztmbqaakfwugizvebscr.supabase.co}"
-SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-sb_publishable_4M5nhT9daHi-uf-5WelfUA_o0HE_R6C}"
+SUPABASE_URL="${SUPABASE_URL:-https://rwzzpzzwkutpwcqllqzt.supabase.co}"
+SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-sb_publishable_LbZweT_3THf2p34VHi_iuA_vJo5UcR1}"
 
 if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
   echo "❌ ERREUR : Les variables SUPABASE_URL et SUPABASE_ANON_KEY sont vides"

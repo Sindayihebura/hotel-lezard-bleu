@@ -1,11 +1,29 @@
 {
   "name": "hotel-lezard-bleu",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi",
+  "private": true,
+  "scripts": {
+    "build": "node generate-env-config.js",
+    "dev": "netlify dev",
+    "deploy": "netlify deploy --prod"
+  },
   "dependencies": {
-    "@supabase/supabase-js": "^2.112.3"
+    "@supabase/supabase-js": "2.112.3"
   },
   "engines": {
-    "node": ">=18.0.0"
-  }
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "hotel",
+    "burundi",
+    "bujumbura",
+    "lac-tanganyika",
+    "jamstack",
+    "supabase",
+    "netlify"
+  ],
+  "author": "Hôtel Le Lézard Bleu & Spa",
+  "license": "UNLICENSED"
 }

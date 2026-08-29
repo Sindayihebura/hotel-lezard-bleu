@@ -5,14 +5,14 @@
 [build]
   publish   = "dist"
   functions = "netlify/functions"
-  command   = "chmod +x generate-env-config.sh && ./generate-env-config.sh"
+  command   = "node generate-env-config.js"
 
 [build.environment]
   NODE_VERSION = "18"
   # Les variables suivantes doivent être définies dans
   # Netlify Dashboard → Site Settings → Environment Variables :
-  #   SUPABASE_URL     = https://ztmbqaakfwugizvebscr.supabase.co
-  #   SUPABASE_ANON_KEY = sb_publishable_4M5nhT9daHi-uf-5WelfUA_o0HE_R6C
+  #   SUPABASE_URL     = https://rwzzpzzwkutpwcqllqzt.supabase.co
+  #   SUPABASE_ANON_KEY = sb_publishable_LbZweT_3THf2p34VHi_iuA_vJo5UcR1
   #   DEFAULT_EXCHANGE_RATE = 6000
 
 # ── API → Functions ───────────────────────────────────────────────────

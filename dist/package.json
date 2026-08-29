@@ -1,29 +1,8 @@
 {
-  "name": "hotel-lezard-bleu",
+  "name": "hotel-lezard-bleu-dist",
   "version": "2.0.0",
-  "description": "Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi - Version JAMstack",
-  "main": "index.html",
-  "scripts": {
-    "dev": "netlify dev",
-    "build": "echo 'Build complete - static site ready'",
-    "deploy": "netlify deploy --prod"
-  },
-  "keywords": [
-    "hotel",
-    "burundi",
-    "bujumbura",
-    "lac-tanganyika",
-    "luxury-hotel",
-    "jamstack"
-  ],
-  "author": "Hôtel Le Lézard Bleu",
-  "license": "UNLICENSED",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.39.0"
-  },
-  "devDependencies": {
-    "netlify-cli": "^17.0.0"
-  },
+  "description": "Hôtel Le Lézard Bleu & Spa — Site statique déployé sur Netlify",
+  "private": true,
   "engines": {
     "node": ">=18.0.0"
   }
