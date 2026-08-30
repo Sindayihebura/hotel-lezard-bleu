@@ -18,8 +18,8 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 // Ces valeurs doivent être définies dans les variables d'environnement Netlify
 // et injectées au build, ou chargées via une Netlify Function publique
 const SUPABASE_CONFIG = {
-  url: window.ENV?.SUPABASE_URL || 'https://ztmbqaakfwugizvebscr.supabase.co',
-  anonKey: window.ENV?.SUPABASE_ANON_KEY || ''
+  url: window.ENV?.SUPABASE_URL || 'https://rwzzpzzwkutpwcqllqzt.supabase.co',
+  anonKey: window.ENV?.SUPABASE_ANON_KEY || 'sb_publishable_LbZweT_3THf2p34VHi_iuA_vJo5UcR1'
 };
 
 // Validation configuration
