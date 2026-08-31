@@ -1250,12 +1250,13 @@ img {
    ==================================================================== */
 .password-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
+  width: 100%;
 }
 
 .password-wrapper .form-input {
+  width: 100%;
   padding-right: 3rem;
+  display: block;
 }
 
 .password-toggle {
@@ -1273,6 +1274,7 @@ img {
   padding: 0.25rem;
   transition: color var(--transition-fast);
   z-index: 2;
+  line-height: 0;
 }
 
 .password-toggle:hover {
@@ -1283,12 +1285,12 @@ img {
    AUTH PAGES — classes dédiées login/register
    ==================================================================== */
 .auth-page-wrapper {
-  padding-top: 100px;
+  padding-top: 120px;
   padding-bottom: 4rem;
   min-height: 100vh;
   background: var(--bg-dark-deep);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -1394,7 +1396,7 @@ img {
 
   /* Auth pages login/register */
   .auth-page-wrapper {
-    padding-top: 85px;
+    padding-top: 90px;
     padding-bottom: 2rem;
     align-items: flex-start;
   }
