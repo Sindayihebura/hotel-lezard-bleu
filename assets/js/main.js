@@ -83,14 +83,48 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileDrawer = document.getElementById('mobileDrawer');
   const drawerClose = document.getElementById('drawerClose');
 
+  const closeMobileMenu = () => {
+    if (!mobileDrawer) return;
+    mobileDrawer.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    mobileToggle?.classList.remove('is-open');
+    mobileToggle?.setAttribute('aria-expanded', 'false');
+    mobileDrawer.setAttribute('aria-hidden', 'true');
+  };
+
   if (mobileToggle && mobileDrawer) {
-    mobileToggle.addEventListener('click', () => mobileDrawer.classList.add('open'));
+    mobileToggle.addEventListener('click', () => {
+      if (mobileDrawer.classList.contains('open')) {
+        closeMobileMenu();
+        return;
+      }
+      mobileDrawer.classList.add('open');
+      document.body.classList.add('menu-open');
+      mobileToggle.classList.add('is-open');
+      mobileToggle.setAttribute('aria-expanded', 'true');
+      mobileDrawer.setAttribute('aria-hidden', 'false');
+    });
   }
   if (drawerClose && mobileDrawer) {
-    drawerClose.addEventListener('click', () => mobileDrawer.classList.remove('open'));
+    drawerClose.addEventListener('click', closeMobileMenu);
   }
   document.querySelectorAll('.drawer-link').forEach(link => {
-    link.addEventListener('click', () => mobileDrawer?.classList.remove('open'));
+    link.addEventListener('click', closeMobileMenu);
+  });
+  document.addEventListener('click', event => {
+    if (
+      mobileDrawer?.classList.contains('open') &&
+      !mobileDrawer.contains(event.target) &&
+      event.target !== mobileToggle
+    ) {
+      closeMobileMenu();
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeMobileMenu();
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1199) closeMobileMenu();
   });
 
   // Dropdown clavier/souris : conserver un bouton accessible et refermer

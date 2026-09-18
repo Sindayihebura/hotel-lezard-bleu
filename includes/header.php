@@ -112,13 +112,15 @@ $baseUrl  = $inPublic ? '..' : '.';
         <?php else: ?>
           <a href="<?php echo $baseUrl; ?>/public/connexion.php" class="btn btn-outline-gold" style="padding:0.65rem 1rem;font-size:0.85rem;">Connexion</a>
         <?php endif; ?>
-        <button id="mobileToggle" class="mobile-toggle" aria-label="Menu Mobile">☰</button>
+        <button id="mobileToggle" class="mobile-toggle" aria-label="Ouvrir le menu" aria-controls="mobileDrawer" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
 
   <!-- MOBILE NAVIGATION DRAWER -->
-  <aside id="mobileDrawer" class="mobile-drawer">
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
     <button id="drawerClose" class="drawer-close" aria-label="Fermer le menu">✕</button>
     <div style="margin-bottom: 1.5rem; text-align: center;">
       <span style="font-size: 0.8rem; color: var(--accent-gold-primary); text-transform: uppercase;">Devise d'affichage :</span>
