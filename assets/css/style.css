@@ -275,6 +275,65 @@ img {
   list-style: none;
 }
 
+.nav-item-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav-dropdown-toggle span {
+  display: inline-block;
+  margin-left: 0.25rem;
+  transition: transform var(--transition-fast);
+}
+
+.nav-item-dropdown:hover .nav-dropdown,
+.nav-item-dropdown:focus-within .nav-dropdown,
+.nav-item-dropdown.is-open .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-item-dropdown.is-open .nav-dropdown-toggle span {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 50%;
+  min-width: 230px;
+  padding: 0.65rem;
+  list-style: none;
+  background: rgba(14, 22, 38, 0.98);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lux);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -0.5rem);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+}
+
+.nav-dropdown-link {
+  display: block;
+  padding: 0.65rem 0.85rem;
+  border-radius: 5px;
+  color: var(--text-light-secondary);
+  font-size: 0.85rem;
+}
+
+.nav-dropdown-link:hover,
+.nav-dropdown-link.active {
+  color: var(--accent-gold-primary);
+  background: rgba(212, 175, 55, 0.1);
+}
+
 .nav-link {
   font-family: var(--font-body);
   font-size: 0.9rem;
@@ -689,6 +748,10 @@ img {
   }
   .mobile-toggle {
     display: block;
+  }
+  .nav-actions .currency-switcher,
+  .nav-actions .btn-outline-gold {
+    display: none;
   }
   .booking-widget-form {
     grid-template-columns: 1fr;
@@ -1322,6 +1385,7 @@ img {
   .nav-menu { display: none; }
   .mobile-toggle { display: block; }
   .nav-brand-subtitle { display: none; }
+  .nav-item-dropdown { display: none; }
   .nav-actions { gap: 0.4rem; }
   .nav-actions .btn-outline-gold { display: none; }
   .nav-actions .btn-gold {

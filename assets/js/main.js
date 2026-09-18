@@ -54,7 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Send AJAX to update PHP session currency
       // Chemin absolu pour fonctionner depuis n'importe quelle sous-page
-      fetch('/config/db.php?set_currency=' + newCurrency).catch(err => console.log(err));
+      const baseUrl = document.body.dataset.baseUrl || '.';
+      fetch(baseUrl + '/config/db.php?set_currency=' + encodeURIComponent(newCurrency), {
+        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+      }).catch(() => {
+        // Le changement visuel reste local si le endpoint n'est pas disponible.
+      });
     });
   });
 
@@ -84,6 +89,34 @@ document.addEventListener('DOMContentLoaded', () => {
   if (drawerClose && mobileDrawer) {
     drawerClose.addEventListener('click', () => mobileDrawer.classList.remove('open'));
   }
+  document.querySelectorAll('.drawer-link').forEach(link => {
+    link.addEventListener('click', () => mobileDrawer?.classList.remove('open'));
+  });
+
+  // Dropdown clavier/souris : conserver un bouton accessible et refermer
+  // automatiquement lorsque l'utilisateur clique ailleurs.
+  document.querySelectorAll('.nav-dropdown-toggle').forEach(toggle => {
+    toggle.addEventListener('click', event => {
+      event.stopPropagation();
+      const item = toggle.closest('.nav-item-dropdown');
+      const isOpen = item.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item-dropdown.is-open').forEach(item => {
+      item.classList.remove('is-open');
+      item.querySelector('.nav-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.querySelectorAll('.newsletter-form').forEach(form => {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      window.showToast?.('Merci ! Vous êtes désormais inscrit à notre newsletter privilège.');
+      form.reset();
+    });
+  });
 
   // 4. Toast Notification Helper
   window.showToast = function(message, type = 'success') {

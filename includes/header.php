@@ -33,7 +33,7 @@ $baseUrl  = $inPublic ? '..' : '.';
   <meta property="og:image" content="assets/images/hero_tanganyika.jpg">
 
   <!-- Schema.org JSON-LD (Burundi Hotel) -->
-  <script type="application/ld+json">
+  <script type="application/ld+json" nonce="<?php echo defined('CSP_NONCE') ? htmlspecialchars(CSP_NONCE, ENT_QUOTES, 'UTF-8') : ''; ?>">
   {
     "@context": "https://schema.org",
     "@type": "Hotel",
@@ -58,7 +58,7 @@ $baseUrl  = $inPublic ? '..' : '.';
   <!-- Custom Luxury Stylesheet -->
   <link rel="stylesheet" href="<?php echo $baseUrl; ?>/assets/css/style.css">
 </head>
-<body>
+<body data-base-url="<?php echo htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8'); ?>">
 
   <!-- HEADER NAVBAR -->
   <header class="header-navbar">
@@ -72,22 +72,29 @@ $baseUrl  = $inPublic ? '..' : '.';
       </a>
 
       <!-- Desktop Navigation -->
-      <nav>
+      <nav aria-label="Navigation principale">
         <ul class="nav-menu">
           <li><a href="<?php echo $baseUrl; ?>/index.php" class="nav-link <?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>">Accueil</a></li>
           <li><a href="<?php echo $baseUrl; ?>/presentation.php" class="nav-link <?php echo ($currentPage == 'presentation.php') ? 'active' : ''; ?>">Présentation</a></li>
-          <li><a href="<?php echo $baseUrl; ?>/chambres.php" class="nav-link <?php echo ($currentPage == 'chambres.php') ? 'active' : ''; ?>">Suites & Villas</a></li>
+          <li class="nav-item-dropdown">
+            <button type="button" class="nav-link nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+              Découvrir <span aria-hidden="true">⌄</span>
+            </button>
+            <ul class="nav-dropdown" aria-label="Découvrir l'hôtel">
+              <li><a href="<?php echo $baseUrl; ?>/chambres.php" class="nav-dropdown-link <?php echo ($currentPage == 'chambres.php') ? 'active' : ''; ?>">Suites & Villas</a></li>
+              <li><a href="<?php echo $baseUrl; ?>/services.php" class="nav-dropdown-link <?php echo ($currentPage == 'services.php') ? 'active' : ''; ?>">Services & Restaurant</a></li>
+              <li><a href="<?php echo $baseUrl; ?>/galerie.php" class="nav-dropdown-link <?php echo ($currentPage == 'galerie.php') ? 'active' : ''; ?>">Galerie Photos</a></li>
+              <li><a href="<?php echo $baseUrl; ?>/conferences.php" class="nav-dropdown-link <?php echo ($currentPage == 'conferences.php') ? 'active' : ''; ?>">Conférences & événements</a></li>
+            </ul>
+          </li>
           <li><a href="<?php echo $baseUrl; ?>/reservation.php" class="nav-link <?php echo ($currentPage == 'reservation.php') ? 'active' : ''; ?>">Réservation</a></li>
-          <li><a href="<?php echo $baseUrl; ?>/galerie.php" class="nav-link <?php echo ($currentPage == 'galerie.php') ? 'active' : ''; ?>">Galerie</a></li>
-          <li><a href="<?php echo $baseUrl; ?>/services.php" class="nav-link <?php echo ($currentPage == 'services.php') ? 'active' : ''; ?>">Services & Resto</a></li>
-          <li><a href="<?php echo $baseUrl; ?>/conferences.php" class="nav-link <?php echo ($currentPage == 'conferences.php') ? 'active' : ''; ?>">Conférences</a></li>
           <li><a href="<?php echo $baseUrl; ?>/offres.php" class="nav-link <?php echo ($currentPage == 'offres.php') ? 'active' : ''; ?>">Offres</a></li>
           <li><a href="<?php echo $baseUrl; ?>/contact.php" class="nav-link <?php echo ($currentPage == 'contact.php') ? 'active' : ''; ?>">Contact</a></li>
         </ul>
       </nav>
 
       <!-- Currency Selector Switcher & CTA -->
-      <div style="display: flex; align-items: center; gap: 0.85rem;">
+      <div class="nav-actions" style="display: flex; align-items: center; gap: 0.85rem;">
         
         <!-- Toggle Devise BIF / USD -->
         <div class="currency-switcher">
@@ -112,7 +119,7 @@ $baseUrl  = $inPublic ? '..' : '.';
 
   <!-- MOBILE NAVIGATION DRAWER -->
   <aside id="mobileDrawer" class="mobile-drawer">
-    <button id="drawerClose" class="drawer-close" aria-label="Fermer">✕</button>
+    <button id="drawerClose" class="drawer-close" aria-label="Fermer le menu">✕</button>
     <div style="margin-bottom: 1.5rem; text-align: center;">
       <span style="font-size: 0.8rem; color: var(--accent-gold-primary); text-transform: uppercase;">Devise d'affichage :</span>
       <div class="currency-switcher" style="margin-top: 0.5rem; justify-content: center;">

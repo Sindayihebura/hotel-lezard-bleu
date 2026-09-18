@@ -57,7 +57,7 @@
           <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
             Inscrivez-vous pour recevoir en avant-première nos offres exclusives et invitations privées.
           </p>
-          <form onsubmit="event.preventDefault(); if(window.showToast) window.showToast('Merci ! Vous êtes désormais inscrit à notre newsletter privilège.'); this.reset();">
+          <form class="newsletter-form">
             <div style="display: flex; gap: 0.5rem;">
               <input type="email" placeholder="Votre adresse e-mail" required class="form-input" style="font-size: 0.85rem; padding: 0.65rem 0.85rem;">
               <button type="submit" class="btn btn-gold" style="padding: 0.65rem 1rem;">OK</button>
@@ -73,16 +73,16 @@
           © <?php echo date('Y'); ?> Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi. Tous droits réservés.
         </div>
         <div style="display: flex; gap: 1.5rem;">
-          <a href="/contact.php">Mentions Légales</a>
-          <a href="/contact.php">Politique de Confidentialité</a>
-          <a href="/contact.php">CGV Réservations</a>
+          <a href="<?php echo $baseUrl; ?>/contact.php">Mentions Légales</a>
+          <a href="<?php echo $baseUrl; ?>/contact.php">Politique de Confidentialité</a>
+          <a href="<?php echo $baseUrl; ?>/contact.php">CGV Réservations</a>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- Scripts -->
-  <script src="/assets/js/main.js"></script>
-  <script src="/assets/js/booking.js"></script>
+  <script src="<?php echo $baseUrl; ?>/assets/js/main.js"></script>
+  <script src="<?php echo $baseUrl; ?>/assets/js/booking.js"></script>
 </body>
 </html>

@@ -12,6 +12,13 @@ namespace Config;
 use PDO;
 use PDOException;
 
+// database.php est aussi utilisé directement par les scripts CLI et les cron.
+// Charger le bootstrap ici garantit que env(), la session et la configuration
+// d'erreurs sont toujours disponibles, quel que soit l'ordre des inclusions.
+if (!function_exists('env')) {
+    require_once __DIR__ . '/bootstrap.php';
+}
+
 class Database
 {
     private static ?PDO $instance = null;
@@ -45,8 +52,8 @@ class Database
                 PDO::MYSQL_ATTR_FOUND_ROWS   => true,
             ]);
             // Définir le fuseau horaire SQL
-            $tz = env('APP_TIMEZONE', 'Africa/Bujumbura');
-            // Convertir en offset UTC pour MySQL (Africa/Bujumbura = UTC+2)
+            // Bujumbura est en UTC+2. L'offset évite de dépendre des tables
+            // de fuseaux horaires éventuellement absentes de MySQL.
             $pdo->exec("SET time_zone = '+02:00'");
             $pdo->exec("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
             return $pdo;
