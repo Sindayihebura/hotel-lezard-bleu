@@ -94,7 +94,7 @@ $baseUrl  = $inPublic ? '..' : '.';
       </nav>
 
       <!-- Currency Selector Switcher & CTA -->
-      <div class="nav-actions" style="display: flex; align-items: center; gap: 0.85rem;">
+      <div class="nav-actions">
         
         <!-- Toggle Devise BIF / USD -->
         <div class="currency-switcher">
