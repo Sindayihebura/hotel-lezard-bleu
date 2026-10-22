@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales, CGV &amp; confidentialité | Le Lézard Bleu</title>
+  <meta name="description" content="Mentions légales, conditions générales de vente et politique de confidentialité de l'Hôtel Le Lézard Bleu & Spa à Bujumbura.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <script src="/env-config.js"></script>
+  <script src="/vendor/supabase.js"></script>
+  <script src="/assets/js/forms.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/supabase-auth.js"></script>
+  <script src="/assets/js/app.js"></script>
+</head>
+<body>
+
+    <!-- EN-TÊTE -->
+<header class="header-navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="nav-logo" aria-label="Le Lézard Bleu — Accueil">
+        <span class="nav-logo-icon" aria-hidden="true">L</span>
+        <span class="nav-logo-text">
+          <span class="nav-brand-title">LE LÉZARD BLEU</span>
+          <span class="nav-brand-subtitle">Bujumbura ★★★★★</span>
+        </span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Navigation principale">
+        <ul class="nav-menu">
+          <li><a href="/index.html" class="nav-link">Accueil</a></li>
+          <li><a href="/presentation.html" class="nav-link">Hôtel</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réserver</a></li>
+          <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
+          <li><a href="/services.html" class="nav-link">Services</a></li>
+          <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
+          <li><a href="/offres.html" class="nav-link">Offres</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="currency-switcher" role="group" aria-label="Devise d'affichage">
+          <button type="button" class="currency-btn" data-currency="BIF" aria-pressed="true">BIF</button>
+          <button type="button" class="currency-btn" data-currency="USD" aria-pressed="false">USD</button>
+        </div>
+        <a href="/reservation.html" class="btn btn-gold nav-cta">Réserver</a>
+        <a href="/login.html" class="btn btn-outline-gold nav-auth" id="authButton">Connexion</a>
+        <button id="mobileToggle" class="mobile-toggle" type="button"
+                aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileDrawer">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menu mobile" aria-hidden="true">
+    <button id="drawerClose" class="drawer-close" type="button" aria-label="Fermer le menu">✕</button>
+
+    <div class="drawer-currency">
+      <span class="drawer-currency-label">Devise d'affichage</span>
+      <div class="currency-switcher" role="group" aria-label="Devise d'affichage (menu)">
+        <button type="button" class="currency-btn" data-currency="BIF">🇧🇮 BIF</button>
+        <button type="button" class="currency-btn" data-currency="USD">💵 USD</button>
+      </div>
+    </div>
+
+    <div class="drawer-nav">
+      <ul class="drawer-menu">
+        <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+        <li><a href="/presentation.html" class="drawer-link">Présentation</a></li>
+        <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
+        <li><a href="/reservation.html" class="drawer-link">Réservation en ligne</a></li>
+        <li><a href="/galerie.html" class="drawer-link">Galerie photos</a></li>
+        <li><a href="/services.html" class="drawer-link">Services & Restaurant</a></li>
+        <li><a href="/conferences.html" class="drawer-link">Conférences & Événements</a></li>
+        <li><a href="/offres.html" class="drawer-link">Offres spéciales</a></li>
+        <li><a href="/contact.html" class="drawer-link">Contact & Accès</a></li>
+        <li><a href="/account.html" class="drawer-link">Mon compte</a></li>
+        <li><a href="/login.html" class="drawer-link" id="mobileAuthLink">Connexion</a></li>
+      </ul>
+    </div>
+
+    <div class="drawer-footer">
+      <a href="/reservation.html" class="btn btn-gold">Réserver maintenant</a>
+      <a href="tel:+25722000000" class="drawer-link" style="font-size:0.95rem;">📞 +257 22 00 00 00</a>
+      <a href="mailto:reservation@lezardbleu-hotel.bi" class="drawer-link" style="font-size:0.95rem;">✉️ reservation@lezardbleu-hotel.bi</a>
+    </div>
+  </aside>
+  <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+
+
+  <main id="main" style="padding-top: 130px; min-height: 100vh; background: var(--bg-dark-deep);">
+    <section class="section-padding" style="padding-top: 2rem;">
+      <div class="container" style="max-width: 900px;">
+
+        <div class="text-center" style="margin-bottom: 2.5rem;">
+          <span class="section-subtitle">INFORMATIONS LÉGALES</span>
+          <h1 class="section-title">Cadre juridique</h1>
+          <p class="section-desc">
+            Transparence sur l'établissement, les conditions de réservation et le traitement de vos données.
+          </p>
+        </div>
+
+        <nav class="legal-nav" aria-label="Sommaire">
+          <a href="#mentions">Mentions légales</a>
+          <a href="#cgv">Conditions de vente</a>
+          <a href="#confidentialite">Confidentialité</a>
+          <a href="#cookies">Cookies</a>
+        </nav>
+
+        <article class="legal-section" id="mentions">
+          <h2>1. Mentions légales</h2>
+          <p><strong>Établissement :</strong> Hôtel Le Lézard Bleu &amp; Spa, établissement hôtelier 5 étoiles.</p>
+          <p><strong>Adresse :</strong> Avenue de la Plage, bord du Lac Tanganyika, Bujumbura, Burundi.</p>
+          <p><strong>Téléphone :</strong> +257 22 00 00 00 · <strong>E-mail :</strong> contact@lezardbleu-hotel.bi</p>
+          <p><strong>Responsable de la publication :</strong> la Direction de l'établissement.</p>
+          <p><strong>Hébergement du site :</strong> Netlify, Inc. — 512 2nd Street, San Francisco, CA 94107, États-Unis.</p>
+          <p>
+            Le site est édité en français. Les tarifs sont exprimés en francs burundais (BIF) et,
+            à titre indicatif, en dollars américains (USD) selon le taux de change affiché.
+          </p>
+        </article>
+
+        <article class="legal-section" id="cgv">
+          <h2>2. Conditions générales de vente</h2>
+
+          <h3>2.1 Réservation</h3>
+          <p>
+            Toute demande effectuée en ligne constitue une demande de réservation. Elle est confirmée
+            par la réception par e-mail ou par téléphone, dans un délai maximum de 24 heures.
+            Aucun paiement n'est prélevé automatiquement lors de la demande en ligne.
+          </p>
+
+          <h3>2.2 Tarifs et paiement</h3>
+          <p>
+            Les tarifs affichés s'entendent par chambre et par nuit, taxes locales incluses.
+            Le règlement s'effectue à l'arrivée ou selon les modalités convenues avec la réception :
+            espèces (BIF ou USD), Lumicash, EcoCash, virement bancaire ou carte Visa/Mastercard.
+          </p>
+
+          <h3>2.3 Arrivée et départ</h3>
+          <p>
+            L'arrivée (check-in) est possible à partir de 14h00 et le départ (check-out) au plus tard à 11h00.
+            Toute arrivée tardive doit être signalée à la réception.
+          </p>
+
+          <h3>2.4 Annulation et modification</h3>
+          <p>
+            L'annulation est gratuite jusqu'à 48 heures avant la date d'arrivée. Au-delà, la première
+            nuit peut être facturée. Les offres promotionnelles peuvent prévoir des conditions spécifiques,
+            précisées lors de la réservation. Toute modification est soumise à disponibilité.
+          </p>
+
+          <h3>2.5 Séjour et responsabilité</h3>
+          <p>
+            Le client est responsable du respect du règlement intérieur, du calme de l'établissement
+            et du matériel mis à sa disposition. L'établissement décline toute responsabilité en cas
+            de perte d'objets de valeur non déposés au coffre.
+          </p>
+        </article>
+
+        <article class="legal-section" id="confidentialite">
+          <h2>3. Politique de confidentialité</h2>
+
+          <h3>3.1 Données collectées</h3>
+          <p>
+            Lors d'une réservation, d'une inscription ou d'un message de contact, nous collectons :
+            nom, adresse e-mail, numéro de téléphone, pays de résidence, dates de séjour, préférences
+            et contenu de vos messages.
+          </p>
+
+          <h3>3.2 Finalités</h3>
+          <p>
+            Ces données servent exclusivement à traiter votre demande, préparer votre séjour,
+            vous contacter si nécessaire, établir la facturation et, avec votre accord,
+            vous envoyer la newsletter. Elles ne sont jamais revendues.
+          </p>
+
+          <h3>3.3 Base légale et durée de conservation</h3>
+          <p>
+            Le traitement repose sur l'exécution du contrat de séjour et votre consentement pour
+            les communications commerciales. Les données de réservation sont conservées pendant la
+            durée légale comptable applicable, puis supprimées.
+          </p>
+
+          <h3>3.4 Sécurité et sous-traitants</h3>
+          <p>
+            Les données sont hébergées de manière sécurisée (base de données Supabase, hébergement Netlify)
+            et protégées par chiffrement en transit (HTTPS). L'accès est limité aux personnes habilitées
+            de l'établissement.
+          </p>
+
+          <h3>3.5 Vos droits</h3>
+          <p>
+            Vous pouvez demander l'accès, la rectification, la suppression ou la portabilité de vos
+            données, ainsi que retirer votre consentement à tout moment, en écrivant à
+            <a href="mailto:contact@lezardbleu-hotel.bi">contact@lezardbleu-hotel.bi</a>
+            ou en appelant le +257 22 00 00 00.
+          </p>
+        </article>
+
+        <article class="legal-section" id="cookies">
+          <h2>4. Cookies et stockage local</h2>
+          <p>
+            Le site fonctionne sans cookie publicitaire ni traceur tiers. Le navigateur conserve
+            uniquement des données techniques nécessaires : devise d'affichage choisie, session de
+            connexion à votre espace client et, en cas d'indisponibilité du service de réservation,
+            une copie locale de votre demande.
+          </p>
+          <p>
+            Vous pouvez supprimer ces données à tout moment via les réglages de votre navigateur ;
+            vous serez alors déconnecté de votre espace client.
+          </p>
+        </article>
+
+        <p class="form-hint" style="margin-top: 2rem; text-align: center;">
+          Dernière mise à jour : <span data-year></span> · Pour toute question :
+          <a href="/contact.html" style="color: var(--accent-gold-primary);">contactez la conciergerie</a>.
+        </p>
+
+      </div>
+    </section>
+  </main>
+
+    <!-- PIED DE PAGE -->
+<footer class="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer-col">
+          <div class="nav-logo" style="margin-bottom: 1.25rem;">
+            <span class="nav-logo-icon" aria-hidden="true">L</span>
+            <span class="nav-logo-text">
+              <span class="nav-brand-title">LE LÉZARD BLEU</span>
+              <span class="nav-brand-subtitle">Hôtel &amp; Spa ★★★★★</span>
+            </span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.25rem;">
+            L'excellence hôtelière au bord du Lac Tanganyika : suites de prestige,
+            gastronomie, spa et espaces de conférence à Bujumbura.
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.82rem;">
+            Paiements : BIF &amp; USD · Lumicash · EcoCash · Visa · Virement bancaire
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="/presentation.html">L'hôtel &amp; ses valeurs</a></li>
+            <li><a href="/chambres.html">Chambres &amp; suites</a></li>
+            <li><a href="/reservation.html">Réservation en ligne</a></li>
+            <li><a href="/services.html">Restaurant &amp; spa</a></li>
+            <li><a href="/conferences.html">Séminaires &amp; mariages</a></li>
+            <li><a href="/offres.html">Offres &amp; privilèges</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Conciergerie</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📍</span>
+            <span>Avenue de la Plage, bord du Lac Tanganyika, Bujumbura, Burundi</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📞</span>
+            <span><a href="tel:+25722000000">+257 22 00 00 00</a> · 24h/24</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">✉️</span>
+            <span><a href="mailto:reservation@lezardbleu-hotel.bi">reservation@lezardbleu-hotel.bi</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">💬</span>
+            <span>WhatsApp : <a href="https://wa.me/25779000000" rel="noopener">+257 79 00 00 00</a></span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Newsletter Privilège</h4>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+            Offres exclusives et invitations privées, deux fois par mois. Pas de spam.
+          </p>
+          <form id="newsletterForm" action="#" method="post">
+            <label for="newsletterEmail" class="sr-only">Votre adresse e-mail</label>
+            <div style="display: flex; gap: 0.5rem; align-items: stretch;">
+              <input type="email" id="newsletterEmail" name="email" class="form-input"
+                     placeholder="votre@email.com" autocomplete="email" required
+                     style="font-size: 0.85rem; padding: 0.65rem 0.85rem; min-height: 44px;">
+              <button type="submit" class="btn btn-gold" style="padding: 0.65rem 1.1rem;">OK</button>
+            </div>
+            <p class="form-hint" style="margin-top: 0.6rem;">
+              En vous inscrivant, vous acceptez notre
+              <a href="/legal.html#confidentialite" style="color: var(--accent-gold-primary);">politique de confidentialité</a>.
+            </p>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu &amp; Spa — Bujumbura, Burundi. Tous droits réservés.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="/legal.html#mentions">Mentions légales</a>
+          <a href="/legal.html#confidentialite">Confidentialité</a>
+          <a href="/legal.html#cgv">CGV</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+
+
+</body>
+</html>

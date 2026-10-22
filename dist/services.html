@@ -6,53 +6,101 @@
   <title>Services & Restaurant | Le Lézard Bleu Bujumbura</title>
   <meta name="description" content="Découvrez nos services : restaurant gastronomique, spa, piscine, conciergerie 24/7.">
   <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0E1626">
+  <!-- Scripts communs (ordre de chargement important) -->
+  <script src="/env-config.js"></script>
+  <script src="/vendor/supabase.js"></script>
+  <script src="/assets/js/forms.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/supabase-auth.js"></script>
+  <script src="/assets/js/app.js"></script>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header-navbar">
+  <!-- EN-TÊTE -->
+<header class="header-navbar">
     <div class="container nav-container">
-      <a href="/index.html" class="nav-logo">
-        <div class="nav-logo-icon">L</div>
-        <div class="nav-logo-text">
+      <a href="/index.html" class="nav-logo" aria-label="Le Lézard Bleu — Accueil">
+        <span class="nav-logo-icon" aria-hidden="true">L</span>
+        <span class="nav-logo-text">
           <span class="nav-brand-title">LE LÉZARD BLEU</span>
-          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
-        </div>
+          <span class="nav-brand-subtitle">Bujumbura ★★★★★</span>
+        </span>
       </a>
-      <nav>
+
+      <nav class="nav-desktop" aria-label="Navigation principale">
         <ul class="nav-menu">
           <li><a href="/index.html" class="nav-link">Accueil</a></li>
-          <li><a href="/presentation.html" class="nav-link">Présentation</a></li>
-          <li><a href="/chambres.html" class="nav-link">Suites & Villas</a></li>
-          <li><a href="/reservation.html" class="nav-link">Réservation</a></li>
+          <li><a href="/presentation.html" class="nav-link">Hôtel</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réserver</a></li>
           <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
-          <li><a href="/services.html" class="nav-link active">Services & Resto</a></li>
+          <li><a href="/services.html" class="nav-link">Services</a></li>
           <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
           <li><a href="/offres.html" class="nav-link">Offres</a></li>
           <li><a href="/contact.html" class="nav-link">Contact</a></li>
         </ul>
       </nav>
-      <div style="display: flex; align-items: center; gap: 0.85rem;">
-        <a href="/reservation.html" class="btn btn-gold" style="padding: 0.65rem 1.25rem;">Réserver</a>
-        <button id="mobileToggle" class="mobile-toggle">☰</button>
+
+      <div class="nav-actions">
+        <div class="currency-switcher" role="group" aria-label="Devise d'affichage">
+          <button type="button" class="currency-btn" data-currency="BIF" aria-pressed="true">BIF</button>
+          <button type="button" class="currency-btn" data-currency="USD" aria-pressed="false">USD</button>
+        </div>
+        <a href="/reservation.html" class="btn btn-gold nav-cta">Réserver</a>
+        <a href="/login.html" class="btn btn-outline-gold nav-auth" id="authButton">Connexion</a>
+        <button id="mobileToggle" class="mobile-toggle" type="button"
+                aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileDrawer">☰</button>
       </div>
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
-  <aside id="mobileDrawer" class="mobile-drawer">
-    <button id="drawerClose" class="drawer-close">✕</button>
-    <ul class="drawer-menu">
-      <li><a href="/index.html" class="drawer-link">Accueil</a></li>
-      <li><a href="/chambres.html" class="drawer-link">Chambres</a></li>
-      <li><a href="/services.html" class="drawer-link">Services</a></li>
-      <li><a href="/contact.html" class="drawer-link">Contact</a></li>
-    </ul>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menu mobile" aria-hidden="true">
+    <button id="drawerClose" class="drawer-close" type="button" aria-label="Fermer le menu">✕</button>
+
+    <div class="drawer-currency">
+      <span class="drawer-currency-label">Devise d'affichage</span>
+      <div class="currency-switcher" role="group" aria-label="Devise d'affichage (menu)">
+        <button type="button" class="currency-btn" data-currency="BIF">🇧🇮 BIF</button>
+        <button type="button" class="currency-btn" data-currency="USD">💵 USD</button>
+      </div>
+    </div>
+
+    <div class="drawer-nav">
+      <ul class="drawer-menu">
+        <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+        <li><a href="/presentation.html" class="drawer-link">Présentation</a></li>
+        <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
+        <li><a href="/reservation.html" class="drawer-link">Réservation en ligne</a></li>
+        <li><a href="/galerie.html" class="drawer-link">Galerie photos</a></li>
+        <li><a href="/services.html" class="drawer-link">Services & Restaurant</a></li>
+        <li><a href="/conferences.html" class="drawer-link">Conférences & Événements</a></li>
+        <li><a href="/offres.html" class="drawer-link">Offres spéciales</a></li>
+        <li><a href="/contact.html" class="drawer-link">Contact & Accès</a></li>
+        <li><a href="/account.html" class="drawer-link">Mon compte</a></li>
+        <li><a href="/login.html" class="drawer-link" id="mobileAuthLink">Connexion</a></li>
+      </ul>
+    </div>
+
+    <div class="drawer-footer">
+      <a href="/reservation.html" class="btn btn-gold">Réserver maintenant</a>
+      <a href="tel:+25722000000" class="drawer-link" style="font-size:0.95rem;">📞 +257 22 00 00 00</a>
+      <a href="mailto:reservation@lezardbleu-hotel.bi" class="drawer-link" style="font-size:0.95rem;">✉️ reservation@lezardbleu-hotel.bi</a>
+    </div>
   </aside>
+  <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+
 
   <!-- Hero -->
   <section class="hero-section" style="min-height: 60vh;">
-    <img src="/assets/images/spa_piscine.jpg" alt="Services Hôtel" class="hero-bg-image">
+    <img src="/assets/images/spa_massage.jpg" alt="Services Hôtel" class="hero-bg-image">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
       <h1 class="hero-title">Services & <span>Restaurant</span></h1>
@@ -149,17 +197,95 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer-section">
+  <!-- PIED DE PAGE -->
+<footer class="footer-section">
     <div class="container">
-      <div class="footer-bottom" style="padding: 2rem 0;">
-        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi.</div>
+      <div class="footer-grid">
+
+        <div class="footer-col">
+          <div class="nav-logo" style="margin-bottom: 1.25rem;">
+            <span class="nav-logo-icon" aria-hidden="true">L</span>
+            <span class="nav-logo-text">
+              <span class="nav-brand-title">LE LÉZARD BLEU</span>
+              <span class="nav-brand-subtitle">Hôtel &amp; Spa ★★★★★</span>
+            </span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.25rem;">
+            L'excellence hôtelière au bord du Lac Tanganyika : suites de prestige,
+            gastronomie, spa et espaces de conférence à Bujumbura.
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.82rem;">
+            Paiements : BIF &amp; USD · Lumicash · EcoCash · Visa · Virement bancaire
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="/presentation.html">L'hôtel &amp; ses valeurs</a></li>
+            <li><a href="/chambres.html">Chambres &amp; suites</a></li>
+            <li><a href="/reservation.html">Réservation en ligne</a></li>
+            <li><a href="/services.html">Restaurant &amp; spa</a></li>
+            <li><a href="/conferences.html">Séminaires &amp; mariages</a></li>
+            <li><a href="/offres.html">Offres &amp; privilèges</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Conciergerie</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📍</span>
+            <span>Avenue de la Plage, bord du Lac Tanganyika, Bujumbura, Burundi</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📞</span>
+            <span><a href="tel:+25722000000">+257 22 00 00 00</a> · 24h/24</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">✉️</span>
+            <span><a href="mailto:reservation@lezardbleu-hotel.bi">reservation@lezardbleu-hotel.bi</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">💬</span>
+            <span>WhatsApp : <a href="https://wa.me/25779000000" rel="noopener">+257 79 00 00 00</a></span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Newsletter Privilège</h4>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+            Offres exclusives et invitations privées, deux fois par mois. Pas de spam.
+          </p>
+          <form id="newsletterForm" action="#" method="post">
+            <label for="newsletterEmail" class="sr-only">Votre adresse e-mail</label>
+            <div style="display: flex; gap: 0.5rem; align-items: stretch;">
+              <input type="email" id="newsletterEmail" name="email" class="form-input"
+                     placeholder="votre@email.com" autocomplete="email" required
+                     style="font-size: 0.85rem; padding: 0.65rem 0.85rem; min-height: 44px;">
+              <button type="submit" class="btn btn-gold" style="padding: 0.65rem 1.1rem;">OK</button>
+            </div>
+            <p class="form-hint" style="margin-top: 0.6rem;">
+              En vous inscrivant, vous acceptez notre
+              <a href="/legal.html#confidentialite" style="color: var(--accent-gold-primary);">politique de confidentialité</a>.
+            </p>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu &amp; Spa — Bujumbura, Burundi. Tous droits réservés.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="/legal.html#mentions">Mentions légales</a>
+          <a href="/legal.html#confidentialite">Confidentialité</a>
+          <a href="/legal.html#cgv">CGV</a>
+          <a href="/contact.html">Contact</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <script src="/assets/js/main.js"></script>
-  <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+
 
 </body>
 </html>

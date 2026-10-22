@@ -1,132 +1,240 @@
 /**
- * Main UI JavaScript - Hotel Le Lézard Bleu Bujumbura
- * Global Multi-Currency Manager (BIF / USD)
+ * main.js — Interface globale du site
+ * Hôtel Le Lézard Bleu & Spa — Bujumbura
+ *
+ * Responsabilités :
+ *  - devise d'affichage (BIF / USD) et formatage des prix
+ *  - menu mobile (drawer) accessible au clavier
+ *  - navigation active
+ *  - notifications (toasts)
+ *  - année du copyright
  */
+(function () {
+  'use strict';
 
-window.EXCHANGE_RATE = 6000; // 1 USD = 6 000 BIF par défaut
-window.currentCurrency = localStorage.getItem('hotel_currency') || 'BIF';
+  const DEFAULT_RATE = 6000;
+  const STORAGE_KEY = 'hotel_currency';
 
-// Helper de conversion et formatage client-side
-window.formatPrice = function(amountBif, currency = window.currentCurrency) {
-  const rate = window.EXCHANGE_RATE || 6000;
-  if (currency === 'USD') {
-    const usd = (amountBif / rate).toFixed(2);
-    return '$ ' + usd.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  } else {
-    return Math.round(amountBif).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' BIF';
+  window.EXCHANGE_RATE = Number(window.EXCHANGE_RATE) || DEFAULT_RATE;
+
+  function getStoredCurrency() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored === 'USD' || stored === 'BIF' ? stored : 'BIF';
   }
-};
 
-document.addEventListener('DOMContentLoaded', () => {
-  // 1. Refresh prices across DOM elements with data-price-bif
-  window.updateAllPricesOnPage = function(currency) {
-    window.currentCurrency = currency;
-    localStorage.setItem('hotel_currency', currency);
+  window.currentCurrency = getStoredCurrency();
 
-    // Sync active state on currency toggle buttons
-    document.querySelectorAll('.currency-btn').forEach(btn => {
-      if (btn.getAttribute('data-currency') === currency) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
+  function formatNumber(value) {
+    return Math.round(value)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
 
-    // Update prices on cards/listings
-    document.querySelectorAll('[data-price-bif]').forEach(elem => {
-      const bifVal = parseFloat(elem.getAttribute('data-price-bif'));
-      if (!isNaN(bifVal)) {
-        elem.textContent = window.formatPrice(bifVal, currency);
-      }
-    });
-
-    // Notify booking engine if present
-    if (typeof window.onCurrencyChange === 'function') {
-      window.onCurrencyChange(currency);
+  /**
+   * Formate un montant exprimé en BIF dans la devise demandée.
+   * @param {number} amountBif
+   * @param {'BIF'|'USD'} [currency]
+   */
+  window.formatPrice = function (amountBif, currency) {
+    const target = currency || window.currentCurrency || 'BIF';
+    const rate = Number(window.EXCHANGE_RATE) || DEFAULT_RATE;
+    const amount = Number(amountBif) || 0;
+    if (target === 'USD') {
+      const usd = amount / rate;
+      return (
+        '$ ' +
+        usd
+          .toFixed(2)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+      );
     }
+    return formatNumber(amount) + ' BIF';
   };
 
-  // Currency switcher click listener
-  document.querySelectorAll('.currency-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const newCurrency = btn.getAttribute('data-currency');
-      window.updateAllPricesOnPage(newCurrency);
-
-      // Currency preference is already saved in localStorage by updateAllPricesOnPage()
-      // No server-side call needed for static site
-    });
-  });
-
-  // Initialize prices on page load
-  window.updateAllPricesOnPage(window.currentCurrency);
-
-  // 2. Sticky Navigation Scroll Effect
-  const navbar = document.querySelector('.header-navbar');
-  if (navbar) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+  function syncCurrencyButtons(currency) {
+    document.querySelectorAll('.currency-btn').forEach((btn) => {
+      const isActive = btn.getAttribute('data-currency') === currency;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
   }
 
-  // 3. Mobile Drawer Navigation
-  const mobileToggle = document.getElementById('mobileToggle');
-  const mobileDrawer = document.getElementById('mobileDrawer');
-  const drawerClose = document.getElementById('drawerClose');
-
-  if (mobileToggle && mobileDrawer) {
-    mobileToggle.addEventListener('click', () => mobileDrawer.classList.add('open'));
-  }
-  if (drawerClose && mobileDrawer) {
-    drawerClose.addEventListener('click', () => mobileDrawer.classList.remove('open'));
-  }
-
-  // 4. Toast Notification Helper
-  window.showToast = function(message, type = 'success') {
-    let toastContainer = document.getElementById('toastContainer');
-    if (!toastContainer) {
-      toastContainer = document.createElement('div');
-      toastContainer.id = 'toastContainer';
-      toastContainer.style.cssText = `
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        z-index: 3000;
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      `;
-      document.body.appendChild(toastContainer);
+  /**
+   * Applique la devise partout dans la page.
+   * @param {'BIF'|'USD'} currency
+   */
+  window.updateAllPricesOnPage = function (currency) {
+    const target = currency === 'USD' ? 'USD' : 'BIF';
+    window.currentCurrency = target;
+    try {
+      localStorage.setItem(STORAGE_KEY, target);
+    } catch (_) {
+      /* stockage indisponible (navigation privée) */
     }
 
+    syncCurrencyButtons(target);
+
+    document.querySelectorAll('[data-price-bif]').forEach((el) => {
+      const bif = parseFloat(el.getAttribute('data-price-bif'));
+      if (!Number.isNaN(bif)) el.textContent = window.formatPrice(bif, target);
+    });
+
+    document.querySelectorAll('[data-price-label]').forEach((el) => {
+      el.textContent = target === 'USD' ? 'Tarif affiché en USD (1 USD ≈ ' + window.EXCHANGE_RATE + ' BIF)' : 'Tarif affiché en Francs burundais (BIF)';
+    });
+
+    document.dispatchEvent(new CustomEvent('currencychange', { detail: { currency: target } }));
+    if (typeof window.onCurrencyChange === 'function') window.onCurrencyChange(target);
+  };
+
+  /* ------------------------------------------------------------------ */
+  /* Notifications                                                      */
+  /* ------------------------------------------------------------------ */
+  window.showToast = function (message, type) {
+    const kind = type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'success';
+    let container = document.querySelector('.toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'toast-container';
+      container.setAttribute('role', 'status');
+      container.setAttribute('aria-live', 'polite');
+      document.body.appendChild(container);
+    }
     const toast = document.createElement('div');
-    const isSuccess = type === 'success';
-    toast.style.cssText = `
-      background: ${isSuccess ? 'rgba(22, 34, 56, 0.95)' : 'rgba(80, 20, 20, 0.95)'};
-      color: #fff;
-      border: 1px solid ${isSuccess ? '#D4AF37' : '#EF4444'};
-      padding: 1rem 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      backdrop-filter: blur(10px);
-    `;
+    toast.className = 'toast' + (kind === 'error' ? ' toast--error' : kind === 'warning' ? ' toast--warning' : '');
+    const icon = kind === 'success' ? '✓' : '⚠';
+    const text = document.createElement('span');
+    text.textContent = message;
+    const iconEl = document.createElement('span');
+    iconEl.setAttribute('aria-hidden', 'true');
+    iconEl.textContent = icon;
+    toast.append(iconEl, text);
+    container.appendChild(toast);
 
-    toast.innerHTML = `<span>${isSuccess ? '✨' : '⚠️'}</span><div>${message}</div>`;
-    toastContainer.appendChild(toast);
-
-    setTimeout(() => {
+    window.setTimeout(() => {
+      toast.style.transition = 'opacity .35s ease, transform .35s ease';
       toast.style.opacity = '0';
-      toast.style.transform = 'translateX(100px)';
-      toast.style.transition = 'all 0.4s ease';
-      setTimeout(() => toast.remove(), 400);
-    }, 4000);
+      toast.style.transform = 'translateX(30px)';
+      window.setTimeout(() => toast.remove(), 400);
+    }, 5000);
   };
-});
+
+  /* ------------------------------------------------------------------ */
+  /* Initialisation                                                     */
+  /* ------------------------------------------------------------------ */
+  function initDrawer() {
+    const drawer = document.getElementById('mobileDrawer');
+    const toggle = document.getElementById('mobileToggle');
+    const close = document.getElementById('drawerClose');
+    if (!drawer || !toggle) return;
+
+    let backdrop = document.getElementById('drawerBackdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.id = 'drawerBackdrop';
+      backdrop.className = 'drawer-backdrop';
+      drawer.insertAdjacentElement('afterend', backdrop);
+    }
+
+    const open = () => {
+      drawer.classList.add('open');
+      backdrop.classList.add('visible');
+      document.body.classList.add('drawer-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      const firstLink = drawer.querySelector('a, button');
+      if (firstLink) firstLink.focus({ preventScroll: true });
+    };
+
+    const closeDrawer = () => {
+      drawer.classList.remove('open');
+      backdrop.classList.remove('visible');
+      document.body.classList.remove('drawer-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+    };
+
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      drawer.classList.contains('open') ? closeDrawer() : open();
+    });
+    if (close) close.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    drawer.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeDrawer));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && drawer.classList.contains('open')) {
+        closeDrawer();
+        toggle.focus();
+      }
+    });
+
+    drawer.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function initCurrency() {
+    document.querySelectorAll('.currency-btn').forEach((btn) => {
+      if (btn.dataset.currencyBound === 'true') return;
+      btn.dataset.currencyBound = 'true';
+      const current = btn.getAttribute('data-currency');
+      btn.classList.toggle('active', current === window.currentCurrency);
+      btn.setAttribute('aria-pressed', current === window.currentCurrency ? 'true' : 'false');
+      btn.addEventListener('click', () => window.updateAllPricesOnPage(current));
+    });
+    window.updateAllPricesOnPage(window.currentCurrency);
+  }
+
+  function initActiveNav() {
+    const path = window.location.pathname.replace(/\/$/, '') || '/index.html';
+    const page = path.split('/').pop() || 'index.html';
+    const map = {
+      'index.html': '/index.html',
+      'presentation.html': '/presentation.html',
+      'chambres.html': '/chambres.html',
+      'reservation.html': '/reservation.html',
+      'galerie.html': '/galerie.html',
+      'services.html': '/services.html',
+      'conferences.html': '/conferences.html',
+      'offres.html': '/offres.html',
+      'contact.html': '/contact.html'
+    };
+    const active = map[page];
+    if (!active) return;
+    document.querySelectorAll('.nav-link, .drawer-link').forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      if (href.split('?')[0] === active) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+  }
+
+  function initYears() {
+    const year = new Date().getFullYear();
+    document.querySelectorAll('#currentYear, [data-year]').forEach((el) => {
+      el.textContent = String(year);
+    });
+  }
+
+  function initScroll() {
+    const navbar = document.querySelector('.header-navbar');
+    if (!navbar) return;
+    const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  function init() {
+    initDrawer();
+    initCurrency();
+    initActiveNav();
+    initYears();
+    initScroll();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

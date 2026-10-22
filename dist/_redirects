@@ -10,6 +10,7 @@
 /api/reviews        /.netlify/functions/reviews      200
 /api/availability   /.netlify/functions/availability 200
 /api/payments       /.netlify/functions/payments     200
+/api/newsletter     /.netlify/functions/newsletter   200
 
 # ── Clean URLs (sans .html) ───────────────────────────────────────────
 /presentation       /presentation.html               301
@@ -25,3 +26,4 @@
 /account            /account.html                    301
 /confirmation       /confirmation.html               301
 /reset-password     /reset-password.html             301
+/legal              /legal.html                      301

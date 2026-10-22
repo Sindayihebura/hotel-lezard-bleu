@@ -5,11 +5,19 @@
   "private": true,
   "scripts": {
     "build": "node generate-env-config.js",
+    "preview": "node tools/serve.js",
+    "start": "node tools/serve.js",
     "dev": "netlify dev",
-    "deploy": "netlify deploy --prod"
+    "deploy": "netlify deploy --prod",
+    "check": "node tools/check-site.js",
+    "sync:legacy-assets": "node tools/sync-legacy-assets.js",
+    "check:browser": "node tools/smoke-jsdom.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.112.3"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1"
   },
   "engines": {
     "node": ">=18.0.0",

@@ -1,403 +1,369 @@
 /**
- * Supabase Authentication Module
- * Hôtel Le Lézard Bleu - Authentification Google OAuth + Email/Password
- * 
- * Sécurité : Utilise uniquement les clés publiques côté client
- * - SUPABASE_URL
- * - SUPABASE_ANON_KEY
- * 
- * JAMAIS exposé :
- * - SUPABASE_SERVICE_ROLE_KEY (serveur uniquement)
- * - Google Client Secret (Supabase uniquement)
+ * supabase-auth.js — Authentification cliente
+ * Hôtel Le Lézard Bleu & Spa
+ *
+ * Charge le SDK Supabase embarqué (/vendor/supabase.js, aucune dépendance CDN)
+ * puis expose :
+ *   window.SupabaseAuth  — API d'authentification (email/mot de passe + Google)
+ *   window.AuthUI        — messages, états de chargement
+ *   window.AuthValidator — validations réutilisables
+ *
+ * Le module ne casse jamais la page : si la configuration ou le réseau est
+ * indisponible, les appels renvoient une erreur explicite en français et
+ * les formulaires affichent un message clair au lieu d'échouer en silence.
  */
+(function () {
+  'use strict';
 
-// Import Supabase depuis CDN (compatible HTML statique)
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const SUPPORT_PHONE = '+257 22 00 00 00';
+  const SUPPORT_EMAIL = 'reservation@lezardbleu-hotel.bi';
+  const CONFIG_ERROR =
+    "Le service de connexion n'est pas configuré (SUPABASE_URL / SUPABASE_ANON_KEY manquants). " +
+    'Contactez la réception au ' + SUPPORT_PHONE + '.';
 
-// Configuration publique Supabase
-// Ces valeurs doivent être définies dans les variables d'environnement Netlify
-// et injectées au build, ou chargées via une Netlify Function publique
-const SUPABASE_CONFIG = {
-  url: window.ENV?.SUPABASE_URL || 'https://rwzzpzzwkutpwcqllqzt.supabase.co',
-  anonKey: window.ENV?.SUPABASE_ANON_KEY || 'sb_publishable_LbZweT_3THf2p34VHi_iuA_vJo5UcR1'
-};
+  const env = window.ENV || {};
+  const config = {
+    url: (env.SUPABASE_URL || '').trim(),
+    anonKey: (env.SUPABASE_ANON_KEY || '').trim()
+  };
 
-// Validation configuration
-if (!SUPABASE_CONFIG.url || !SUPABASE_CONFIG.anonKey) {
-  console.warn('⚠️  Configuration Supabase manquante. Authentification non disponible.');
-}
+  let client = null;
+  let initError = null;
 
-// Créer le client Supabase
-const supabase = createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true,
-    storage: window.localStorage,
-    storageKey: 'hotel_auth_token',
-    flowType: 'pkce' // Plus sécurisé pour les applications publiques
-  }
-});
-
-/**
- * Classe d'authentification centralisée
- */
-class SupabaseAuth {
-  
-  /**
-   * Inscription avec email + mot de passe
-   */
-  static async signUpWithEmail({ email, password, fullName }) {
+  function initClient() {
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
+      if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+        throw new Error(
+          "La bibliothèque d'authentification n'a pas pu être chargée. Vérifiez votre connexion puis rechargez la page."
+        );
+      }
+      if (!config.url || !config.anonKey) throw new Error(CONFIG_ERROR);
+
+      client = window.supabase.createClient(config.url, config.anonKey, {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true,
+          storage: window.localStorage,
+          storageKey: 'hotel_auth_token',
+          flowType: 'pkce'
+        }
+      });
+    } catch (error) {
+      initError = error;
+      console.warn('[auth] Indisponible :', error.message);
+    }
+  }
+
+  initClient();
+
+  const unavailable = () =>
+    Promise.reject(
+      new Error(
+        (initError && initError.message) ||
+          'Le service de connexion est momentanément indisponible. Réessayez dans un instant.'
+      )
+    );
+
+  /* ------------------------------------------------------------------ */
+  /* Traduction des erreurs Supabase les plus fréquentes                */
+  /* ------------------------------------------------------------------ */
+  function humanizeError(error) {
+    const raw = (error && (error.message || error.error_description)) || '';
+    const code = (error && error.code) || '';
+    const text = `${code} ${raw}`.toLowerCase();
+
+    if (text.includes('invalid_credentials') || text.includes('invalid login')) {
+      return 'E-mail ou mot de passe incorrect.';
+    }
+    if (text.includes('email_not_confirmed')) {
+      return "Votre adresse e-mail n'est pas encore confirmée. Cliquez sur le lien reçu par e-mail, puis réessayez.";
+    }
+    if (text.includes('user_already_exists') || text.includes('already registered')) {
+      return 'Cette adresse e-mail est déjà utilisée. Connectez-vous ou réinitialisez votre mot de passe.';
+    }
+    if (text.includes('weak_password') || text.includes('password should be')) {
+      return 'Mot de passe trop faible : utilisez au moins 8 caractères, avec une lettre et un chiffre.';
+    }
+    if (text.includes('rate limit') || text.includes('too many') || text.includes('over_email')) {
+      return 'Trop de tentatives. Patientez quelques minutes avant de réessayer.';
+    }
+    if (text.includes('provider is not enabled') || text.includes('unsupported provider')) {
+      return 'La connexion Google n’est pas activée sur ce site. Utilisez votre e-mail et votre mot de passe.';
+    }
+    if (text.includes('failed to fetch') || text.includes('networkerror') || text.includes('load failed')) {
+      return 'Connexion au serveur impossible. Vérifiez votre connexion Internet puis réessayez.';
+    }
+    if (text.includes('email address') && text.includes('invalid')) {
+      return 'Cette adresse e-mail est refusée par le serveur. Utilisez une autre adresse.';
+    }
+    return raw || 'Une erreur est survenue. Veuillez réessayer.';
+  }
+
+  function requireClient() {
+    if (!client) return unavailable();
+    return null;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* AuthUI                                                             */
+  /* ------------------------------------------------------------------ */
+  class AuthUI {
+    static showLoading(button, message) {
+      if (window.Forms && window.Forms.setLoading) {
+        window.Forms.setLoading(button, message || 'Veuillez patienter…');
+        return;
+      }
+      if (button) {
+        button.disabled = true;
+        button.dataset.originalText = button.textContent;
+        button.textContent = message || 'Veuillez patienter…';
+      }
+    }
+
+    static hideLoading(button) {
+      if (window.Forms && window.Forms.clearLoading) {
+        window.Forms.clearLoading(button);
+        return;
+      }
+      if (button && button.dataset.originalText) {
+        button.disabled = false;
+        button.textContent = button.dataset.originalText;
+      }
+    }
+
+    static showMessage(message, type) {
+      if (window.showToast) window.showToast(message, type || 'success');
+    }
+
+    static showError(error) {
+      const message = typeof error === 'string' ? error : humanizeError(error);
+      this.showMessage(message, 'error');
+    }
+
+    /** Bandeau d'alerte en haut d'un formulaire (id="authAlert"). */
+    static setAlert(container, message, type) {
+      const el = typeof container === 'string' ? document.getElementById(container) : container;
+      if (!el) return;
+      if (!message) {
+        el.innerHTML = '';
+        el.hidden = true;
+        return;
+      }
+      const icons = { success: '✓', error: '⚠', warning: '⚠', info: 'ℹ' };
+      const kind = type || 'info';
+      el.className = `alert alert-${kind === 'error' ? 'error' : kind}`;
+      el.innerHTML = `<span aria-hidden="true">${icons[kind] || 'ℹ'}</span><span>${escapeHtml(
+        message
+      )}</span>`;
+      el.hidden = false;
+      el.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* AuthValidator                                                      */
+  /* ------------------------------------------------------------------ */
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+
+  function escapeHtml(value) {
+    if (window.Forms && window.Forms.utils && window.Forms.utils.escapeHtml) {
+      return window.Forms.utils.escapeHtml(value);
+    }
+    return String(value).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  class AuthValidator {
+    static validateEmail(email) {
+      return EMAIL_RE.test((email || '').trim());
+    }
+
+    static validatePassword(password) {
+      return !!password && password.length >= 8;
+    }
+
+    static validateStrongPassword(password) {
+      return (
+        !!password &&
+        password.length >= 8 &&
+        /[A-Za-z]/.test(password) &&
+        /\d/.test(password)
+      );
+    }
+
+    static validatePasswordMatch(password, confirmation) {
+      return password === confirmation;
+    }
+
+    static validateFullName(name) {
+      return !!name && name.trim().length >= 2;
+    }
+
+    static validatePhone(phone) {
+      if (!phone) return true; // facultatif
+      const digits = phone.replace(/\D/g, '');
+      return digits.length >= 8 && /^[+\d\s().-]+$/.test(phone);
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* SupabaseAuth                                                       */
+  /* ------------------------------------------------------------------ */
+  class SupabaseAuth {
+    static isAvailable() {
+      return !!client;
+    }
+
+    static getInitError() {
+      return initError ? initError.message : null;
+    }
+
+    static async signUpWithEmail({ email, password, fullName, phone }) {
+      const pending = requireClient();
+      if (pending) return pending;
+      const { data, error } = await client.auth.signUp({
+        email: (email || '').trim(),
         password,
         options: {
           data: {
-            full_name: fullName,
-            display_name: fullName
+            full_name: fullName || '',
+            display_name: fullName || '',
+            phone: phone || ''
           },
-          emailRedirectTo: `${window.location.origin}/account.html`
+          emailRedirectTo: `${window.location.origin}/login.html?verified=true`
         }
       });
-
-      if (error) {
-        throw error;
-      }
-
+      if (error) throw new Error(humanizeError(error));
       return {
         success: true,
-        needsConfirmation: !data.session, // Si pas de session, confirmation email requise
+        needsConfirmation: !data.session,
         user: data.user,
         session: data.session
       };
-    } catch (error) {
-      console.error('Sign up error:', error);
-      
-      // Messages d'erreur utilisateur-friendly
-      let message = 'Une erreur est survenue lors de l\'inscription.';
-      
-      if (error.message.includes('already registered')) {
-        message = 'Cette adresse email est déjà enregistrée. Veuillez vous connecter.';
-      } else if (error.message.includes('password')) {
-        message = 'Le mot de passe doit contenir au moins 8 caractères.';
-      } else if (error.message.includes('email')) {
-        message = 'Adresse email invalide.';
-      }
-
-      throw new Error(message);
     }
-  }
 
-  /**
-   * Connexion avec email + mot de passe
-   */
-  static async signInWithEmail({ email, password }) {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+    static async signInWithEmail({ email, password }) {
+      const pending = requireClient();
+      if (pending) return pending;
+      const { data, error } = await client.auth.signInWithPassword({
+        email: (email || '').trim(),
         password
       });
-
-      if (error) {
-        throw error;
-      }
-
-      return {
-        success: true,
-        user: data.user,
-        session: data.session
-      };
-    } catch (error) {
-      console.error('Sign in error:', error);
-      
-      // Message générique pour ne pas révéler si le compte existe
-      throw new Error('Email ou mot de passe incorrect.');
+      if (error) throw new Error(humanizeError(error));
+      return { success: true, user: data.user, session: data.session };
     }
-  }
 
-  /**
-   * Connexion / Inscription avec Google OAuth
-   */
-  static async signInWithGoogle() {
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+    static async signInWithGoogle() {
+      const pending = requireClient();
+      if (pending) return pending;
+      const { error } = await client.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/account.html`,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent'
-          }
+          queryParams: { access_type: 'offline', prompt: 'consent' }
         }
       });
-
-      if (error) {
-        throw error;
-      }
-
-      // La redirection vers Google se fait automatiquement
-      return {
-        success: true,
-        redirecting: true
-      };
-    } catch (error) {
-      console.error('Google OAuth error:', error);
-      
-      let message = 'Impossible de se connecter avec Google.';
-      
-      if (error.message.includes('popup')) {
-        message = 'Veuillez autoriser les popups pour vous connecter avec Google.';
-      }
-
-      throw new Error(message);
+      if (error) throw new Error(humanizeError(error));
+      return { success: true, redirecting: true };
     }
-  }
 
-  /**
-   * Réinitialisation du mot de passe
-   */
-  static async resetPassword(email) {
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    static async resetPassword(email) {
+      const pending = requireClient();
+      if (pending) return pending;
+      const { error } = await client.auth.resetPasswordForEmail((email || '').trim(), {
         redirectTo: `${window.location.origin}/reset-password.html`
       });
-
-      if (error) {
-        throw error;
-      }
-
-      // Ne pas révéler si l'email existe
+      if (error) throw new Error(humanizeError(error));
       return {
         success: true,
-        message: 'Si cette adresse email est enregistrée, vous recevrez un lien de réinitialisation.'
-      };
-    } catch (error) {
-      console.error('Reset password error:', error);
-      
-      // Message générique
-      return {
-        success: true,
-        message: 'Si cette adresse email est enregistrée, vous recevrez un lien de réinitialisation.'
+        message:
+          'Si un compte existe pour cette adresse, un lien de réinitialisation vient d’être envoyé. Pensez à vérifier vos spams.'
       };
     }
-  }
 
-  /**
-   * Mise à jour du mot de passe (après reset)
-   */
-  static async updatePassword(newPassword) {
-    try {
-      const { data, error } = await supabase.auth.updateUser({
-        password: newPassword
-      });
-
-      if (error) {
-        throw error;
-      }
-
-      return {
-        success: true,
-        user: data.user
-      };
-    } catch (error) {
-      console.error('Update password error:', error);
-      
-      let message = 'Impossible de mettre à jour le mot de passe.';
-      
-      if (error.message.includes('same')) {
-        message = 'Le nouveau mot de passe doit être différent de l\'ancien.';
-      } else if (error.message.includes('password')) {
-        message = 'Le mot de passe doit contenir au moins 8 caractères.';
-      }
-
-      throw new Error(message);
+    static async updatePassword(newPassword) {
+      const pending = requireClient();
+      if (pending) return pending;
+      const { data, error } = await client.auth.updateUser({ password: newPassword });
+      if (error) throw new Error(humanizeError(error));
+      return { success: true, user: data.user };
     }
-  }
 
-  /**
-   * Déconnexion
-   */
-  static async signOut() {
-    try {
-      const { error } = await supabase.auth.signOut();
+    static async updateProfile(attributes) {
+      const pending = requireClient();
+      if (pending) return pending;
+      const { data, error } = await client.auth.updateUser({ data: attributes });
+      if (error) throw new Error(humanizeError(error));
+      return { success: true, user: data.user };
+    }
 
-      if (error) {
-        throw error;
-      }
-
+    static async signOut() {
+      if (!client) return { success: true };
+      const { error } = await client.auth.signOut();
+      if (error) throw new Error(humanizeError(error));
       return { success: true };
-    } catch (error) {
-      console.error('Sign out error:', error);
-      throw new Error('Erreur lors de la déconnexion.');
     }
-  }
 
-  /**
-   * Récupérer l'utilisateur connecté
-   */
-  static async getUser() {
-    try {
-      const { data: { user }, error } = await supabase.auth.getUser();
-
-      if (error) {
-        throw error;
+    static async getUser() {
+      if (!client) return null;
+      try {
+        const { data } = await client.auth.getUser();
+        return data ? data.user : null;
+      } catch (error) {
+        console.warn('[auth] getUser :', error.message);
+        return null;
       }
-
-      return user;
-    } catch (error) {
-      console.error('Get user error:', error);
-      return null;
     }
-  }
 
-  /**
-   * Récupérer la session active
-   */
-  static async getSession() {
-    try {
-      const { data: { session }, error } = await supabase.auth.getSession();
-
-      if (error) {
-        throw error;
+    static async getSession() {
+      if (!client) return null;
+      try {
+        const { data } = await client.auth.getSession();
+        return data ? data.session : null;
+      } catch (error) {
+        console.warn('[auth] getSession :', error.message);
+        return null;
       }
-
-      return session;
-    } catch (error) {
-      console.error('Get session error:', error);
-      return null;
     }
-  }
 
-  /**
-   * Écouter les changements d'authentification
-   */
-  static onAuthStateChange(callback) {
-    return supabase.auth.onAuthStateChange((event, session) => {
-      callback(event, session);
-    });
-  }
+    static async getAccessToken() {
+      const session = await this.getSession();
+      return session ? session.access_token : null;
+    }
 
-  /**
-   * Vérifier si l'utilisateur est connecté
-   */
-  static async isAuthenticated() {
-    const session = await this.getSession();
-    return !!session;
-  }
+    static async onAuthStateChange(callback) {
+      if (!client) return { data: { subscription: { unsubscribe() {} } } };
+      return client.auth.onAuthStateChange((event, session) => callback(event, session));
+    }
 
-  /**
-   * Obtenir le provider de connexion (google, email, etc.)
-   */
-  static async getAuthProvider() {
-    try {
+    static async isAuthenticated() {
+      return !!(await this.getSession());
+    }
+
+    static async getAuthProvider() {
       const user = await this.getUser();
-      
       if (!user) return null;
-
-      // Le provider est dans app_metadata ou user_metadata
-      const provider = user.app_metadata?.provider || 'email';
-      
-      return provider;
-    } catch (error) {
-      console.error('Get provider error:', error);
-      return null;
+      return (user.app_metadata && user.app_metadata.provider) || 'email';
     }
-  }
 
-  /**
-   * Vérifier si l'utilisateur a confirmé son email
-   */
-  static async isEmailConfirmed() {
-    try {
+    static async isEmailConfirmed() {
       const user = await this.getUser();
-      return user?.email_confirmed_at != null;
-    } catch (error) {
-      return false;
-    }
-  }
-}
-
-// Helper pour afficher les messages utilisateur
-class AuthUI {
-  static showLoading(button, message = 'Chargement...') {
-    if (button) {
-      button.disabled = true;
-      button.dataset.originalText = button.textContent;
-      button.innerHTML = `<span style="display: inline-flex; align-items: center; gap: 0.5rem;">
-        <svg style="animation: spin 1s linear infinite; width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <circle cx="12" cy="12" r="10" stroke-width="4" opacity="0.25"/>
-          <path d="M12 2a10 10 0 0 1 10 10" stroke-width="4" stroke-linecap="round"/>
-        </svg>
-        ${message}
-      </span>`;
-      
-      // Ajouter l'animation spin si elle n'existe pas
-      if (!document.getElementById('spin-animation')) {
-        const style = document.createElement('style');
-        style.id = 'spin-animation';
-        style.textContent = `
-          @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-        `;
-        document.head.appendChild(style);
-      }
+      return !!(user && user.email_confirmed_at);
     }
   }
 
-  static hideLoading(button) {
-    if (button && button.dataset.originalText) {
-      button.disabled = false;
-      button.textContent = button.dataset.originalText;
+
+  window.SupabaseAuth = SupabaseAuth;
+  window.AuthUI = AuthUI;
+  window.AuthValidator = AuthValidator;
+  window.supabaseClient = client;
+  window.__supabaseAuthReady = Promise.resolve();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!client) {
+      console.warn('[auth] Mode dégradé —', initError && initError.message);
     }
-  }
-
-  static showMessage(message, type = 'success') {
-    if (window.showToast) {
-      window.showToast(message, type);
-    } else {
-      alert(message);
-    }
-  }
-
-  static showError(error) {
-    const message = error.message || 'Une erreur est survenue.';
-    this.showMessage(message, 'error');
-  }
-}
-
-// Validation côté client
-class AuthValidator {
-  static validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  }
-
-  static validatePassword(password) {
-    return password && password.length >= 8;
-  }
-
-  static validatePasswordMatch(password, confirmPassword) {
-    return password === confirmPassword;
-  }
-
-  static validateFullName(name) {
-    return name && name.trim().length >= 2;
-  }
-}
-
-// Export pour utilisation globale
-window.SupabaseAuth = SupabaseAuth;
-window.AuthUI = AuthUI;
-window.AuthValidator = AuthValidator;
-window.supabaseClient = supabase; // Pour usage avancé si nécessaire
-
-// Promesse résolue que les pages peuvent await pour attendre que le module soit prêt
-window.__supabaseAuthReady = Promise.resolve();
-
-// Log de disponibilité
-console.log('✅ Supabase Auth Module loaded');
-console.log('   - Google OAuth available');
-console.log('   - Email/Password available');
+  });
+})();

@@ -225,6 +225,21 @@ CREATE INDEX IF NOT EXISTS idx_contact_status ON contact_messages(status);
 
 
 -- ─────────────────────────────────────────────────────────────────────
+-- 6 bis. NEWSLETTER
+-- ─────────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+  id              BIGSERIAL PRIMARY KEY,
+  email           TEXT UNIQUE NOT NULL,
+  name            TEXT,
+  subscribed_at   TIMESTAMPTZ DEFAULT NOW(),
+  is_active       BOOLEAN DEFAULT TRUE,
+  unsubscribed_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_newsletter_email ON newsletter_subscribers(email);
+
+
+-- ─────────────────────────────────────────────────────────────────────
 -- 7. PROFILS UTILISATEURS (lié à Supabase Auth)
 -- ─────────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS profiles (
@@ -308,6 +323,13 @@ CREATE POLICY "payments_insert" ON payments
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "contact_insert" ON contact_messages
   FOR INSERT WITH CHECK (TRUE);
+
+-- newsletter_subscribers : inscription publique (aucune lecture publique)
+ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "newsletter_insert" ON newsletter_subscribers
+  FOR INSERT WITH CHECK (TRUE);
+CREATE POLICY "newsletter_update" ON newsletter_subscribers
+  FOR UPDATE USING (TRUE) WITH CHECK (TRUE);
 
 -- profiles : chaque utilisateur voit et modifie son propre profil
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;

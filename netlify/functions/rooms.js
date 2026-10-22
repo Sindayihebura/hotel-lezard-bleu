@@ -41,8 +41,8 @@ const DEFAULT_ROOMS = [
     capacity_adults: 2,
     capacity_children: 1,
     surface_m2: 50,
-    photo_main: '/assets/images/hero_hotel.jpg',
-    photos: ['/assets/images/hero_hotel.jpg'],
+    photo_main: '/assets/images/chambre_deluxe.jpg',
+    photos: ['/assets/images/chambre_deluxe.jpg', '/assets/images/hero_hotel.jpg'],
     amenities: ['Terrasse privée', 'Vue jardin tropical', 'Climatisation', 'WiFi haut débit', 'Coffre-fort', 'Minibar', 'TV satellite', 'Salle de bain italienne'],
     is_active: true,
     sort_order: 2

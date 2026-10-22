@@ -3,467 +3,456 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réservation en Ligne | Le Lézard Bleu — Hôtel Bujumbura</title>
-  <meta name="description" content="Réservez votre séjour à l'Hôtel Le Lézard Bleu à Bujumbura. Paiement sécurisé en BIF ou USD via Lumicash, EcoCash, cartes bancaires.">
+  <title>Réserver votre séjour | Hôtel Le Lézard Bleu &amp; Spa — Bujumbura</title>
+  <meta name="description" content="Réservez votre chambre à l'Hôtel Le Lézard Bleu & Spa à Bujumbura. Paiement en BIF ou USD : espèces, Lumicash, EcoCash, virement bancaire ou carte.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <script src="/env-config.js"></script>
+  <script src="/vendor/supabase.js"></script>
+  <script src="/assets/js/forms.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/supabase-auth.js"></script>
+  <script src="/assets/js/app.js"></script>
 </head>
 <body>
 
-  <!-- Header (copié depuis index.html) -->
-  <header class="header-navbar">
+    <!-- EN-TÊTE -->
+<header class="header-navbar">
     <div class="container nav-container">
-      <a href="/index.html" class="nav-logo">
-        <div class="nav-logo-icon">L</div>
-        <div class="nav-logo-text">
+      <a href="/index.html" class="nav-logo" aria-label="Le Lézard Bleu — Accueil">
+        <span class="nav-logo-icon" aria-hidden="true">L</span>
+        <span class="nav-logo-text">
           <span class="nav-brand-title">LE LÉZARD BLEU</span>
-          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
-        </div>
+          <span class="nav-brand-subtitle">Bujumbura ★★★★★</span>
+        </span>
       </a>
-      <nav>
+
+      <nav class="nav-desktop" aria-label="Navigation principale">
         <ul class="nav-menu">
           <li><a href="/index.html" class="nav-link">Accueil</a></li>
-          <li><a href="/presentation.html" class="nav-link">Présentation</a></li>
-          <li><a href="/chambres.html" class="nav-link">Suites & Villas</a></li>
-          <li><a href="/reservation.html" class="nav-link active">Réservation</a></li>
+          <li><a href="/presentation.html" class="nav-link">Hôtel</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réserver</a></li>
           <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
-          <li><a href="/services.html" class="nav-link">Services & Resto</a></li>
+          <li><a href="/services.html" class="nav-link">Services</a></li>
           <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
           <li><a href="/offres.html" class="nav-link">Offres</a></li>
           <li><a href="/contact.html" class="nav-link">Contact</a></li>
         </ul>
       </nav>
-      <div style="display: flex; align-items: center; gap: 0.85rem;">
-        <div class="currency-switcher">
-          <button type="button" class="currency-btn active" data-currency="BIF">🇧🇮 BIF</button>
-          <button type="button" class="currency-btn" data-currency="USD">💵 USD ($)</button>
+
+      <div class="nav-actions">
+        <div class="currency-switcher" role="group" aria-label="Devise d'affichage">
+          <button type="button" class="currency-btn" data-currency="BIF" aria-pressed="true">BIF</button>
+          <button type="button" class="currency-btn" data-currency="USD" aria-pressed="false">USD</button>
         </div>
-        <a href="/reservation.html" class="btn btn-gold" style="padding: 0.65rem 1.25rem;">Réserver</a>
-        <a href="/login.html" class="btn btn-outline-gold" style="padding:0.65rem 1rem;font-size:0.85rem;" id="authButton">Connexion</a>
-        <button id="mobileToggle" class="mobile-toggle" aria-label="Menu Mobile">☰</button>
+        <a href="/reservation.html" class="btn btn-gold nav-cta">Réserver</a>
+        <a href="/login.html" class="btn btn-outline-gold nav-auth" id="authButton">Connexion</a>
+        <button id="mobileToggle" class="mobile-toggle" type="button"
+                aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileDrawer">☰</button>
       </div>
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
-  <aside id="mobileDrawer" class="mobile-drawer">
-    <button id="drawerClose" class="drawer-close" aria-label="Fermer">✕</button>
-    <div style="margin-bottom: 1.5rem; text-align: center;">
-      <div class="currency-switcher" style="margin-top: 0.5rem; justify-content: center;">
-        <button type="button" class="currency-btn active" data-currency="BIF">🇧🇮 BIF</button>
-        <button type="button" class="currency-btn" data-currency="USD">💵 USD ($)</button>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menu mobile" aria-hidden="true">
+    <button id="drawerClose" class="drawer-close" type="button" aria-label="Fermer le menu">✕</button>
+
+    <div class="drawer-currency">
+      <span class="drawer-currency-label">Devise d'affichage</span>
+      <div class="currency-switcher" role="group" aria-label="Devise d'affichage (menu)">
+        <button type="button" class="currency-btn" data-currency="BIF">🇧🇮 BIF</button>
+        <button type="button" class="currency-btn" data-currency="USD">💵 USD</button>
       </div>
     </div>
-    <ul class="drawer-menu">
-      <li><a href="/index.html" class="drawer-link">Accueil</a></li>
-      <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
-      <li><a href="/reservation.html" class="drawer-link">Réservation</a></li>
-      <li><a href="/contact.html" class="drawer-link">Contact</a></li>
-    </ul>
-  </aside>
 
-  <!-- Page Content -->
-  <div style="padding-top: 120px; min-height: 100vh; background: var(--bg-dark-deep);">
-    <section class="section-padding">
+    <div class="drawer-nav">
+      <ul class="drawer-menu">
+        <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+        <li><a href="/presentation.html" class="drawer-link">Présentation</a></li>
+        <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
+        <li><a href="/reservation.html" class="drawer-link">Réservation en ligne</a></li>
+        <li><a href="/galerie.html" class="drawer-link">Galerie photos</a></li>
+        <li><a href="/services.html" class="drawer-link">Services & Restaurant</a></li>
+        <li><a href="/conferences.html" class="drawer-link">Conférences & Événements</a></li>
+        <li><a href="/offres.html" class="drawer-link">Offres spéciales</a></li>
+        <li><a href="/contact.html" class="drawer-link">Contact & Accès</a></li>
+        <li><a href="/account.html" class="drawer-link">Mon compte</a></li>
+        <li><a href="/login.html" class="drawer-link" id="mobileAuthLink">Connexion</a></li>
+      </ul>
+    </div>
+
+    <div class="drawer-footer">
+      <a href="/reservation.html" class="btn btn-gold">Réserver maintenant</a>
+      <a href="tel:+25722000000" class="drawer-link" style="font-size:0.95rem;">📞 +257 22 00 00 00</a>
+      <a href="mailto:reservation@lezardbleu-hotel.bi" class="drawer-link" style="font-size:0.95rem;">✉️ reservation@lezardbleu-hotel.bi</a>
+    </div>
+  </aside>
+  <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+
+
+  <main id="main" style="padding-top: 130px; min-height: 100vh; background: var(--bg-dark-deep);">
+    <section class="section-padding" style="padding-top: 2rem;">
       <div class="container">
-        
-        <!-- Page Header -->
-        <div class="text-center" style="margin-bottom: 4rem;">
+
+        <div class="text-center" style="margin-bottom: 3rem;">
           <span class="section-subtitle">RÉSERVATION EN LIGNE</span>
-          <h1 class="section-title">Réservez Votre Séjour</h1>
+          <h1 class="section-title">Réservez votre séjour</h1>
           <p class="section-desc">
-            Complétez ce formulaire pour réserver votre chambre. Nous acceptons les paiements en BIF et USD.
+            Trois étapes, deux minutes. Aucun paiement n'est débité en ligne :
+            notre réception confirme votre arrivée et le mode de règlement.
           </p>
         </div>
 
-        <!-- Booking Form Container -->
-        <div style="display: grid; grid-template-columns: 1fr 400px; gap: 3rem; align-items: start;">
-          
-          <!-- Left: Booking Form -->
-          <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2.5rem;">
-            
-            <form id="bookingForm">
-              
-              <!-- Step 1: Dates & Room Selection -->
-              <div class="form-step active" id="step1">
-                <h3 style="font-family: var(--font-heading); color: var(--accent-gold-primary); margin-bottom: 2rem;">
-                  Étape 1 : Dates & Chambre
-                </h3>
+        <div class="reservation-layout">
 
-                <div class="form-group">
-                  <label for="checkIn" class="form-label">📅 Date d'arrivée</label>
-                  <input type="date" id="checkIn" name="checkIn" class="form-input" required>
+          <!-- ---------------- FORMULAIRE ---------------- -->
+          <div class="reservation-card">
+
+            <ol class="steps-indicator" aria-label="Étapes de la réservation">
+              <li class="step is-active" data-step-indicator="1"><span>1</span> Dates &amp; chambre</li>
+              <li class="step" data-step-indicator="2"><span>2</span> Coordonnées</li>
+              <li class="step" data-step-indicator="3"><span>3</span> Paiement</li>
+            </ol>
+
+            <div id="bookingAlert" class="alert" role="status" hidden></div>
+
+            <form id="bookingForm" action="/reservation.html" method="post" novalidate>
+
+              <!-- ÉTAPE 1 -->
+              <fieldset class="form-step is-active" id="step1">
+                <legend class="sr-only">Étape 1 : dates et chambre</legend>
+
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="checkIn" class="form-label">Date d'arrivée</label>
+                    <input type="date" id="checkIn" name="checkIn" class="form-input"
+                           required data-min="today" data-label="la date d'arrivée">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="checkOut" class="form-label">Date de départ</label>
+                    <input type="date" id="checkOut" name="checkOut" class="form-input"
+                           required data-after="#checkIn" data-label="la date d'arrivée">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="guests" class="form-label">Voyageurs</label>
+                    <input type="number" id="guests" name="guests" class="form-input"
+                           min="1" max="20" step="1" value="2" inputmode="numeric" required>
+                    <p class="form-hint" id="capacityHint">Adultes et enfants, chambre comprise.</p>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="roomSelect" class="form-label">Catégorie de chambre</label>
+                    <select id="roomSelect" name="roomId" class="form-select" required>
+                      <option value="">Chargement des chambres…</option>
+                    </select>
+                    <p class="form-hint" id="roomHint">Les tarifs s'affichent dans la devise choisie.</p>
+                  </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="checkOut" class="form-label">📅 Date de départ</label>
-                  <input type="date" id="checkOut" name="checkOut" class="form-input" required>
+                <div id="nightsSummary" class="booking-inline-summary" hidden></div>
+
+                <div class="step-actions">
+                  <button type="button" class="btn btn-gold" id="nextToStep2" style="flex: 1;">
+                    Continuer
+                  </button>
                 </div>
+              </fieldset>
 
-                <div class="form-group">
-                  <label for="guests" class="form-label">👥 Nombre de personnes</label>
-                  <input type="number" id="guests" name="guests" class="form-input"
-                         min="1" max="20" value="2" placeholder="Ex: 2" required>
-                  <span style="font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem;">Entrez le nombre exact de personnes</span>
-                </div>
+              <!-- ÉTAPE 2 -->
+              <fieldset class="form-step" id="step2" hidden>
+                <legend class="sr-only">Étape 2 : vos coordonnées</legend>
 
-                <div class="form-group">
-                  <label for="roomSelect" class="form-label">🛏️ Catégorie de chambre</label>
-                  <select id="roomSelect" name="roomId" class="form-select" required>
-                    <option value="">-- Choisissez une chambre --</option>
-                    <option value="1" data-price="3900000">Suite Présidentielle (3 900 000 BIF/nuit)</option>
-                    <option value="2" data-price="2280000">Chambre Deluxe (2 280 000 BIF/nuit)</option>
-                    <option value="3" data-price="2700000">Chambre Executive (2 700 000 BIF/nuit)</option>
-                  </select>
-                </div>
-
-                <button type="button" class="btn btn-gold" style="width: 100%; margin-top: 1.5rem;" onclick="goToStep(2)">
-                  Continuer →
-                </button>
-              </div>
-
-              <!-- Step 2: Guest Information -->
-              <div class="form-step" id="step2" style="display: none;">
-                <h3 style="font-family: var(--font-heading); color: var(--accent-gold-primary); margin-bottom: 2rem;">
-                  Étape 2 : Vos Informations
-                </h3>
-
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                <div class="form-grid">
                   <div class="form-group">
                     <label for="firstName" class="form-label">Prénom</label>
-                    <input type="text" id="firstName" name="firstName" class="form-input" required>
+                    <input type="text" id="firstName" name="firstName" class="form-input"
+                           autocomplete="given-name" placeholder="Prénom" maxlength="60"
+                           data-rule="name" required>
                   </div>
 
                   <div class="form-group">
                     <label for="lastName" class="form-label">Nom</label>
-                    <input type="text" id="lastName" name="lastName" class="form-input" required>
+                    <input type="text" id="lastName" name="lastName" class="form-input"
+                           autocomplete="family-name" placeholder="Nom de famille" maxlength="60"
+                           data-rule="name" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email" class="form-label">Adresse e-mail</label>
+                    <input type="email" id="email" name="email" class="form-input"
+                           autocomplete="email" inputmode="email" spellcheck="false"
+                           placeholder="votre@email.com" maxlength="180" required>
+                    <p class="form-hint">La confirmation de réservation y sera envoyée.</p>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone" class="form-label">Téléphone</label>
+                    <input type="tel" id="phone" name="phone" class="form-input"
+                           autocomplete="tel" inputmode="tel" placeholder="+257 79 00 00 00"
+                           maxlength="25" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="country" class="form-label">Pays de résidence</label>
+                    <select id="country" name="country" class="form-select" required>
+                      <option value="BI" selected>Burundi</option>
+                      <option value="RW">Rwanda</option>
+                      <option value="CD">République démocratique du Congo</option>
+                      <option value="TZ">Tanzanie</option>
+                      <option value="KE">Kenya</option>
+                      <option value="UG">Ouganda</option>
+                      <option value="ZA">Afrique du Sud</option>
+                      <option value="BE">Belgique</option>
+                      <option value="FR">France</option>
+                      <option value="CH">Suisse</option>
+                      <option value="CA">Canada</option>
+                      <option value="US">États-Unis</option>
+                      <option value="AE">Émirats arabes unis</option>
+                      <option value="CN">Chine</option>
+                      <option value="IN">Inde</option>
+                      <option value="OTHER">Autre pays</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="arrivalTime" class="form-label" data-optional="true">Heure d'arrivée estimée</label>
+                    <select id="arrivalTime" name="arrivalTime" class="form-select">
+                      <option value="">Je ne sais pas encore</option>
+                      <option value="before-14">Avant 14h00</option>
+                      <option value="14-18">Entre 14h00 et 18h00</option>
+                      <option value="18-22">Entre 18h00 et 22h00</option>
+                      <option value="after-22">Après 22h00</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group form-col-span">
+                    <label for="specialRequests" class="form-label" data-optional="true">Demandes particulières</label>
+                    <textarea id="specialRequests" name="specialRequests" class="form-textarea" rows="4"
+                              maxlength="600"
+                              placeholder="Lit bébé, vue lac, étage élevé, allergies alimentaires, transfert aéroport…"></textarea>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="email" class="form-label">📧 Email</label>
-                  <input type="email" id="email" name="email" class="form-input" required>
+                <div class="step-actions">
+                  <button type="button" class="btn btn-outline-gold" id="backToStep1" style="flex: 1;">Retour</button>
+                  <button type="button" class="btn btn-gold" id="nextToStep3" style="flex: 2;">Continuer</button>
                 </div>
+              </fieldset>
 
-                <div class="form-group">
-                  <label for="phone" class="form-label">📞 Téléphone</label>
-                  <input type="tel" id="phone" name="phone" class="form-input" placeholder="+257 79 00 00 00" required>
-                </div>
+              <!-- ÉTAPE 3 -->
+              <fieldset class="form-step" id="step3" hidden>
+                <legend class="sr-only">Étape 3 : mode de paiement</legend>
 
-                <div class="form-group">
-                  <label for="country" class="form-label">🌍 Pays de résidence</label>
-                  <select id="country" name="country" class="form-select" required>
-                    <option value="BI">Burundi</option>
-                    <option value="RW">Rwanda</option>
-                    <option value="CD">RD Congo</option>
-                    <option value="TZ">Tanzanie</option>
-                    <option value="KE">Kenya</option>
-                    <option value="BE">Belgique</option>
-                    <option value="FR">France</option>
-                    <option value="US">États-Unis</option>
-                    <option value="OTHER">Autre</option>
-                  </select>
-                </div>
+                <div class="payment-methods" role="radiogroup" aria-label="Mode de paiement">
+                  <label class="payment-method">
+                    <input type="radio" name="paymentMethod" value="cash" required>
+                    <span class="payment-method-icon" aria-hidden="true">💵</span>
+                    <span class="payment-method-info">
+                      <strong>Espèces à l'arrivée</strong>
+                      <small>BIF ou USD, à la réception</small>
+                    </span>
+                  </label>
 
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                  <button type="button" class="btn btn-outline-gold" style="flex: 1;" onclick="goToStep(1)">
-                    ← Retour
-                  </button>
-                  <button type="button" class="btn btn-gold" style="flex: 2;" onclick="goToStep(3)">
-                    Continuer →
-                  </button>
-                </div>
-              </div>
+                  <label class="payment-method">
+                    <input type="radio" name="paymentMethod" value="lumicash">
+                    <span class="payment-method-icon" aria-hidden="true">📱</span>
+                    <span class="payment-method-info">
+                      <strong>Lumicash</strong>
+                      <small>Mobile money Lumitel</small>
+                    </span>
+                  </label>
 
-              <!-- Step 3: Payment Method -->
-              <div class="form-step" id="step3" style="display: none;">
-                <h3 style="font-family: var(--font-heading); color: var(--accent-gold-primary); margin-bottom: 2rem;">
-                  Étape 3 : Mode de Paiement
-                </h3>
+                  <label class="payment-method">
+                    <input type="radio" name="paymentMethod" value="ecocash">
+                    <span class="payment-method-icon" aria-hidden="true">📲</span>
+                    <span class="payment-method-info">
+                      <strong>EcoCash</strong>
+                      <small>Mobile money Econet Leo</small>
+                    </span>
+                  </label>
 
-                <div class="payment-methods">
-                  <div class="payment-method" data-method="lumicash">
-                    <span class="payment-method-icon">📱</span>
-                    <div class="payment-method-info">
-                      <h4>Lumicash</h4>
-                      <p>Mobile Money Lumitel</p>
-                    </div>
-                  </div>
+                  <label class="payment-method">
+                    <input type="radio" name="paymentMethod" value="bank">
+                    <span class="payment-method-icon" aria-hidden="true">🏦</span>
+                    <span class="payment-method-info">
+                      <strong>Virement bancaire</strong>
+                      <small>Banques du Burundi</small>
+                    </span>
+                  </label>
 
-                  <div class="payment-method" data-method="ecocash">
-                    <span class="payment-method-icon">💵</span>
-                    <div class="payment-method-info">
-                      <h4>EcoCash</h4>
-                      <p>Mobile Money Econet</p>
-                    </div>
-                  </div>
-
-                  <div class="payment-method" data-method="bank">
-                    <span class="payment-method-icon">🏦</span>
-                    <div class="payment-method-info">
-                      <h4>Banque</h4>
-                      <p>Virement bancaire</p>
-                    </div>
-                  </div>
-
-                  <div class="payment-method" data-method="card">
-                    <span class="payment-method-icon">💳</span>
-                    <div class="payment-method-info">
-                      <h4>Carte</h4>
-                      <p>Visa / MasterCard</p>
-                    </div>
-                  </div>
-
-                  <div class="payment-method" data-method="cash">
-                    <span class="payment-method-icon">💰</span>
-                    <div class="payment-method-info">
-                      <h4>Sur Place</h4>
-                      <p>Paiement à l'arrivée</p>
-                    </div>
-                  </div>
-                </div>
-
-                <input type="hidden" id="paymentMethod" name="paymentMethod" required>
-
-                <div class="form-group">
-                  <label for="specialRequests" class="form-label">💬 Demandes spéciales (optionnel)</label>
-                  <textarea id="specialRequests" name="specialRequests" class="form-input" rows="4" 
-                            placeholder="Lit bébé, vue lac, étage élevé, allergies alimentaires..."></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
-                    <input type="checkbox" id="terms" name="terms" required style="width: 18px; height: 18px;">
-                    <span style="font-size: 0.9rem;">
-                      J'accepte les <a href="/contact.html" style="color: var(--accent-gold-primary);">conditions générales</a> et la politique de confidentialité
+                  <label class="payment-method">
+                    <input type="radio" name="paymentMethod" value="card">
+                    <span class="payment-method-icon" aria-hidden="true">💳</span>
+                    <span class="payment-method-info">
+                      <strong>Carte bancaire</strong>
+                      <small>Visa / Mastercard sur place</small>
                     </span>
                   </label>
                 </div>
 
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                  <button type="button" class="btn btn-outline-gold" style="flex: 1;" onclick="goToStep(2)">
-                    ← Retour
-                  </button>
-                  <button type="submit" class="btn btn-gold" style="flex: 2;">
-                    ✓ Confirmer la Réservation
+                <p class="form-hint" style="margin: 1rem 0 1.25rem;">
+                  Aucun prélèvement automatique : la réception vous confirme le montant
+                  et les modalités (acompte éventuel) sous 24 h.
+                </p>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                  <label class="form-check" for="terms">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <span>
+                      J'accepte les <a href="/legal.html#cgv" target="_blank" rel="noopener">conditions générales de vente</a>
+                      et la <a href="/legal.html#confidentialite" target="_blank" rel="noopener">politique de confidentialité</a>,
+                      ainsi que la politique d'annulation (48 h avant l'arrivée).
+                    </span>
+                  </label>
+                </div>
+
+                <div class="step-actions">
+                  <button type="button" class="btn btn-outline-gold" id="backToStep2" style="flex: 1;">Retour</button>
+                  <button type="submit" class="btn btn-gold" id="submitBooking" style="flex: 2;">
+                    Confirmer la réservation
                   </button>
                 </div>
-              </div>
+              </fieldset>
 
             </form>
           </div>
 
-          <!-- Right: Booking Summary -->
-          <div style="position: sticky; top: 140px;">
+          <!-- ---------------- RÉSUMÉ ---------------- -->
+          <aside class="reservation-summary" aria-label="Résumé de la réservation">
             <div class="booking-summary">
-              <h3 style="font-family: var(--font-heading); color: var(--accent-gold-primary); margin-bottom: 1.5rem; font-size: 1.25rem;">
-                📋 Résumé de Réservation
-              </h3>
+              <h2 style="font-family: var(--font-heading); color: var(--accent-gold-primary); margin-bottom: 1.25rem; font-size: 1.15rem;">
+                Votre réservation
+              </h2>
 
               <div id="summaryContent">
-                <div class="empty-state" style="padding: 2rem 1rem;">
-                  <div class="empty-state-icon">📅</div>
-                  <p style="font-size: 0.9rem; color: var(--text-muted);">
-                    Remplissez le formulaire pour voir le résumé de votre réservation
+                <div class="empty-state" style="padding: 1.5rem 0.5rem;">
+                  <div class="empty-state-icon" aria-hidden="true">🗓️</div>
+                  <p class="empty-state-text">
+                    Choisissez vos dates et votre chambre pour voir le détail et le montant.
                   </p>
                 </div>
               </div>
             </div>
 
-            <!-- Trust Badges -->
-            <div style="background: var(--bg-dark-card); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 1.5rem;">
-              <h4 style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-muted); text-align: center;">
-                🔒 Réservation Sécurisée
-              </h4>
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; font-size: 0.75rem; color: var(--text-muted);">
-                <div>✓ Paiement Sécurisé</div>
-                <div>✓ Annulation Flexible</div>
-                <div>✓ Confirmation Immédiate</div>
-              </div>
+            <div class="summary-trust">
+              <p>🔒 Demande sans paiement immédiat</p>
+              <p>✓ Annulation gratuite jusqu'à 48 h avant</p>
+              <p>✓ Confirmation par e-mail et téléphone</p>
             </div>
-          </div>
 
+            <div class="summary-help">
+              <p>Besoin d'aide pour réserver ?</p>
+              <a href="tel:+25722000000" class="btn btn-outline-gold" style="width: 100%;">📞 +257 22 00 00 00</a>
+              <a href="https://wa.me/25779000000" rel="noopener" class="btn btn-outline-gold" style="width: 100%;">💬 WhatsApp</a>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+    <!-- PIED DE PAGE -->
+<footer class="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer-col">
+          <div class="nav-logo" style="margin-bottom: 1.25rem;">
+            <span class="nav-logo-icon" aria-hidden="true">L</span>
+            <span class="nav-logo-text">
+              <span class="nav-brand-title">LE LÉZARD BLEU</span>
+              <span class="nav-brand-subtitle">Hôtel &amp; Spa ★★★★★</span>
+            </span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.25rem;">
+            L'excellence hôtelière au bord du Lac Tanganyika : suites de prestige,
+            gastronomie, spa et espaces de conférence à Bujumbura.
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.82rem;">
+            Paiements : BIF &amp; USD · Lumicash · EcoCash · Visa · Virement bancaire
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="/presentation.html">L'hôtel &amp; ses valeurs</a></li>
+            <li><a href="/chambres.html">Chambres &amp; suites</a></li>
+            <li><a href="/reservation.html">Réservation en ligne</a></li>
+            <li><a href="/services.html">Restaurant &amp; spa</a></li>
+            <li><a href="/conferences.html">Séminaires &amp; mariages</a></li>
+            <li><a href="/offres.html">Offres &amp; privilèges</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Conciergerie</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📍</span>
+            <span>Avenue de la Plage, bord du Lac Tanganyika, Bujumbura, Burundi</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📞</span>
+            <span><a href="tel:+25722000000">+257 22 00 00 00</a> · 24h/24</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">✉️</span>
+            <span><a href="mailto:reservation@lezardbleu-hotel.bi">reservation@lezardbleu-hotel.bi</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">💬</span>
+            <span>WhatsApp : <a href="https://wa.me/25779000000" rel="noopener">+257 79 00 00 00</a></span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Newsletter Privilège</h4>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+            Offres exclusives et invitations privées, deux fois par mois. Pas de spam.
+          </p>
+          <form id="newsletterForm" action="#" method="post">
+            <label for="newsletterEmail" class="sr-only">Votre adresse e-mail</label>
+            <div style="display: flex; gap: 0.5rem; align-items: stretch;">
+              <input type="email" id="newsletterEmail" name="email" class="form-input"
+                     placeholder="votre@email.com" autocomplete="email" required
+                     style="font-size: 0.85rem; padding: 0.65rem 0.85rem; min-height: 44px;">
+              <button type="submit" class="btn btn-gold" style="padding: 0.65rem 1.1rem;">OK</button>
+            </div>
+            <p class="form-hint" style="margin-top: 0.6rem;">
+              En vous inscrivant, vous acceptez notre
+              <a href="/legal.html#confidentialite" style="color: var(--accent-gold-primary);">politique de confidentialité</a>.
+            </p>
+          </form>
         </div>
 
       </div>
-    </section>
-  </div>
 
-  <!-- Footer -->
-  <footer class="footer-section">
-    <div class="container">
-      <div class="footer-bottom" style="padding: 2rem 0;">
-        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu & Spa — Bujumbura, Burundi.</div>
+      <div class="footer-bottom">
+        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu &amp; Spa — Bujumbura, Burundi. Tous droits réservés.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="/legal.html#mentions">Mentions légales</a>
+          <a href="/legal.html#confidentialite">Confidentialité</a>
+          <a href="/legal.html#cgv">CGV</a>
+          <a href="/contact.html">Contact</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <script src="/assets/js/main.js"></script>
-  <script src="/assets/js/app.js"></script>
-  
-  <script>
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // Initialize dates
-    const checkInInput = document.getElementById('checkIn');
-    const checkOutInput = document.getElementById('checkOut');
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    
-    checkInInput.value = today.toISOString().split('T')[0];
-    checkInInput.min = today.toISOString().split('T')[0];
-    checkOutInput.value = tomorrow.toISOString().split('T')[0];
-    checkOutInput.min = tomorrow.toISOString().split('T')[0];
 
-    // Update min checkout date when checkin changes
-    checkInInput.addEventListener('change', () => {
-      const nextDay = new Date(checkInInput.value);
-      nextDay.setDate(nextDay.getDate() + 1);
-      checkOutInput.min = nextDay.toISOString().split('T')[0];
-      if (checkOutInput.value <= checkInInput.value) {
-        checkOutInput.value = nextDay.toISOString().split('T')[0];
-      }
-      updateSummary();
-    });
 
-    checkOutInput.addEventListener('change', updateSummary);
-    document.getElementById('roomSelect').addEventListener('change', updateSummary);
 
-    // Step navigation
-    function goToStep(stepNumber) {
-      // Hide all steps
-      document.querySelectorAll('.form-step').forEach(step => {
-        step.style.display = 'none';
-      });
-      // Show target step
-      document.getElementById('step' + stepNumber).style.display = 'block';
-      // Scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
-    // Payment method selection
-    document.querySelectorAll('.payment-method').forEach(method => {
-      method.addEventListener('click', function() {
-        document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-        this.classList.add('selected');
-        document.getElementById('paymentMethod').value = this.dataset.method;
-      });
-    });
-
-    // Update summary
-    function updateSummary() {
-      const checkIn = checkInInput.value;
-      const checkOut = checkOutInput.value;
-      const roomSelect = document.getElementById('roomSelect');
-      const selectedRoom = roomSelect.options[roomSelect.selectedIndex];
-      
-      if (!checkIn || !checkOut || !selectedRoom.value) {
-        return;
-      }
-
-      const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
-      const pricePerNight = parseInt(selectedRoom.dataset.price);
-      const totalBIF = pricePerNight * nights;
-      
-      const currency = window.currentCurrency || 'BIF';
-      const formattedPrice = window.formatPrice(pricePerNight, currency);
-      const formattedTotal = window.formatPrice(totalBIF, currency);
-
-      document.getElementById('summaryContent').innerHTML = `
-        <div class="booking-summary-item">
-          <span class="booking-summary-label">Chambre</span>
-          <span class="booking-summary-value">${selectedRoom.text.split('(')[0]}</span>
-        </div>
-        <div class="booking-summary-item">
-          <span class="booking-summary-label">Arrivée</span>
-          <span class="booking-summary-value">${new Date(checkIn).toLocaleDateString('fr-FR')}</span>
-        </div>
-        <div class="booking-summary-item">
-          <span class="booking-summary-label">Départ</span>
-          <span class="booking-summary-value">${new Date(checkOut).toLocaleDateString('fr-FR')}</span>
-        </div>
-        <div class="booking-summary-item">
-          <span class="booking-summary-label">Nombre de nuits</span>
-          <span class="booking-summary-value">${nights} nuit${nights > 1 ? 's' : ''}</span>
-        </div>
-        <div class="booking-summary-item">
-          <span class="booking-summary-label">Prix par nuit</span>
-          <span class="booking-summary-value">${formattedPrice}</span>
-        </div>
-        <div class="booking-summary-item">
-          <span class="booking-summary-label">Total</span>
-          <span class="booking-summary-value booking-summary-total">${formattedTotal}</span>
-        </div>
-      `;
-    }
-
-    // Form submission
-    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      if (!document.getElementById('paymentMethod').value) {
-        window.showToast('Veuillez sélectionner un mode de paiement', 'error');
-        return;
-      }
-
-      window.App.Loading.show('Traitement de votre réservation...');
-
-      const formData = new FormData(e.target);
-      const bookingData = {
-        checkIn: formData.get('checkIn'),
-        checkOut: formData.get('checkOut'),
-        guests: formData.get('guests'),
-        roomId: formData.get('roomId'),
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        country: formData.get('country'),
-        paymentMethod: formData.get('paymentMethod'),
-        specialRequests: formData.get('specialRequests'),
-        currency: window.currentCurrency
-      };
-
-      try {
-        const result = await window.App.Booking.create(bookingData);
-        window.App.Loading.hide();
-        
-        if (result.success) {
-          window.showToast('✓ Réservation confirmée ! Consultez votre email.', 'success');
-          setTimeout(() => {
-            window.location.href = '/confirmation.html?booking=' + result.bookingId;
-          }, 2000);
-        } else {
-          window.showToast('Erreur lors de la réservation. Veuillez réessayer.', 'error');
-        }
-      } catch (error) {
-        window.App.Loading.hide();
-        console.error('Booking error:', error);
-        
-        // For demo purposes, show success anyway
-        window.showToast('✓ Réservation enregistrée ! Vous recevrez une confirmation par email.', 'success');
-        setTimeout(() => {
-          window.location.href = '/index.html';
-        }, 3000);
-      }
-    });
-
-    // Load URL parameters if any
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('room_id')) {
-      document.getElementById('roomSelect').value = urlParams.get('room_id');
-      updateSummary();
-    }
-    if (urlParams.has('date_arrivee')) {
-      checkInInput.value = urlParams.get('date_arrivee');
-    }
-    if (urlParams.has('date_depart')) {
-      checkOutInput.value = urlParams.get('date_depart');
-    }
-    if (urlParams.has('nb_personnes')) {
-      document.getElementById('guests').value = urlParams.get('nb_personnes');
-    }
-  </script>
-
+  <script src="/assets/js/pages/reservation.js"></script>
 </body>
 </html>

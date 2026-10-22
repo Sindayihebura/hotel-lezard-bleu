@@ -3,265 +3,295 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon Compte | Le Lézard Bleu Bujumbura</title>
-  <meta name="description" content="Gérez votre compte et vos réservations à l'Hôtel Le Lézard Bleu.">
+  <title>Mon compte | Hôtel Le Lézard Bleu &amp; Spa</title>
+  <meta name="description" content="Gérez votre profil et vos réservations à l'Hôtel Le Lézard Bleu & Spa à Bujumbura.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
   <script src="/env-config.js"></script>
+  <script src="/vendor/supabase.js"></script>
+  <script src="/assets/js/forms.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/supabase-auth.js"></script>
+  <script src="/assets/js/app.js"></script>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header-navbar">
+    <!-- EN-TÊTE -->
+<header class="header-navbar">
     <div class="container nav-container">
-      <a href="/index.html" class="nav-logo">
-        <div class="nav-logo-icon">L</div>
-        <div class="nav-logo-text">
+      <a href="/index.html" class="nav-logo" aria-label="Le Lézard Bleu — Accueil">
+        <span class="nav-logo-icon" aria-hidden="true">L</span>
+        <span class="nav-logo-text">
           <span class="nav-brand-title">LE LÉZARD BLEU</span>
-          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
-        </div>
+          <span class="nav-brand-subtitle">Bujumbura ★★★★★</span>
+        </span>
       </a>
-      <nav>
+
+      <nav class="nav-desktop" aria-label="Navigation principale">
         <ul class="nav-menu">
           <li><a href="/index.html" class="nav-link">Accueil</a></li>
-          <li><a href="/presentation.html" class="nav-link">Présentation</a></li>
-          <li><a href="/chambres.html" class="nav-link">Suites & Villas</a></li>
-          <li><a href="/reservation.html" class="nav-link">Réservation</a></li>
+          <li><a href="/presentation.html" class="nav-link">Hôtel</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réserver</a></li>
           <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
-          <li><a href="/services.html" class="nav-link">Services & Resto</a></li>
+          <li><a href="/services.html" class="nav-link">Services</a></li>
           <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
           <li><a href="/offres.html" class="nav-link">Offres</a></li>
           <li><a href="/contact.html" class="nav-link">Contact</a></li>
         </ul>
       </nav>
-      <div style="display: flex; align-items: center; gap: 0.85rem;">
-        <a href="/reservation.html" class="btn btn-gold" style="padding: 0.65rem 1.25rem;">Réserver</a>
-        <button class="btn btn-outline-gold logout-btn" style="padding:0.65rem 1rem;font-size:0.85rem;">Déconnexion</button>
-        <button id="mobileToggle" class="mobile-toggle" aria-label="Menu Mobile">☰</button>
+
+      <div class="nav-actions">
+        <div class="currency-switcher" role="group" aria-label="Devise d'affichage">
+          <button type="button" class="currency-btn" data-currency="BIF" aria-pressed="true">BIF</button>
+          <button type="button" class="currency-btn" data-currency="USD" aria-pressed="false">USD</button>
+        </div>
+        <a href="/reservation.html" class="btn btn-gold nav-cta">Réserver</a>
+        <a href="/login.html" class="btn btn-outline-gold nav-auth" id="authButton">Connexion</a>
+        <button id="mobileToggle" class="mobile-toggle" type="button"
+                aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileDrawer">☰</button>
       </div>
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
-  <aside id="mobileDrawer" class="mobile-drawer">
-    <div class="drawer-header">
-      <div class="nav-logo-icon" style="margin: 0;">L</div>
-      <span style="font-weight: 600; color: var(--accent-gold-primary);">LE LÉZARD BLEU</span>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menu mobile" aria-hidden="true">
+    <button id="drawerClose" class="drawer-close" type="button" aria-label="Fermer le menu">✕</button>
+
+    <div class="drawer-currency">
+      <span class="drawer-currency-label">Devise d'affichage</span>
+      <div class="currency-switcher" role="group" aria-label="Devise d'affichage (menu)">
+        <button type="button" class="currency-btn" data-currency="BIF">🇧🇮 BIF</button>
+        <button type="button" class="currency-btn" data-currency="USD">💵 USD</button>
+      </div>
     </div>
-    <button id="drawerClose" class="drawer-close">✕</button>
-    <ul class="drawer-menu">
-      <li><a href="/index.html" class="drawer-link">Accueil</a></li>
-      <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
-      <li><a href="/reservation.html" class="drawer-link">Réservation</a></li>
-      <li><a href="/contact.html" class="drawer-link">Contact</a></li>
-      <li><a href="#" class="drawer-link logout-btn">Déconnexion</a></li>
-    </ul>
+
+    <div class="drawer-nav">
+      <ul class="drawer-menu">
+        <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+        <li><a href="/presentation.html" class="drawer-link">Présentation</a></li>
+        <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
+        <li><a href="/reservation.html" class="drawer-link">Réservation en ligne</a></li>
+        <li><a href="/galerie.html" class="drawer-link">Galerie photos</a></li>
+        <li><a href="/services.html" class="drawer-link">Services & Restaurant</a></li>
+        <li><a href="/conferences.html" class="drawer-link">Conférences & Événements</a></li>
+        <li><a href="/offres.html" class="drawer-link">Offres spéciales</a></li>
+        <li><a href="/contact.html" class="drawer-link">Contact & Accès</a></li>
+        <li><a href="/account.html" class="drawer-link">Mon compte</a></li>
+        <li><a href="/login.html" class="drawer-link" id="mobileAuthLink">Connexion</a></li>
+      </ul>
+    </div>
+
+    <div class="drawer-footer">
+      <a href="/reservation.html" class="btn btn-gold">Réserver maintenant</a>
+      <a href="tel:+25722000000" class="drawer-link" style="font-size:0.95rem;">📞 +257 22 00 00 00</a>
+      <a href="mailto:reservation@lezardbleu-hotel.bi" class="drawer-link" style="font-size:0.95rem;">✉️ reservation@lezardbleu-hotel.bi</a>
+    </div>
   </aside>
+  <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
 
-  <!-- Main Content -->
-  <div style="padding-top: 120px; min-height: 100vh; background: var(--bg-dark-deep);">
-    <div class="container" style="padding: 3rem 1rem; max-width: 1200px;">
-      
-      <!-- Welcome Section -->
-      <div style="text-align: center; margin-bottom: 3rem;">
-        <h1 style="font-family: var(--font-heading); color: var(--text-light-primary); margin-bottom: 0.5rem; font-size: clamp(2rem, 5vw, 3rem);">
-          Mon Compte
-        </h1>
-        <p id="welcomeMessage" style="color: var(--text-muted); font-size: 1.1rem;">
-          Chargement...
-        </p>
+
+
+  <main id="main" style="padding-top: 130px; min-height: 100vh; background: var(--bg-dark-deep);">
+    <section class="section-padding" style="padding-top: 2rem;">
+      <div class="container" style="max-width: 1180px;">
+
+        <div id="accountAlert" class="alert" role="status" hidden></div>
+
+        <div class="account-header">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div id="profileAvatar" class="account-avatar" aria-hidden="true">👤</div>
+            <div>
+              <h1 style="font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 0.15rem;">Mon compte</h1>
+              <p id="welcomeMessage" style="color: var(--text-muted); font-size: 0.9rem;">Chargement…</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+            <a href="/reservation.html" class="btn btn-gold" style="padding: 0.75rem 1.25rem;">Réserver</a>
+            <button type="button" class="btn btn-outline-gold logout-btn" style="padding: 0.75rem 1.25rem;">Déconnexion</button>
+          </div>
+        </div>
+
+        <div class="account-grid">
+
+          <!-- Profil -->
+          <section class="account-card">
+            <h2>Mes informations</h2>
+            <p class="form-hint" style="margin-bottom: 1.25rem;">
+              Ces informations servent à préparer votre arrivée et à vous contacter si nécessaire.
+            </p>
+
+            <div id="profileFormWrapper">
+              <form id="profileForm" action="/account.html" method="post">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                  <label for="profileName" class="form-label">Nom complet</label>
+                  <input type="text" id="profileName" name="fullName" class="form-input"
+                         autocomplete="name" maxlength="80" data-rule="name" required>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                  <label for="profileEmail" class="form-label">Adresse e-mail</label>
+                  <input type="email" id="profileEmail" name="email" class="form-input"
+                         autocomplete="email" readonly>
+                  <p class="form-hint">L'adresse e-mail de connexion ne peut pas être modifiée ici.</p>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                  <label for="profilePhone" class="form-label" data-optional="true">Téléphone</label>
+                  <input type="tel" id="profilePhone" name="phone" class="form-input"
+                         autocomplete="tel" inputmode="tel" placeholder="+257 79 00 00 00" maxlength="25">
+                </div>
+
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                  <button type="submit" id="profileSubmit" class="btn btn-gold" style="flex: 1;">
+                    Enregistrer
+                  </button>
+                  <a href="/reset-password.html" class="btn btn-outline-gold" style="flex: 1;">
+                    Changer de mot de passe
+                  </a>
+                </div>
+              </form>
+            </div>
+
+            <div class="account-meta" id="accountMeta"></div>
+          </section>
+
+          <!-- Réservations -->
+          <section class="account-card account-card--wide">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+              <h2 style="margin-bottom: 0.25rem;">Mes réservations</h2>
+              <span id="bookingsCount" class="badge-demo" style="border-color: var(--border-gold); background: rgba(212,175,55,.12); color: var(--accent-gold-primary);">
+                0 réservation
+              </span>
+            </div>
+            <p class="form-hint" style="margin-bottom: 1.5rem;">
+              Vos demandes enregistrées avec cette adresse e-mail.
+            </p>
+
+            <div id="bookingsList">
+              <p style="color: var(--text-muted); text-align: center; padding: 2rem 0;">
+                Chargement de vos réservations…
+              </p>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="account-help">
+          <div>
+            <h2 style="font-size: 1.05rem; margin-bottom: 0.35rem;">Besoin d'aide ?</h2>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">
+              Notre conciergerie est disponible 24h/24 pour modifier ou annuler un séjour.
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+            <a href="tel:+25722000000" class="btn btn-outline-gold" style="padding: 0.7rem 1.1rem;">📞 Appeler</a>
+            <a href="/contact.html" class="btn btn-outline-gold" style="padding: 0.7rem 1.1rem;">✉️ Écrire</a>
+          </div>
+        </div>
+
       </div>
+    </section>
+  </main>
 
-      <!-- Account Sections Grid -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-        
-        <!-- Profile Card -->
-        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
-          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-            <div id="profileAvatar" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #D4AF37, #C19B2F); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0D1117;">
-              👤
-            </div>
-            <div>
-              <h3 style="color: var(--text-light-primary); margin-bottom: 0.25rem; font-size: 1.25rem;">Profil</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Vos informations personnelles</p>
-            </div>
-          </div>
-          <div id="profileData" style="color: var(--text-muted);">
-            <p><strong>Email:</strong> <span id="userEmail">-</span></p>
-            <p><strong>Nom:</strong> <span id="userName">-</span></p>
-            <p><strong>Téléphone:</strong> <span id="userPhone">-</span></p>
-          </div>
-          <button onclick="alert('Fonctionnalité en développement')" class="btn btn-outline-gold" style="width: 100%; margin-top: 1.5rem; padding: 0.75rem;">
-            Modifier le profil
-          </button>
-        </div>
+    <!-- PIED DE PAGE -->
+<footer class="footer-section">
+    <div class="container">
+      <div class="footer-grid">
 
-        <!-- Bookings Card -->
-        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
-          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #D4AF37, #C19B2F); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0D1117;">
-              🏨
-            </div>
-            <div>
-              <h3 style="color: var(--text-light-primary); margin-bottom: 0.25rem; font-size: 1.25rem;">Réservations</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Gérez vos séjours</p>
-            </div>
+        <div class="footer-col">
+          <div class="nav-logo" style="margin-bottom: 1.25rem;">
+            <span class="nav-logo-icon" aria-hidden="true">L</span>
+            <span class="nav-logo-text">
+              <span class="nav-brand-title">LE LÉZARD BLEU</span>
+              <span class="nav-brand-subtitle">Hôtel &amp; Spa ★★★★★</span>
+            </span>
           </div>
-          <div id="bookingsCount" style="text-align: center; padding: 2rem 0;">
-            <div style="font-size: 3rem; color: var(--accent-gold-primary);" id="bookingNumber">0</div>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">réservation(s) active(s)</p>
-          </div>
-          <a href="/reservation.html" class="btn btn-gold" style="width: 100%; padding: 0.75rem; text-align: center; display: block;">
-            Nouvelle Réservation
-          </a>
-        </div>
-
-        <!-- Help Card -->
-        <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
-          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #D4AF37, #C19B2F); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0D1117;">
-              💬
-            </div>
-            <div>
-              <h3 style="color: var(--text-light-primary); margin-bottom: 0.25rem; font-size: 1.25rem;">Assistance</h3>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Besoin d'aide ?</p>
-            </div>
-          </div>
-          <p style="color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
-            Notre équipe de conciergerie est disponible 24h/24 pour répondre à toutes vos questions.
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.25rem;">
+            L'excellence hôtelière au bord du Lac Tanganyika : suites de prestige,
+            gastronomie, spa et espaces de conférence à Bujumbura.
           </p>
-          <a href="/contact.html" class="btn btn-outline-gold" style="width: 100%; padding: 0.75rem; text-align: center; display: block;">
-            Nous Contacter
-          </a>
-        </div>
-
-      </div>
-
-      <!-- Bookings List -->
-      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2rem;">
-        <h2 style="color: var(--text-light-primary); margin-bottom: 1.5rem; font-size: 1.5rem;">Historique des Réservations</h2>
-        <div id="bookingsList">
-          <p style="color: var(--text-muted); text-align: center; padding: 2rem;">
-            Chargement de vos réservations...
+          <p style="color: var(--text-muted); font-size: 0.82rem;">
+            Paiements : BIF &amp; USD · Lumicash · EcoCash · Visa · Virement bancaire
           </p>
         </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="/presentation.html">L'hôtel &amp; ses valeurs</a></li>
+            <li><a href="/chambres.html">Chambres &amp; suites</a></li>
+            <li><a href="/reservation.html">Réservation en ligne</a></li>
+            <li><a href="/services.html">Restaurant &amp; spa</a></li>
+            <li><a href="/conferences.html">Séminaires &amp; mariages</a></li>
+            <li><a href="/offres.html">Offres &amp; privilèges</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Conciergerie</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📍</span>
+            <span>Avenue de la Plage, bord du Lac Tanganyika, Bujumbura, Burundi</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📞</span>
+            <span><a href="tel:+25722000000">+257 22 00 00 00</a> · 24h/24</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">✉️</span>
+            <span><a href="mailto:reservation@lezardbleu-hotel.bi">reservation@lezardbleu-hotel.bi</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">💬</span>
+            <span>WhatsApp : <a href="https://wa.me/25779000000" rel="noopener">+257 79 00 00 00</a></span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Newsletter Privilège</h4>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+            Offres exclusives et invitations privées, deux fois par mois. Pas de spam.
+          </p>
+          <form id="newsletterForm" action="#" method="post">
+            <label for="newsletterEmail" class="sr-only">Votre adresse e-mail</label>
+            <div style="display: flex; gap: 0.5rem; align-items: stretch;">
+              <input type="email" id="newsletterEmail" name="email" class="form-input"
+                     placeholder="votre@email.com" autocomplete="email" required
+                     style="font-size: 0.85rem; padding: 0.65rem 0.85rem; min-height: 44px;">
+              <button type="submit" class="btn btn-gold" style="padding: 0.65rem 1.1rem;">OK</button>
+            </div>
+            <p class="form-hint" style="margin-top: 0.6rem;">
+              En vous inscrivant, vous acceptez notre
+              <a href="/legal.html#confidentialite" style="color: var(--accent-gold-primary);">politique de confidentialité</a>.
+            </p>
+          </form>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer" style="background: var(--bg-dark-deep); border-top: 1px solid var(--border-subtle);">
-    <div class="container" style="padding: 2rem 1rem; text-align: center;">
-      <p style="color: var(--text-muted); margin-bottom: 0.5rem;">
-        © <span id="currentYear">2025</span> Le Lézard Bleu - Hôtel & Spa Bujumbura
-      </p>
-      <p style="font-size: 0.85rem; color: var(--text-muted);">
-        Tous droits réservés
-      </p>
+      <div class="footer-bottom">
+        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu &amp; Spa — Bujumbura, Burundi. Tous droits réservés.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="/legal.html#mentions">Mentions légales</a>
+          <a href="/legal.html#confidentialite">Confidentialité</a>
+          <a href="/legal.html#cgv">CGV</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <script src="/assets/js/main.js"></script>
-  <script type="module" src="/assets/js/supabase-auth.js"></script>
-  
-  <script type="module">
-    await window.__supabaseAuthReady;
 
-    // ── Helpers ────────────────────────────────────────────────────────────
-    function showEmptyBookings() {
-      document.getElementById('bookingsList').innerHTML = `
-        <div style="text-align: center; padding: 3rem 1rem;">
-          <div style="font-size: 4rem; margin-bottom: 1rem;">🏨</div>
-          <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
-            Vous n'avez pas encore de réservation
-          </p>
-          <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem;">
-            Consultez nos suites exceptionnelles et réservez votre séjour de rêve
-          </p>
-          <a href="/reservation.html" class="btn btn-gold" style="padding: 1rem 2rem;">
-            Découvrir nos Suites
-          </a>
-        </div>
-      `;
-    }
 
-    // ── Chargement profil ──────────────────────────────────────────────────
-    async function loadUserProfile() {
-      try {
-        const session = await window.SupabaseAuth.getSession();
-        const user    = await window.SupabaseAuth.getUser();
 
-        if (!user || !session) {
-          window.location.href = '/login.html?redirect=/account.html';
-          return;
-        }
 
-        const fullName = user.user_metadata?.full_name
-          || user.user_metadata?.display_name
-          || user.email?.split('@')[0]
-          || 'Membre VIP';
 
-        const provider  = user.app_metadata?.provider || 'email';
-        const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
-
-        document.getElementById('welcomeMessage').textContent = `Bienvenue, ${fullName} !`;
-        document.getElementById('userEmail').textContent = user.email || '-';
-        document.getElementById('userName').textContent  = fullName;
-        document.getElementById('userPhone').textContent =
-          user.user_metadata?.phone || user.phone || 'Non renseigné';
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Avatar Google
-        if (avatarUrl) {
-          const avatarDiv = document.getElementById('profileAvatar');
-          if (avatarDiv) {
-            avatarDiv.innerHTML = `<img src="${avatarUrl}" alt="${fullName}"
-              style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-          }
-        }
-
-        // Badge provider
-        if (provider === 'google') {
-          const profileData = document.getElementById('profileData');
-          const providerInfo = document.createElement('p');
-          providerInfo.style.marginTop = '0.5rem';
-          providerInfo.innerHTML = '<strong>Connexion via :</strong> <span style="color:var(--accent-gold-primary);">Google</span>';
-          profileData.appendChild(providerInfo);
-        }
-
-        document.getElementById('bookingNumber').textContent = '0';
-        showEmptyBookings();
-
-      } catch (err) {
-        console.error('loadUserProfile:', err);
-        window.showToast && window.showToast('Erreur de chargement du profil.', 'error');
-        setTimeout(() => { window.location.href = '/login.html'; }, 3000);
-      }
-    }
-
-    // ── Déconnexion ────────────────────────────────────────────────────────
-    document.querySelectorAll('.logout-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        try {
-          await window.SupabaseAuth.signOut();
-          window.showToast && window.showToast('Déconnexion réussie', 'success');
-          setTimeout(() => { window.location.href = '/index.html'; }, 800);
-        } catch (err) {
-          window.showToast && window.showToast('Erreur lors de la déconnexion.', 'error');
-        }
-      });
-    });
-
-    // ── Listener état auth ─────────────────────────────────────────────────
-    window.SupabaseAuth.onAuthStateChange((event) => {
-      if (event === 'SIGNED_OUT')    window.location.href = '/login.html';
-      if (event === 'USER_UPDATED')  loadUserProfile();
-    });
-
-    // ── Lancement ─────────────────────────────────────────────────────────
-    await loadUserProfile();
-  </script>
-
+  <script src="/assets/js/pages/account.js"></script>
 </body>
 </html>

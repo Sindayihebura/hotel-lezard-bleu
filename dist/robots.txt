@@ -1,0 +1,10 @@
+# Hôtel Le Lézard Bleu & Spa — Bujumbura
+User-agent: *
+Allow: /
+Disallow: /account.html
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /reset-password.html
+Disallow: /confirmation.html
+
+Sitemap: https://lezardbleu-hotel.bi/sitemap.xml

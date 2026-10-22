@@ -3,222 +3,274 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confirmation de Réservation | Le Lézard Bleu Bujumbura</title>
-  <meta name="description" content="Votre réservation a été confirmée à l'Hôtel Le Lézard Bleu.">
+  <title>Confirmation de réservation | Hôtel Le Lézard Bleu &amp; Spa</title>
+  <meta name="description" content="Votre demande de réservation à l'Hôtel Le Lézard Bleu & Spa a bien été enregistrée.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <!-- Scripts communs (ordre de chargement important) -->
+  <script src="/env-config.js"></script>
+  <script src="/vendor/supabase.js"></script>
+  <script src="/assets/js/forms.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/supabase-auth.js"></script>
+  <script src="/assets/js/app.js"></script>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header-navbar">
+    <!-- EN-TÊTE -->
+<header class="header-navbar">
     <div class="container nav-container">
-      <a href="/index.html" class="nav-logo">
-        <div class="nav-logo-icon">L</div>
-        <div class="nav-logo-text">
+      <a href="/index.html" class="nav-logo" aria-label="Le Lézard Bleu — Accueil">
+        <span class="nav-logo-icon" aria-hidden="true">L</span>
+        <span class="nav-logo-text">
           <span class="nav-brand-title">LE LÉZARD BLEU</span>
-          <span class="nav-brand-subtitle">Bujumbura • Burundi ★★★★★</span>
-        </div>
+          <span class="nav-brand-subtitle">Bujumbura ★★★★★</span>
+        </span>
       </a>
-      <div style="display: flex; align-items: center; gap: 0.85rem;">
-        <a href="/index.html" class="btn btn-outline-gold" style="padding: 0.65rem 1.25rem;">← Accueil</a>
+
+      <nav class="nav-desktop" aria-label="Navigation principale">
+        <ul class="nav-menu">
+          <li><a href="/index.html" class="nav-link">Accueil</a></li>
+          <li><a href="/presentation.html" class="nav-link">Hôtel</a></li>
+          <li><a href="/chambres.html" class="nav-link">Suites</a></li>
+          <li><a href="/reservation.html" class="nav-link">Réserver</a></li>
+          <li><a href="/galerie.html" class="nav-link">Galerie</a></li>
+          <li><a href="/services.html" class="nav-link">Services</a></li>
+          <li><a href="/conferences.html" class="nav-link">Conférences</a></li>
+          <li><a href="/offres.html" class="nav-link">Offres</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="currency-switcher" role="group" aria-label="Devise d'affichage">
+          <button type="button" class="currency-btn" data-currency="BIF" aria-pressed="true">BIF</button>
+          <button type="button" class="currency-btn" data-currency="USD" aria-pressed="false">USD</button>
+        </div>
+        <a href="/reservation.html" class="btn btn-gold nav-cta">Réserver</a>
+        <a href="/login.html" class="btn btn-outline-gold nav-auth" id="authButton">Connexion</a>
+        <button id="mobileToggle" class="mobile-toggle" type="button"
+                aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileDrawer">☰</button>
       </div>
     </div>
   </header>
 
-  <!-- Confirmation Content -->
-  <div style="padding-top: 120px; min-height: 100vh; background: var(--bg-dark-deep); display: flex; align-items: center; justify-content: center;">
-    <div class="container" style="max-width: 700px; padding: 3rem 1rem;">
-      
-      <!-- Success Icon -->
-      <div style="text-align: center; margin-bottom: 3rem;">
-        <div style="width: 120px; height: 120px; margin: 0 auto 2rem auto; border-radius: 50%; background: linear-gradient(135deg, #1a4d2e, #2d7a4e); display: flex; align-items: center; justify-content: center; font-size: 4rem; box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);">
-          ✓
-        </div>
-        <h1 style="font-family: var(--font-heading); color: var(--text-light-primary); margin-bottom: 1rem; font-size: clamp(2rem, 5vw, 3rem);">
-          Réservation <span style="color: var(--accent-gold-primary);">Confirmée</span> !
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
-          Nous avons le plaisir de confirmer votre réservation à l'Hôtel Le Lézard Bleu.
-        </p>
-      </div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menu mobile" aria-hidden="true">
+    <button id="drawerClose" class="drawer-close" type="button" aria-label="Fermer le menu">✕</button>
 
-      <!-- Booking Details Card -->
-      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2.5rem; margin-bottom: 2rem;">
-        
-        <div style="text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-subtle);">
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Numéro de confirmation</p>
-          <p id="bookingId" style="font-size: 1.8rem; font-weight: 700; color: var(--accent-gold-primary); font-family: monospace; letter-spacing: 2px;">
-            #LOADING...
+    <div class="drawer-currency">
+      <span class="drawer-currency-label">Devise d'affichage</span>
+      <div class="currency-switcher" role="group" aria-label="Devise d'affichage (menu)">
+        <button type="button" class="currency-btn" data-currency="BIF">🇧🇮 BIF</button>
+        <button type="button" class="currency-btn" data-currency="USD">💵 USD</button>
+      </div>
+    </div>
+
+    <div class="drawer-nav">
+      <ul class="drawer-menu">
+        <li><a href="/index.html" class="drawer-link">Accueil</a></li>
+        <li><a href="/presentation.html" class="drawer-link">Présentation</a></li>
+        <li><a href="/chambres.html" class="drawer-link">Suites & Villas</a></li>
+        <li><a href="/reservation.html" class="drawer-link">Réservation en ligne</a></li>
+        <li><a href="/galerie.html" class="drawer-link">Galerie photos</a></li>
+        <li><a href="/services.html" class="drawer-link">Services & Restaurant</a></li>
+        <li><a href="/conferences.html" class="drawer-link">Conférences & Événements</a></li>
+        <li><a href="/offres.html" class="drawer-link">Offres spéciales</a></li>
+        <li><a href="/contact.html" class="drawer-link">Contact & Accès</a></li>
+        <li><a href="/account.html" class="drawer-link">Mon compte</a></li>
+        <li><a href="/login.html" class="drawer-link" id="mobileAuthLink">Connexion</a></li>
+      </ul>
+    </div>
+
+    <div class="drawer-footer">
+      <a href="/reservation.html" class="btn btn-gold">Réserver maintenant</a>
+      <a href="tel:+25722000000" class="drawer-link" style="font-size:0.95rem;">📞 +257 22 00 00 00</a>
+      <a href="mailto:reservation@lezardbleu-hotel.bi" class="drawer-link" style="font-size:0.95rem;">✉️ reservation@lezardbleu-hotel.bi</a>
+    </div>
+  </aside>
+  <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+
+
+  <main id="main" style="padding-top: 130px; min-height: 100vh; background: var(--bg-dark-deep);">
+    <section class="section-padding" style="padding-top: 2rem;">
+      <div class="container" style="max-width: 780px;">
+
+        <div class="text-center" style="margin-bottom: 2.5rem;">
+          <div class="confirmation-check" aria-hidden="true">✓</div>
+          <span class="section-subtitle">DEMANDE ENREGISTRÉE</span>
+          <h1 class="section-title" style="font-size: clamp(1.8rem, 5vw, 2.6rem);">
+            Merci pour votre réservation
+          </h1>
+          <p class="section-desc">
+            Notre réception vous contacte sous 24 h pour confirmer votre séjour et le mode de paiement.
           </p>
         </div>
 
-        <div id="bookingDetails" style="display: grid; gap: 1.5rem;">
-          
-          <div>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">📅 Dates du séjour</p>
-            <p id="dates" style="color: var(--text-light-primary); font-weight: 600; font-size: 1.1rem;">
-              Chargement...
-            </p>
+        <div id="confirmationAlert" class="alert" role="status" hidden></div>
+
+        <div class="confirmation-card">
+          <div class="confirmation-reference">
+            <span>Référence de la demande</span>
+            <strong id="bookingReference">—</strong>
           </div>
 
-          <div>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">🏨 Chambre réservée</p>
-            <p id="roomName" style="color: var(--text-light-primary); font-weight: 600; font-size: 1.1rem;">
-              Chargement...
-            </p>
+          <div class="confirmation-details" id="bookingDetails">
+            <div class="confirmation-detail">
+              <span>Séjour</span>
+              <strong id="dates">—</strong>
+            </div>
+            <div class="confirmation-detail">
+              <span>Chambre</span>
+              <strong id="roomName">—</strong>
+            </div>
+            <div class="confirmation-detail">
+              <span>Voyageurs</span>
+              <strong id="guests">—</strong>
+            </div>
+            <div class="confirmation-detail">
+              <span>Mode de paiement</span>
+              <strong id="paymentMethod">—</strong>
+            </div>
+            <div class="confirmation-detail">
+              <span>Montant estimé</span>
+              <strong id="totalPrice" class="text-gold">—</strong>
+            </div>
+            <div class="confirmation-detail">
+              <span>Contact</span>
+              <strong id="guestContact">—</strong>
+            </div>
           </div>
 
-          <div>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">👥 Nombre d'invités</p>
-            <p id="guests" style="color: var(--text-light-primary); font-weight: 600; font-size: 1.1rem;">
-              Chargement...
-            </p>
+          <div class="confirmation-actions">
+            <a href="/account.html" class="btn btn-outline-gold">Mon compte</a>
+            <a href="/index.html" class="btn btn-gold">Retour à l'accueil</a>
           </div>
-
-          <div>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">💰 Montant total</p>
-            <p id="totalPrice" style="color: var(--accent-gold-primary); font-weight: 700; font-size: 1.4rem;">
-              Chargement...
-            </p>
-          </div>
-
         </div>
-      </div>
 
-      <!-- Next Steps -->
-      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 2rem;">
-        <h3 style="color: var(--text-light-primary); margin-bottom: 1.5rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
-          <span style="color: var(--accent-gold-primary);">📧</span> Prochaines Étapes
-        </h3>
-        <ul style="color: var(--text-muted); line-height: 2; padding-left: 1.5rem;">
-          <li>Un email de confirmation vous a été envoyé</li>
-          <li>Conservez votre numéro de réservation</li>
-          <li>Notre équipe vous contactera sous 24h pour finaliser les détails</li>
-          <li>Vous recevrez toutes les informations pratiques avant votre arrivée</li>
-        </ul>
-      </div>
+        <div class="confirmation-card confirmation-card--muted">
+          <h2 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-light-primary);">
+            Et maintenant ?
+          </h2>
+          <ol style="color: var(--text-muted); line-height: 1.9; padding-left: 1.25rem; font-size: 0.9rem;">
+            <li>Vous recevez un e-mail récapitulatif (vérifiez vos spams).</li>
+            <li>La réception vous appelle ou vous écrit sous 24 h pour confirmer.</li>
+            <li>Le règlement s'effectue à l'arrivée ou par Lumicash / EcoCash / virement selon votre choix.</li>
+            <li>Annulation gratuite jusqu'à 48 h avant la date d'arrivée.</li>
+          </ol>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.25rem;">
+            <a href="tel:+25722000000" class="btn btn-outline-gold" style="padding: 0.7rem 1.25rem;">📞 +257 22 00 00 00</a>
+            <a href="mailto:reservation@lezardbleu-hotel.bi" class="btn btn-outline-gold" style="padding: 0.7rem 1.25rem;">✉️ Nous écrire</a>
+            <a href="https://wa.me/25779000000" rel="noopener" class="btn btn-outline-gold" style="padding: 0.7rem 1.25rem;">💬 WhatsApp</a>
+          </div>
+        </div>
 
-      <!-- Contact Info -->
-      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 2rem; text-align: center;">
-        <p style="color: var(--text-muted); margin-bottom: 1rem;">
-          Des questions sur votre réservation ?
+        <p class="text-center" style="margin-top: 1.5rem;">
+          <a href="/reservation.html" style="color: var(--text-muted); font-size: 0.85rem;">← Faire une autre réservation</a>
         </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-          <a href="tel:+25722000000" class="btn btn-outline-gold" style="padding: 0.75rem 1.5rem;">
-            📞 +257 22 00 00 00
-          </a>
-          <a href="/contact.html" class="btn btn-outline-gold" style="padding: 0.75rem 1.5rem;">
-            ✉️ Nous Contacter
-          </a>
+
+      </div>
+    </section>
+  </main>
+
+    <!-- PIED DE PAGE -->
+<footer class="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer-col">
+          <div class="nav-logo" style="margin-bottom: 1.25rem;">
+            <span class="nav-logo-icon" aria-hidden="true">L</span>
+            <span class="nav-logo-text">
+              <span class="nav-brand-title">LE LÉZARD BLEU</span>
+              <span class="nav-brand-subtitle">Hôtel &amp; Spa ★★★★★</span>
+            </span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.25rem;">
+            L'excellence hôtelière au bord du Lac Tanganyika : suites de prestige,
+            gastronomie, spa et espaces de conférence à Bujumbura.
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.82rem;">
+            Paiements : BIF &amp; USD · Lumicash · EcoCash · Visa · Virement bancaire
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="/presentation.html">L'hôtel &amp; ses valeurs</a></li>
+            <li><a href="/chambres.html">Chambres &amp; suites</a></li>
+            <li><a href="/reservation.html">Réservation en ligne</a></li>
+            <li><a href="/services.html">Restaurant &amp; spa</a></li>
+            <li><a href="/conferences.html">Séminaires &amp; mariages</a></li>
+            <li><a href="/offres.html">Offres &amp; privilèges</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Conciergerie</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📍</span>
+            <span>Avenue de la Plage, bord du Lac Tanganyika, Bujumbura, Burundi</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">📞</span>
+            <span><a href="tel:+25722000000">+257 22 00 00 00</a> · 24h/24</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">✉️</span>
+            <span><a href="mailto:reservation@lezardbleu-hotel.bi">reservation@lezardbleu-hotel.bi</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">💬</span>
+            <span>WhatsApp : <a href="https://wa.me/25779000000" rel="noopener">+257 79 00 00 00</a></span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Newsletter Privilège</h4>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+            Offres exclusives et invitations privées, deux fois par mois. Pas de spam.
+          </p>
+          <form id="newsletterForm" action="#" method="post">
+            <label for="newsletterEmail" class="sr-only">Votre adresse e-mail</label>
+            <div style="display: flex; gap: 0.5rem; align-items: stretch;">
+              <input type="email" id="newsletterEmail" name="email" class="form-input"
+                     placeholder="votre@email.com" autocomplete="email" required
+                     style="font-size: 0.85rem; padding: 0.65rem 0.85rem; min-height: 44px;">
+              <button type="submit" class="btn btn-gold" style="padding: 0.65rem 1.1rem;">OK</button>
+            </div>
+            <p class="form-hint" style="margin-top: 0.6rem;">
+              En vous inscrivant, vous acceptez notre
+              <a href="/legal.html#confidentialite" style="color: var(--accent-gold-primary);">politique de confidentialité</a>.
+            </p>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>© <span id="currentYear"></span> Hôtel Le Lézard Bleu &amp; Spa — Bujumbura, Burundi. Tous droits réservés.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="/legal.html#mentions">Mentions légales</a>
+          <a href="/legal.html#confidentialite">Confidentialité</a>
+          <a href="/legal.html#cgv">CGV</a>
+          <a href="/contact.html">Contact</a>
         </div>
       </div>
-
-      <!-- Action Buttons -->
-      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="/index.html" class="btn btn-gold" style="padding: 1rem 2rem;">
-          Retour à l'Accueil
-        </a>
-        <a href="/account.html" class="btn btn-outline-gold" style="padding: 1rem 2rem;">
-          Mon Compte
-        </a>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer" style="background: var(--bg-dark-deep); border-top: 1px solid var(--border-subtle);">
-    <div class="container" style="padding: 2rem 1rem; text-align: center;">
-      <p style="color: var(--text-muted); margin-bottom: 0.5rem;">
-        © <span id="currentYear">2025</span> Le Lézard Bleu - Hôtel & Spa Bujumbura
-      </p>
-      <p style="font-size: 0.85rem; color: var(--text-muted);">
-        Tous droits réservés • Avenue de la Plage, Lac Tanganyika, Bujumbura, Burundi
-      </p>
     </div>
   </footer>
 
-  <script src="/assets/js/main.js"></script>
-  <script src="/assets/js/app.js"></script>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Get booking ID from URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const bookingId = urlParams.get('booking');
 
-      if (!bookingId) {
-        // No booking ID provided, show generic confirmation
-        document.getElementById('bookingId').textContent = '#PENDING';
-        document.getElementById('dates').textContent = 'Information en cours de traitement';
-        document.getElementById('roomName').textContent = 'Voir email de confirmation';
-        document.getElementById('guests').textContent = 'Voir email de confirmation';
-        document.getElementById('totalPrice').textContent = 'Voir email de confirmation';
-      } else {
-        // Display booking ID
-        document.getElementById('bookingId').textContent = `#${bookingId}`;
 
-        // Try to load booking details from API
-        loadBookingDetails(bookingId);
-      }
 
-      document.getElementById('currentYear').textContent = new Date().getFullYear();
-    });
 
-    async function loadBookingDetails(bookingId) {
-      try {
-        // Récupérer le token Supabase depuis le localStorage
-        const sessionRaw = localStorage.getItem('hotel_auth_token');
-        let authHeader = '';
-        if (sessionRaw) {
-          try {
-            const session = JSON.parse(sessionRaw);
-            if (session?.access_token) {
-              authHeader = `Bearer ${session.access_token}`;
-            }
-          } catch (_) {}
-        }
 
-        const response = await fetch(`/.netlify/functions/bookings?id=${bookingId}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            ...(authHeader ? { 'Authorization': authHeader } : {})
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Booking not found');
-        }
-
-        const data = await response.json();
-        const booking = data.booking;
-
-        // Display booking details
-        if (booking.check_in && booking.check_out) {
-          const checkIn = window.App.DateHelper.format(booking.check_in);
-          const checkOut = window.App.DateHelper.format(booking.check_out);
-          document.getElementById('dates').textContent = `${checkIn} → ${checkOut}`;
-        }
-
-        if (booking.room_name) {
-          document.getElementById('roomName').textContent = booking.room_name;
-        }
-
-        if (booking.guests) {
-          document.getElementById('guests').textContent = `${booking.guests} personne(s)`;
-        }
-
-        if (booking.total_price_bif) {
-          const price = window.formatPrice(booking.total_price_bif);
-          document.getElementById('totalPrice').textContent = price;
-        }
-
-      } catch (error) {
-        console.error('Error loading booking details:', error);
-        // Keep generic messages if API fails
-      }
-    }
-  </script>
-
+  <script src="/assets/js/pages/confirmation.js"></script>
 </body>
 </html>
