@@ -128,7 +128,23 @@ npm run check:browser   # chargement réel des pages dans jsdom
 npm run test:flows      # parcours : connexion, devise, réservation, contact
 ```
 
-## 8. Déploiement
+## 8. Aperçu en ligne / GitHub Pages
+
+L'aperçu Arena (`https://<port>-<sandbox>.e2b.app`) est **temporaire** : il s'arrête
+avec la session et ne fonctionne qu'ouvert depuis le panneau d'aperçu (jeton requis).
+
+Pour un lien public permanent, le dépôt est prêt pour GitHub Pages :
+
+```bash
+node tools/build-pages.js        # génère _site/ (chemins adaptés au sous-dossier)
+```
+
+Le workflow `.github/workflows/pages.yml` publie `dist/` à chaque push.
+Il faut activer Pages une seule fois : **Settings → Pages → Build and deployment →
+Source : GitHub Actions**. Le site est alors servi sur
+`https://sindayihebura.github.io/hotel-lezard-bleu/`.
+
+## 9. Déploiement
 
 Netlify est configuré à la racine (`netlify.toml`) :
 
@@ -143,7 +159,7 @@ npm run deploy          # netlify deploy --prod
 Autres cibles (VPS, Railway, InfinityFree, PHP historique) : voir `docs/` et `DEPLOIEMENT.md`.
 L'application PHP de la racine reste disponible mais **n'est pas** déployée par Netlify.
 
-## 9. Documentation
+## 10. Documentation
 
 | Fichier | Contenu |
 | --- | --- |
@@ -154,7 +170,7 @@ L'application PHP de la racine reste disponible mais **n'est pas** déployée pa
 | `SECURITY_CHECKLIST.md` | Contrôles avant mise en production |
 | `docs/archive/` | Anciens rapports de déploiement (non publiés) |
 
-## 10. Contact établissement
+## 11. Contact établissement
 
 Avenue de la Plage, bord du Lac Tanganyika — Bujumbura, Burundi
 Tél. +257 22 00 00 00 · reservation@lezardbleu-hotel.bi
