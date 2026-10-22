@@ -64,7 +64,7 @@ async function checkPage(page) {
     return { page: page.url, ok: false, errors: [`chargement impossible : ${error.message}`] };
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 700));
+  await new Promise((resolve) => setTimeout(resolve, 1400));
 
   const { window } = dom;
   const document = window.document;
